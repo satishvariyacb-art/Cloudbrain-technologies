@@ -10,7 +10,7 @@
     "dev:web": "npm run dev --prefix web",
     "dev:admin": "npm run ui --prefix admin",
     "dev:api": "npm run server --prefix admin",
-    "build": "npm install --prefix web --include=dev && npm run build --prefix web",
+    "build": "node scripts/build-web.mjs",
     "build:web": "npm run build --prefix web",
     "build:admin": "npm run build --prefix admin",
     "lint:web": "npm run lint --prefix web"
