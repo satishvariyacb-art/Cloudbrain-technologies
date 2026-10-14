@@ -1,0 +1,40 @@
+# Dependencies and build output
+node_modules/
+dist/
+dist-ssr/
+build/
+.vite/
+coverage/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.json
+
+# Logs, caches, OS and editor noise
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.local
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Local runtime data. Public site assets under web/public and admin/public stay tracked.
+admin/server/data/db.json
+*.dump
+*.bak

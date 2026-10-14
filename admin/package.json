@@ -1,0 +1,28 @@
+{
+  "name": "cloudbrain-admin",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"node server/server.js\" \"vite --port 5174\"",
+    "start": "concurrently \"node server/server.js\" \"vite --port 5174\"",
+    "server": "node server/server.js",
+    "ui": "vite --port 5174",
+    "build": "vite build",
+    "preview": "vite preview --port 5174"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "cors": "^2.8.5",
+    "dotenv": "^18.0.4",
+    "express": "^4.19.2",
+    "lucide-react": "^1.16.0",
+    "mongoose": "^9.10.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "vite": "^6.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

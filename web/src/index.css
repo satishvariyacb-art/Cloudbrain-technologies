@@ -1,0 +1,439 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@500;600;700&family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* --------------------------------------------------
+   CUSTOM CLOUDBRAIN FONTS SYSTEM (@font-face)
+-------------------------------------------------- */
+@font-face {
+  font-family: 'cbsans';
+  src: url('/fonts/cbsans-Thin.woff2') format('woff2'),
+       url('/fonts/cbsans-Thin.ttf') format('truetype'),
+       url('/fonts/cbsans-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'cbsans';
+  src: url('/fonts/cbsans-Light.woff2') format('woff2'),
+       url('/fonts/cbsans-Light.ttf') format('truetype'),
+       url('/fonts/cbsans-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'cbsans';
+  src: url('/fonts/cbsans-Regular.woff2') format('woff2'),
+       url('/fonts/cbsans-Regular.ttf') format('truetype'),
+       url('/fonts/cbsans-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'cbsans';
+  src: url('/fonts/cbsans-Medium.woff2') format('woff2'),
+       url('/fonts/cbsans-Medium.ttf') format('truetype'),
+       url('/fonts/cbsans-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'cbsans';
+  src: url('/fonts/cbsans-SemiBold.woff2') format('woff2'),
+       url('/fonts/cbsans-SemiBold.ttf') format('truetype'),
+       url('/fonts/cbsans-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'cbsans';
+  src: url('/fonts/cbsans-Bold.woff2') format('woff2'),
+       url('/fonts/cbsans-Bold.ttf') format('truetype'),
+       url('/fonts/cbsans-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'cbsans';
+  src: url('/fonts/cbsans-ExtraBold.woff2') format('woff2'),
+       url('/fonts/cbsans-ExtraBold.ttf') format('truetype'),
+       url('/fonts/cbsans-ExtraBold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* TYPEWRITER / HERO FONT */
+@font-face {
+  font-family: 'cbsans-Typewriter';
+  src: url('/fonts/cbsans-Typewriter.ttf') format('truetype'),
+       url('/fonts/cbsans-Typewriter.woff2') format('woff2'),
+       url('/fonts/cbsans-Typewriter.otf') format('opentype'),
+       url('/fonts/cbsans-Typewriter-Regular.woff2') format('woff2'),
+       url('/fonts/cbsans-Typewriter-Regular.ttf') format('truetype'),
+       url('/fonts/cbsans-Typewriter-Regular.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-main: 'cbsans', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'cbsans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-typewriter: 'cbsans-Typewriter', 'Edu NSW ACT Foundation', 'Caveat', cursive;
+  --font-fancy: var(--font-typewriter);
+
+  /* ════════════════════════════════════════════════════════════════
+     SINGLE SOURCE OF TRUTH TYPOGRAPHY SYSTEM
+     Change any value here to update the font size across the whole site!
+     ════════════════════════════════════════════════════════════════ */
+  --text-h1: 3.8rem;            /* Hero Title (Largest on entire site) */
+  --text-h1-mobile: 1.95rem;
+
+  --text-h2: 2.6rem;            /* All Main Section Titles (H2) */
+  --text-h2-mobile: 1.85rem;
+
+  --text-h3: 1.35rem;           /* All Component / Card Titles (H3) */
+  --text-h3-mobile: 1.2rem;
+
+  --text-subtitle: 1.125rem;    /* All Section Subtitles */
+  --text-subtitle-mobile: 1.0rem;
+
+  --text-body: 1.0rem;          /* Standard Body Paragraphs */
+  --text-body-mobile: 0.95rem;
+
+  --text-tag: 0.85rem;          /* Section Badges & Label Tags */
+  --text-tag-mobile: 0.8rem;
+
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #f1f5f9;
+  --bg-glass: rgba(255, 255, 255, 0.85);
+  --border-subtle: rgba(0, 0, 0, 0.07);
+  --border-hover: rgba(48, 133, 255, 0.35);
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  
+  /* CloudBrain 4 Brand Palette */
+  --cb-red: #F42A37;
+  --cb-green: #04AB6B;
+  --cb-yellow: #FFBE01;
+  --cb-blue: #3085FF;
+  
+  /* Primary Brand Definitions */
+  --brand-primary: #3085FF;
+  --brand-gradient: linear-gradient(135deg, #3085FF 34%, #04AB6B 50%, #04AB6B 100%);
+  --brand-gradient-four: linear-gradient(135deg, #F42A37 0%, #FFBE01 33%, #04AB6B 66%, #3085FF 100%);
+  --brand-subtle: rgba(48, 133, 255, 0.08);
+  
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+  
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.05);
+  --shadow-glass: 0 16px 40px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  --shadow-glow: 0 0 30px rgba(48, 133, 255, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+html, body {
+  scroll-behavior: smooth;
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.section-padding {
+  padding: 5.5rem 1.5rem;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 3.5rem auto;
+}
+
+.section-tag,
+.sv-badge-pill,
+.about-label-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--brand-primary, #3085FF);
+  font-family: var(--font-main);
+  font-size: var(--text-tag);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+}
+
+.section-tag::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--brand-primary, #3085FF);
+  flex-shrink: 0;
+}
+
+/* 100% UNIFORM SECTION TITLES (H2) */
+.section-title,
+.sv-main-title,
+.about-headline,
+.mission-title,
+.vision-title,
+.values-title,
+.philo-title {
+  font-size: var(--text-h2) !important;
+  font-family: var(--font-main);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+/* 100% UNIFORM SECTION SUBTITLES */
+.section-subtitle,
+.sv-main-sub,
+.about-lead {
+  font-size: var(--text-subtitle) !important;
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .section-title,
+  .sv-main-title,
+  .about-headline,
+  .mission-title,
+  .vision-title,
+  .values-title,
+  .philo-title {
+    font-size: var(--text-h2-mobile) !important;
+  }
+  .section-subtitle,
+  .sv-main-sub,
+  .about-lead {
+    font-size: var(--text-subtitle-mobile) !important;
+  }
+  .section-tag,
+  .sv-badge-pill,
+  .about-label-badge {
+    font-size: var(--text-tag-mobile) !important;
+  }
+}
+
+/* Color Accent Badges & Helpers */
+.accent-blue { color: var(--cb-blue) !important; }
+.accent-green { color: var(--cb-green) !important; }
+.accent-red { color: var(--cb-red) !important; }
+.accent-yellow { color: var(--cb-yellow) !important; }
+
+.bg-accent-blue { background: rgba(48, 133, 255, 0.08) !important; border-color: rgba(48, 133, 255, 0.2) !important; color: var(--cb-blue) !important; }
+.bg-accent-green { background: rgba(4, 171, 107, 0.08) !important; border-color: rgba(4, 171, 107, 0.2) !important; color: var(--cb-green) !important; }
+.bg-accent-red { background: rgba(244, 42, 55, 0.08) !important; border-color: rgba(244, 42, 55, 0.2) !important; color: var(--cb-red) !important; }
+.bg-accent-yellow { background: rgba(255, 190, 1, 0.12) !important; border-color: rgba(255, 190, 1, 0.3) !important; color: #f59e0b !important; }
+
+/* Glassmorphism Card Style */
+.card-glass {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-glass:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: var(--text-primary);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
+}
+
+.btn-primary:hover {
+  background: #1e293b;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25);
+}
+
+.btn-secondary {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-secondary:hover {
+  background: #edf2f7;
+  border-color: rgba(0,0,0,0.12);
+}
+
+.btn-brand {
+  background: var(--cb-blue);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(48, 133, 255, 0.3);
+}
+
+.btn-brand:hover {
+  background: #1d72f3;
+  box-shadow: 0 6px 20px rgba(48, 133, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Global Modal & Overlay System */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: modalFadeIn 0.25s ease;
+}
+
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: var(--radius-xl, 32px);
+  padding: 2.5rem 2rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: #e2e8f0;
+  transform: scale(1.05);
+}
+
+.modal-header {
+  margin-bottom: 1.5rem;
+}
+
+.modal-title {
+  font-family: var(--font-main);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 0.35rem;
+  margin-bottom: 0.25rem;
+}
+
+.modal-subtitle {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}

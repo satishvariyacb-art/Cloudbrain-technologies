@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset="utf-8">
+<title>Cloudbrain Technologies — Complete Website Content Document</title>
+<!--[if gte mso 9]>
+<xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+<w:DoNotOptimizeForBrowser/>
+</w:WordDocument>
+</xml>
+<![endif]-->
+<style>
+  @page {
+    size: 8.5in 11in;
+    margin: 1in;
+    mso-header-margin: 0.5in;
+    mso-footer-margin: 0.5in;
+  }
+  body {
+    font-family: 'Calibri', 'Arial', sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #0f172a;
+    background: #ffffff;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 24pt;
+    font-weight: 700;
+    color: #3085ff;
+    margin-top: 24pt;
+    margin-bottom: 8pt;
+    border-bottom: 2pt solid #e2e8f0;
+    padding-bottom: 4pt;
+  }
+  h2 {
+    font-size: 16pt;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 18pt;
+    margin-bottom: 6pt;
+  }
+  h3 {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #04ab6b;
+    margin-top: 12pt;
+    margin-bottom: 4pt;
+  }
+  p {
+    margin-top: 0;
+    margin-bottom: 8pt;
+  }
+  .doc-title {
+    font-size: 28pt;
+    font-weight: 800;
+    color: #3085ff;
+    text-align: center;
+    margin-bottom: 4pt;
+  }
+  .doc-sub {
+    font-size: 13pt;
+    color: #64748b;
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 24pt;
+  }
+  .quote-box {
+    background: #f8fafc;
+    border-left: 4pt solid #3085ff;
+    padding: 10pt 14pt;
+    margin: 10pt 0;
+    font-style: italic;
+    color: #1e293b;
+    font-weight: 600;
+  }
+  .quote-author {
+    font-weight: 400;
+    font-style: normal;
+    color: #64748b;
+    margin-top: 4pt;
+    display: block;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12pt 0;
+    font-size: 10.5pt;
+  }
+  th {
+    background: #eff6ff;
+    color: #1e40af;
+    font-weight: 700;
+    text-align: left;
+    padding: 8pt 10pt;
+    border: 1pt solid #cbd5e1;
+  }
+  td {
+    padding: 7pt 10pt;
+    border: 1pt solid #cbd5e1;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+  ul {
+    margin-top: 2pt;
+    margin-bottom: 8pt;
+    padding-left: 20pt;
+  }
+  li {
+    margin-bottom: 4pt;
+  }
+  .badge {
+    display: inline-block;
+    background: #e0f2fe;
+    color: #0284c7;
+    font-size: 9pt;
+    font-weight: 700;
+    padding: 2pt 6pt;
+    border-radius: 4pt;
+    margin-left: 6pt;
+  }
+  .meta-tag {
+    color: #64748b;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-title">Cloudbrain Technologies</div>
+<div class="doc-sub">Official Website Content & Brand Repository • 2026 Production Edition<br>Website: https://cloudbrain-technologies.onrender.com | Email: contact@cloudbrain.tech</div>
+
+<hr style="border: 0; border-top: 1pt solid #e2e8f0; margin-bottom: 20pt;">
+
+<h1>1. Brand Overview, Mission & Vision</h1>
+<p><strong>Cloudbrain Technologies (Cloudbrain Inc.)</strong> is a Pure Product Engineering Company researching global user needs, architecting scalable systems, and building proprietary flagship iOS, Android, AI, and Web applications.</p>
+
+<h3>Official Mission Statement</h3>
+<div class="quote-box">
+  "We build digital products for users through innovation to deliver real value."
+</div>
+<p>Everything we engineer starts with human needs. We avoid unnecessary complexity to craft resilient software that solves genuine problems and scales smoothly.</p>
+
+<h3>Official Vision Statement</h3>
+<div class="quote-box">
+  "To be a global leader in technology, building seamless digital products that make everyday life genuinely better."
+</div>
+<p>Our ambition is to build digital infrastructure and proprietary applications that touch millions of lives across global markets with 99.98%+ uptime and zero friction.</p>
+
+<h1>2. Our Philosophy in Four Colors</h1>
+<p>Our visual identity and four-quadrant logo represent the foundational tenets of how we think, build, and operate:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 20%;">Color & Hex</th>
+      <th style="width: 15%;">Dimension</th>
+      <th style="width: 25%;">Core Principle</th>
+      <th style="width: 40%;">Philosophy Narrative Copy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Red</strong> (#F42A37)</td>
+      <td>Passion</td>
+      <td><strong>Build with Passion</strong></td>
+      <td>We ask "why" before we ask "how." Every product starts because we're genuinely curious about solving it.</td>
+    </tr>
+    <tr>
+      <td><strong>Teal / Green</strong> (#04AB6B)</td>
+      <td>Purpose</td>
+      <td><strong>Grow with Purpose</strong></td>
+      <td>Nothing we build is meant to stay static. We design products that keep improving long after launch.</td>
+    </tr>
+    <tr>
+      <td><strong>Yellow</strong> (#FFBE01)</td>
+      <td>Creativity</td>
+      <td><strong>Think Beyond Obvious</strong></td>
+      <td>We look for the simplest path to a solution, even when the obvious path takes longer.</td>
+    </tr>
+    <tr>
+      <td><strong>Blue</strong> (#3085FF)</td>
+      <td>Trust</td>
+      <td><strong>Trust by Design</strong></td>
+      <td>No shortcuts on the fundamentals. What we ship is stable, secure, and built to hold up.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1>3. Core Values (6 Things We Won't Compromise On)</h1>
+<ul>
+  <li><strong>01. Integrity:</strong> <em>"We do what we say, and we say what we mean."</em> Radical transparency with our team, clients, and end-users. No inflated promises or opaque timelines.</li>
+  <li><strong>02. Accountability:</strong> <em>"If something goes wrong, we own it, no excuses."</em> True engineering ownership. When edge cases arise or production issues happen, our priority is resolution, learning, and systemic prevention.</li>
+  <li><strong>03. Excellence:</strong> <em>"We'd rather take an extra day than ship something half-baked."</em> Craftsmanship over shortcuts. We scrutinize micro-interactions, memory footprints, and battery drains.</li>
+  <li><strong>04. Agility:</strong> <em>"Plans change, and we're okay moving fast when they do."</em> Adaptable product thinking. Market conditions evolve, and our cross-functional squads pivot with momentum.</li>
+  <li><strong>05. Innovation:</strong> <em>"We're always looking for a smarter way to solve the problem in front of us."</em> Relentless curiosity. Exploring on-device AI, declarative UI engines, and low-latency architectures.</li>
+  <li><strong>06. User-Centricity:</strong> <em>"Someone has to actually use what we build, so we build it with them in mind."</em> Empathy-driven design. We build for the human on the other side of the glass.</li>
+</ul>
+
+<h1>4. Hero Section & Key Performance Metrics</h1>
+<p><strong>Primary Headline:</strong><br>
+<span style="font-size: 14pt; font-weight: 700; color: #0f172a;">Building Apps That Matter, with Strategy / Purpose / Precision / Creativity / Intelligence / Passion / Innovation / Craft.</span></p>
+
+<p><strong>Hero Subtitle:</strong><br>
+<em>"We build technology products that solve problems, scale businesses, and shape the digital future."</em></p>
+
+<h3>Core Production Metrics</h3>
+<ul>
+  <li><strong>7+ Years:</strong> R&D Innovation & Production Experience</li>
+  <li><strong>30+ IT Experts:</strong> In-House Passionate Problem Solvers</li>
+  <li><strong>20+ Apps:</strong> Published Worldwide across Google Play & Apple App Store</li>
+  <li><strong>4.6★:</strong> Average Store Rating across live user bases</li>
+  <li><strong>10M+ Users:</strong> Reached across global product markets</li>
+  <li><strong>99.98%:</strong> System SLA Uptime Standard</li>
+</ul>
+
+<h1>5. About Us & Company Story</h1>
+<div class="quote-box">
+  "Seven years ago, Cloudbrain Technologies started with one simple idea — build digital products for users through innovation, and make everyday life a little easier. That idea hasn't changed. It's just grown up."
+</div>
+<p>Today, we're a team of 30+ people who genuinely enjoy solving problems — whether that means building an app from scratch, designing an intuitive interface, or exploring what AI can actually do for real businesses and real users. We're not here to just "deliver projects." We're here to build things that work, that last, and that people are glad exist.</p>
+<p>Over the years, we've grown from a small, curious team into a full-fledged product company. But the way we approach a new problem hasn't really changed — dig into it properly, build something that makes sense, and keep refining until it's actually good, not just good enough to ship.</p>
+<p><strong>We're still growing, still learning, and still genuinely excited about what we get to build next.</strong></p>
+
+<h3>The 4 Pillars of Product Excellence</h3>
+<ul>
+  <li><strong>01. Empirical User Research:</strong> We map real human pain points using telemetry, behavioral analytics, and interaction research to design friction-free user journeys.</li>
+  <li><strong>02. Atomic UI Design Systems:</strong> Our design system team builds unified Figma tokens, component libraries, and responsive light/dark design guidelines.</li>
+  <li><strong>03. Native & Web Engineering:</strong> We engineer high-performance mobile (Swift 6 & Kotlin Compose) and modern web applications built for speed and reliability.</li>
+  <li><strong>04. Continuous Global Delivery:</strong> Automated CI/CD pipelines and cloud edge infrastructure allow us to rapidly deploy updates to millions of global users.</li>
+</ul>
+
+<h1>6. Services & Technical Capabilities</h1>
+
+<h2>6.1 Android App Development <span class="badge">Play Store Ready</span></h2>
+<p><strong>Summary:</strong> We build fast, scalable Android apps using Kotlin and modern architecture, designed to perform seamlessly across devices and deliver real user value.</p>
+<ul>
+  <li><strong>Tech Stack:</strong> Kotlin, Jetpack Compose, Coroutines & Flow, Room DB, Dagger Hilt, Gradle, Google Play Vitals, NDK C++.</li>
+  <li><strong>Deliverables:</strong> Modular Kotlin Clean Architecture, Jetpack Compose UI Engine, Play Store AAB Package, Fastlane Automated CI/CD, Deep Linking & Push Notifications.</li>
+  <li><strong>Standards:</strong> Unidirectional Data Flow (UDF), Google Play Vitals compliance (Cold boot &lt; 800ms, ANR &lt; 0.05%).</li>
+  <li><strong>Roadmap:</strong> 01. Architecture Blueprint &rarr; 02. Compose UI Design &rarr; 03. Offline DB & API Sync &rarr; 04. Play Store AAB & CI/CD.</li>
+</ul>
+
+<h2>6.2 iOS App Development <span class="badge">App Store Ready</span></h2>
+<p><strong>Summary:</strong> From concept to App Store, we craft intuitive iOS apps using Swift, focused on smooth performance, clean design, and a seamless user experience.</p>
+<ul>
+  <li><strong>Tech Stack:</strong> Swift 6, SwiftUI, Combine, SwiftData / CoreData, Metal 3, TestFlight, App Store Connect.</li>
+  <li><strong>Deliverables:</strong> SwiftUI Modular Architecture, CoreML On-Device AI Models, App Store Connect Provisioning, Biometric Keychain Security, StoreKit 2 & Apple Pay.</li>
+  <li><strong>Standards:</strong> Apple Human Interface Guidelines, ProMotion 120Hz scrolling, Hardware-backed Secure Enclave Face ID.</li>
+  <li><strong>Roadmap:</strong> 01. Swift Modular Domain Setup &rarr; 02. SwiftUI 6 Interface Build &rarr; 03. CoreML & CloudKit Integration &rarr; 04. TestFlight & App Store Deployment.</li>
+</ul>
+
+<h2>6.3 AI & Machine Learning Development <span class="badge">AI & ML Solutions</span></h2>
+<p><strong>Summary:</strong> We develop intelligent AI and machine learning solutions that automate processes, unlock insights, and give your products a competitive edge.</p>
+<ul>
+  <li><strong>Tech Stack:</strong> CoreML, TensorFlow Lite, PyTorch, OpenAI GPT-4o, Claude 3.5 Sonnet, LangChain, Pinecone / Qdrant Vector DBs.</li>
+  <li><strong>Deliverables:</strong> On-Device Low-Latency ML (Sub-100MB Quantized Models), Custom LLM Agents & RAG Pipelines, Predictive Recommendation Engines, Automated Process Intelligence.</li>
+  <li><strong>Standards:</strong> Zero Data Retention API Policy, Sub-300ms First-Token SSE Streaming, Safety Guardrails.</li>
+  <li><strong>Roadmap:</strong> 01. AI Feasibility & Privacy &rarr; 02. Vector DB & RAG Pipeline &rarr; 03. API Integration & Streaming &rarr; 04. Production Evaluation & SLA.</li>
+</ul>
+
+<h2>6.4 UI / UX Design <span class="badge">User-Centric Design</span></h2>
+<p><strong>Summary:</strong> We design user-centric interfaces that blend aesthetics with usability, creating experiences that are intuitive, engaging, and built to convert.</p>
+<ul>
+  <li><strong>Tech Stack:</strong> Figma, Design Tokens, User Research, Wireframing, Micro-Interactions, Usability Testing.</li>
+  <li><strong>Deliverables:</strong> Empirical User Research, Figma Component Libraries, Low & High-Fidelity Wireframes, Usability Friction Audits, Conversion Rate Optimization (CRO).</li>
+  <li><strong>Standards:</strong> Streamlined user pathways, WCAG 2.1 AA accessibility, Telemetry-driven UX iteration.</li>
+  <li><strong>Roadmap:</strong> 01. Discovery & UX Audit &rarr; 02. Wireframing & Flow Architecture &rarr; 03. Usability Testing &rarr; 04. Final UX Design Specifications.</li>
+</ul>
+
+<h2>6.5 Web Design & Development <span class="badge">High-Performance Web</span></h2>
+<p><strong>Summary:</strong> We build responsive, high-performance websites that combine strong design with clean code, helping your brand stand out and scale online.</p>
+<ul>
+  <li><strong>Tech Stack:</strong> React 19, Next.js 15, TypeScript, Node.js, Tailwind CSS, PostgreSQL, Redis, Edge Serverless.</li>
+  <li><strong>Deliverables:</strong> Responsive Layouts, Server-Side Rendered (SSR) & SSG Hybrid Architecture, Node.js REST/GraphQL APIs, Lighthouse 95+ Score.</li>
+  <li><strong>Standards:</strong> Core Web Vitals Optimization (Sub-100ms LCP, 0 CLS), Edge CDN Caching (Sub-50ms TTFB), Progressive Web App (PWA) readiness.</li>
+  <li><strong>Roadmap:</strong> 01. Schema & TypeScript Design &rarr; 02. Server Component Engineering &rarr; 03. Microservices & API Layer &rarr; 04. Edge Deployment & CDN Setup.</li>
+</ul>
+
+<h2>6.6 Digital Marketing & Growth <span class="badge">High ROI Growth</span></h2>
+<p><strong>Summary:</strong> We help your products get discovered through data-driven strategies with SEO, ASO, social media, and paid campaigns that drive real growth.</p>
+<ul>
+  <li><strong>Tech Stack:</strong> App Store Optimization (ASO), Technical SEO, Google Ads, Apple Search Ads (ASA), Meta Ads, Mixpanel, Segment.</li>
+  <li><strong>Deliverables:</strong> ASO Metadata & Localized Screenshots, Technical Schema.org SEO, Search Paid Acquisition Campaigns, Retention & ROAS Dashboards.</li>
+  <li><strong>Standards:</strong> Keyword clustering, Product Page Optimization (PPO) A/B testing, Mobile-first search indexing.</li>
+  <li><strong>Roadmap:</strong> 01. Keyword & Competitor Audit &rarr; 02. Metadata & Asset Overhaul &rarr; 03. A/B Conversion Experiments &rarr; 04. Organic Rank Tracking.</li>
+</ul>
+
+<h1>7. 5-Step Product Development Process</h1>
+<ul>
+  <li><strong>01. Discovery:</strong> We start by understanding your idea, users, and goals inside out. This helps us define the right scope and approach before writing a single line of code.</li>
+  <li><strong>02. Design (UI/UX):</strong> We turn ideas into wireframes and prototypes that are simple to use and easy to navigate. Every screen is designed around how real users will actually interact with it.</li>
+  <li><strong>03. Development:</strong> Our team builds your product using the right tech stack for your platform. Clean code and scalable architecture are non-negotiable at this stage.</li>
+  <li><strong>04. Testing & Refine:</strong> We break things on purpose before your users get the chance to. Bugs, slow load times, weird edge cases — better we find them than someone leaves a 1-star review.</li>
+  <li><strong>05. Launch & Grow:</strong> We handle deployment to the app store or web, and support you through the early growth phase. Launch isn't the finish line — it's where the real learning begins.</li>
+</ul>
+
+<h1>8. Why Cloudbrain vs. Traditional Agencies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 25%;">Dimension</th>
+      <th style="width: 38%;">Cloudbrain Technologies</th>
+      <th style="width: 37%;">Traditional Outsourcing Agencies</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Ownership & Mindset</strong></td>
+      <td><strong>Product Co-Engineers</strong> who care about product metrics, retention, and long-term business health.</td>
+      <td>Outsourced code factory focused purely on billable hours and ticket counts.</td>
+    </tr>
+    <tr>
+      <td><strong>Mobile Native Execution</strong></td>
+      <td><strong>Native Kotlin & Swift 6</strong> with 60–120 FPS performance and minimal battery footprint.</td>
+      <td>Sluggish web wrappers and unoptimized cross-platform generic templates.</td>
+    </tr>
+    <tr>
+      <td><strong>Store Deployment</strong></td>
+      <td><strong>Guaranteed App Store & Play Store approval</strong> with automated Fastlane CI/CD pipelines.</td>
+      <td>Hands off after delivery; leaves App Store rejections and guideline hurdles to the client.</td>
+    </tr>
+    <tr>
+      <td><strong>Architecture & Code</strong></td>
+      <td><strong>Modular Clean Architecture</strong>, 99.9% crash-free SLA, zero security tech debt.</td>
+      <td>Monolithic spaghetti code, undocumented hacks, and missing test coverage.</td>
+    </tr>
+    <tr>
+      <td><strong>Intelligence Integration</strong></td>
+      <td><strong>Built-in AI/ML</strong> (CoreML, TFLite, RAG) for personalized, predictive user experiences.</td>
+      <td>Basic static CRUD features without intelligent workflow automation.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1>9. Industries & Verticals</h1>
+<ul>
+  <li><strong>FinTech & Banking:</strong> Biometric auth, PCI-DSS compliance, real-time transaction telemetry, instant payments.</li>
+  <li><strong>HealthTech & Fitness:</strong> HIPAA-compliant data pipelines, Apple HealthKit & Google Fit integration, live telemetry.</li>
+  <li><strong>AI SaaS & Productivity:</strong> LLM autonomous agents, vector semantic search, Linear-style keyboard-driven apps.</li>
+  <li><strong>E-Commerce & Retail:</strong> 1-click frictionless checkout, native AR product previews, personalized ML recommendation engines.</li>
+  <li><strong>Logistics & Mobility:</strong> Real-time GPS tracking, offline-first mobile sync, route optimization algorithms.</li>
+  <li><strong>EdTech & Learning:</strong> Gamified learning loops, offline video caching, interactive quiz widgets.</li>
+</ul>
+
+<h1>10. Client Testimonials & Social Proof</h1>
+<div class="quote-box">
+  "Cloudbrain rebuilt our flagship iOS and Android apps from scratch. Our Play Store crash rate dropped to 0.02% and App Store ratings rose from 3.8 to 4.9 stars within 60 days."
+  <span class="quote-author">— Elena Rostova, VP of Engineering at FinScale Global (4.9★, 42,000+ reviews)</span>
+</div>
+
+<div class="quote-box">
+  "Unlike traditional development agencies, Cloudbrain operates like our internal product team. Their AI/ML recommendations increased our app user 30-day retention by 44%."
+  <span class="quote-author">— David Chen, Co-Founder & CTO, PulseHealth AI (1M+ Play Store Downloads)</span>
+</div>
+
+<div class="quote-box">
+  "The team handled our App Store submission effortlessly—navigating complex Apple privacy guidelines on the first pass while delivering a jaw-dropping Linear-style web dashboard."
+  <span class="quote-author">— Sarah Jenkins, Chief Product Officer, NovaSaaS (Featured on App Store Today)</span>
+</div>
+
+<h1>11. Life at Cloudbrain & Company Culture</h1>
+<p><em>"This is what it actually feels like to work at Cloudbrain."</em></p>
+<ul>
+  <li><strong>M3 Max / Top Hardware:</strong> Every developer receives top-tier M3 Max MacBooks, 4K monitors, and ergonomic workstation setups.</li>
+  <li><strong>$2,500 Learning Stipend:</strong> Dedicated annual budget for Apple WWDC, Google I/O, specialized courses, technical books, and certifications.</li>
+  <li><strong>100% Remote / Hybrid Freedom:</strong> Work from anywhere with asynchronous communication, flexible working hours, and quarterly team retreats.</li>
+  <li><strong>Health & Work-Life Balance:</strong> Comprehensive health coverage, zero weekend crunch culture, and personal wellness allowances.</li>
+</ul>
+
+<h1>12. Careers & Talent Portal</h1>
+<p><strong>Banner Title:</strong> Join Cloudbrain Engineering<br>
+<strong>Banner Subtitle:</strong> We are looking for world-class iOS architects, Android lead developers, AI/ML product engineers, and linear-style UI/UX designers.</p>
+
+<h3>Official "Currently No Open Positions" Corporate Notice</h3>
+<div class="quote-box">
+  "Our development, design, and AI squads are currently operating at full capacity with no active vacancies at this moment. As our roadmap continues to scale, new opportunities open regularly—stay connected with us for future roles."
+</div>
+<p><em>Note: "Think you’d be a great addition to Cloudbrain? We always welcome exceptional talent. Feel free to reach out, share your work or portfolio, and we’ll get in touch as soon as a fitting role opens up."</em></p>
+<p><strong>Call to Action:</strong> Drop Your Portfolio (careers@cloudbrain.tech)</p>
+
+<h3>Candidate Application Modal Specifications</h3>
+<ul>
+  <li><strong>Full Name *:</strong> Mandatory input.</li>
+  <li><strong>Mobile Number:</strong> Optional input for SMS/WhatsApp follow-ups.</li>
+  <li><strong>Email Address:</strong> Optional input.</li>
+  <li><strong>Upload Resume / CV:</strong> Optional file attachment supporting PDF, DOC, DOCX up to 10MB.</li>
+  <li><strong>LinkedIn / Portfolio / Work URL:</strong> Optional profile link.</li>
+  <li><strong>Why Cloudbrain? (Brief Note):</strong> Optional candidate motivation note.</li>
+</ul>
+
+<h1>13. Contact & Project Inquiries</h1>
+<p><strong>Modal Tag:</strong> Start a Project<br>
+<strong>Modal Title:</strong> Let's Build Your Product<br>
+<strong>Modal Subtitle:</strong> <em>"Direct access to product engineers — no sales fluff."</em></p>
+<ul>
+  <li><strong>Fields:</strong> Full Name, Work Email, Company / Organization Name, Target Service, Budget Range (&lt;$25k, $25k-$50k, $50k-$100k, $100k+), Project Details.</li>
+  <li><strong>Confirmation Notice:</strong> <em>"Project Proposal Received! Thank you. Our Lead Product Architect will analyze your scope and get back to you within 12 business hours."</em></li>
+</ul>
+
+<h1>14. Footer & Legal Information</h1>
+<ul>
+  <li><strong>Brand Description:</strong> Cloudbrain is a Product Engineering Company building intelligent digital products and high-performance native iOS and Android apps published globally.</li>
+  <li><strong>Official Contact Email:</strong> contact@cloudbrain.tech / careers@cloudbrain.tech</li>
+  <li><strong>Social Links:</strong> LinkedIn, Twitter / X</li>
+  <li><strong>Copyright Statement:</strong> © 2026 Cloudbrain Inc. All rights reserved. Premium Product Engineering.</li>
+</ul>
+
+<hr style="border: 0; border-top: 1pt solid #e2e8f0; margin-top: 30pt;">
+<p style="text-align: center; color: #94a3b8; font-size: 9pt;">Document verified and compiled from live Cloudbrain production source code.</p>
+
+</body>
+</html>

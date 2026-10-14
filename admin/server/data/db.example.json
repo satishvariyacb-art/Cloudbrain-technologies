@@ -1,0 +1,25 @@
+{
+  "admin": {
+    "email": "admin@example.com",
+    "password": "replace-with-a-long-password",
+    "name": "CloudBrain Admin"
+  },
+  "teams": [
+    "Product Design"
+  ],
+  "jobs": [
+    {
+      "id": "sample-designer",
+      "role": "Product Designer",
+      "team": "Product Design",
+      "type": "Full-Time",
+      "location": "Remote",
+      "experience": "3+ Years",
+      "desc": "Sample opening for local development. Replace this record.",
+      "status": "Active",
+      "postedDate": "2026-01-01"
+    }
+  ],
+  "applications": [],
+  "culture": []
+}

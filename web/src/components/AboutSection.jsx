@@ -1,0 +1,369 @@
+import React from 'react';
+import SectionBadge from './SectionBadge';
+
+export default function AboutSection() {
+  return (
+    <section id="about" className="about-v2-section">
+      {/* Full Width Container */}
+      <div className="about-v2-wrapper">
+
+        {/* Tier 1 (Topmost & Widest outer card tab) */}
+        <div className="about-v2-sheet sheet-tier1" aria-hidden="true" />
+
+        {/* Tier 2 (Middle stacked card tab) */}
+        <div className="about-v2-sheet sheet-tier2" aria-hidden="true" />
+
+        {/* Tier 3 (Main Primary White Card - Full Width with Top & Bottom Same Radius) */}
+        <div className="about-v2-sheet-main">
+
+          <div className="about-v2-inner-container">
+            {/* Reusable Section Badge matching reference */}
+            <SectionBadge number="02" label="ABOUT US" />
+
+            {/* Big Clean Sans-Serif Headline */}
+            <h2 className="about-v2-headline">
+              Our Journey So Far
+            </h2>
+
+            {/* Subtitle / Intro text */}
+            <p className="about-v2-subtext">
+              Seven years ago, Cloudbrain Technologies started with one simple idea - build digital products for users through innovation, and make everyday life a little easier.
+            </p>
+
+            {/* 2-Column Story / Narrative Block */}
+            <div className="about-v2-story-grid">
+
+              {/* Left Big Typography Callout */}
+              <div className="about-v2-callout">
+                <div className="callout-line1">
+                  <span className="callout-blue">That idea</span>
+                  <span className="callout-idea-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="11" r="5" stroke="#2B7FFF" strokeWidth="2" />
+                      <path d="M12 2V4" stroke="#2B7FFF" strokeWidth="2" strokeLinecap="round" />
+                      <path d="M4.93 4.93L6.34 6.34" stroke="#2B7FFF" strokeWidth="2" strokeLinecap="round" />
+                      <path d="M19.07 4.93L17.66 6.34" stroke="#2B7FFF" strokeWidth="2" strokeLinecap="round" />
+                      <path d="M2 11H4" stroke="#2B7FFF" strokeWidth="2" strokeLinecap="round" />
+                      <path d="M20 11H22" stroke="#2B7FFF" strokeWidth="2" strokeLinecap="round" />
+                      <path d="M10 18H14" stroke="#2B7FFF" strokeWidth="2" strokeLinecap="round" />
+                      <circle cx="12" cy="11" r="1.5" fill="#2B7FFF" />
+                    </svg>
+                  </span>
+                </div>
+
+                <div className="callout-line2">
+                  hasn't changed.
+                </div>
+
+                <div className="callout-line3">
+                  <span className="callout-blue">It's just grown up.</span>
+                  {/* Diagonal Up-Right arrow matching reference */}
+                  <span className="callout-arrow-icon" aria-hidden="true">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M2 17L8.5 10.5L13.5 15.5L22 7" stroke="#2B7FFF" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M16 7H22V13" stroke="#2B7FFF" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              {/* Right Paragraphs & Highlight Bullet */}
+              <div className="about-v2-body">
+                <p className="about-v2-paragraph">
+                  Today, we're a team of 30+ people who genuinely enjoy solving problems - whether that means building an app from scratch, designing an intuitive interface, or exploring what AI can actually do for real businesses and real users. We're not here to just "deliver projects." We're here to build things that work, that last, and that people are glad exist.
+                </p>
+
+                <div className="about-v2-highlight">
+                  <span className="highlight-dot">•</span>
+                  <span className="highlight-text">
+                    We're still growing, still learning, and still genuinely excited about what we get to build next.
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <style>{`
+        .about-v2-section {
+          background: transparent;
+          padding: 0;
+          margin-top: -5rem; /* Pulled up over Hero's continuous background so they melt as one canvas */
+          position: relative;
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          box-sizing: border-box;
+          overflow: visible;
+          z-index: 5;
+        }
+
+        .about-v2-wrapper {
+          width: 100%;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          box-sizing: border-box;
+        }
+
+        /* Tier 1 - Topmost stacked card lip */
+        .sheet-tier1 {
+          width: 82%;
+          height: 36px;
+          background: #e2e8f0;
+          border-radius: 40px 40px 0 0;
+          margin-bottom: -22px;
+          box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.04);
+          z-index: 1;
+        }
+
+        /* Tier 2 - Middle stacked card lip */
+        .sheet-tier2 {
+          width: 91%;
+          height: 38px;
+          background: #edf2f7;
+          border-radius: 48px 48px 0 0;
+          margin-bottom: -22px;
+          box-shadow: 0 -6px 20px rgba(15, 23, 42, 0.05);
+          z-index: 2;
+        }
+
+        /* Main Big White Card (Layer 3) - Full width with 80px radius */
+        .about-v2-sheet-main {
+          background: #ffffff;
+          border-radius: 80px; /* Requested 80px radius */
+          box-shadow: none; /* Shadow removed */
+          padding: 5.5rem 2rem 6.5rem 2rem;
+          width: 100%;
+          box-sizing: border-box;
+          position: relative;
+          z-index: 10;
+          margin-bottom: 0;
+        }
+
+        .about-v2-inner-container {
+          max-width: 1400px;
+          margin: 0 auto;
+          width: 100%;
+          box-sizing: border-box;
+        }
+
+        /* 02 ABOUT US Badge with playful tilt */
+        .about-v2-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          margin-bottom: 2.25rem;
+          transform: rotate(-3.5deg);
+          transform-origin: left center;
+        }
+
+        .about-v2-badge-num {
+          font-family: var(--font-main, 'cbsans', sans-serif);
+          font-size: 0.95rem;
+          font-weight: 800;
+          color: #64748b;
+          letter-spacing: -0.02em;
+        }
+
+        .about-v2-badge-text {
+          font-family: var(--font-main, 'cbsans', sans-serif);
+          font-size: 0.78rem;
+          font-weight: 800;
+          letter-spacing: 0.04em;
+          background: #8FA2B6;
+          color: #ffffff;
+          padding: 0.3rem 0.8rem;
+          border-radius: 6px;
+          text-transform: uppercase;
+        }
+
+        /* Headline */
+        .about-v2-headline {
+          font-family: var(--font-main, 'cbsans', sans-serif);
+          font-size: clamp(2.8rem, 4.6vw, 4.2rem);
+          font-weight: 800;
+          line-height: 1.1;
+          letter-spacing: -0.035em;
+          color: #0b132b;
+          margin: 0 0 1.75rem 0;
+        }
+
+        /* Subtext */
+        .about-v2-subtext {
+          font-family: var(--font-body, 'cbsans', sans-serif);
+          font-size: 1.1rem;
+          line-height: 1.65;
+          color: #475569;
+          max-width: 620px;
+          margin: 0 0 4.5rem 0;
+        }
+
+        /* 2-Column Grid */
+        .about-v2-story-grid {
+          display: grid;
+          grid-template-columns: 1.05fr 1.35fr;
+          gap: 4.5rem;
+          align-items: flex-start;
+        }
+
+        /* Left Callout Typography */
+        .about-v2-callout {
+          font-family: var(--font-main, 'cbsans', sans-serif);
+          font-size: clamp(2.3rem, 3.4vw, 3.2rem);
+          font-weight: 800;
+          line-height: 1.2;
+          letter-spacing: -0.03em;
+          color: #0b132b;
+        }
+
+        .callout-line1 {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 0.25rem;
+        }
+
+        .callout-blue {
+          color: #2B7FFF;
+        }
+
+        .callout-idea-icon {
+          display: inline-flex;
+          align-items: flex-end;
+          line-height: 0;
+          margin-left: 0.12em;
+          margin-bottom: 0.06em;
+        }
+
+        .callout-idea-icon svg {
+          width: 0.78em;
+          height: 0.78em;
+          display: block;
+          overflow: visible;
+        }
+
+        .callout-line2 {
+          color: #0b132b;
+        }
+
+        .callout-line3 {
+          display: flex;
+          align-items: flex-end;
+          flex-wrap: wrap;
+          gap: 0.45rem;
+        }
+
+        .callout-arrow-icon {
+          display: inline-flex;
+          align-items: flex-end;
+          line-height: 0;
+          margin-bottom: 0.12em;
+        }
+
+        .callout-arrow-icon svg {
+          width: 0.7em;
+          height: 0.7em;
+          display: block;
+        }
+
+        /* Right Body */
+        .about-v2-body {
+          display: flex;
+          flex-direction: column;
+          gap: 1.75rem;
+          padding-top: 0.35rem;
+        }
+
+        .about-v2-paragraph {
+          font-family: var(--font-body, 'cbsans', sans-serif);
+          font-size: 1.05rem;
+          line-height: 1.75;
+          color: #475569;
+          margin: 0;
+        }
+
+        .about-v2-highlight {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: #00AF57;
+          font-family: var(--font-main, 'cbsans', sans-serif);
+          font-size: 1rem;
+          font-weight: 700;
+          line-height: 1.55;
+        }
+
+        .highlight-dot {
+          flex-shrink: 0;
+          font-size: 1.15em;
+          line-height: 1;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+          .about-v2-section {
+            margin-top: -3.5rem;
+          }
+
+          .about-v2-sheet-main {
+            padding: 4.5rem 1.5rem 5rem 1.5rem;
+            border-radius: 44px;
+          }
+
+          .about-v2-story-grid {
+            grid-template-columns: 1fr;
+            gap: 2.75rem;
+          }
+
+          .about-v2-subtext {
+            margin-bottom: 3rem;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .about-v2-section {
+            margin-top: 0;
+            padding: 1.25rem 0 0 0;
+          }
+
+          .sheet-tier1 {
+            width: 86%;
+            height: 24px;
+            margin-bottom: -14px;
+            border-radius: 28px 28px 0 0;
+          }
+
+          .sheet-tier2 {
+            width: 93%;
+            height: 26px;
+            margin-bottom: -14px;
+            border-radius: 34px 34px 0 0;
+          }
+
+          .about-v2-sheet-main {
+            padding: 3rem 1.25rem 3.5rem 1.25rem;
+            border-radius: 36px;
+          }
+
+          .about-v2-headline {
+            font-size: clamp(2rem, 7.5vw, 2.3rem);
+          }
+
+          .about-v2-callout {
+            font-size: clamp(1.65rem, 6.2vw, 2rem);
+          }
+
+          .about-v2-subtext,
+          .about-v2-paragraph {
+            font-size: 0.98rem;
+          }
+        }
+      `}</style>
+    </section>
+  );
+}
