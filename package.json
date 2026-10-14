@@ -2,11 +2,15 @@
   "name": "cloudbrain",
   "private": true,
   "description": "CloudBrain marketing site, admin UI, and API",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "scripts": {
     "install:all": "npm install --prefix web && npm install --prefix admin",
     "dev:web": "npm run dev --prefix web",
     "dev:admin": "npm run ui --prefix admin",
     "dev:api": "npm run server --prefix admin",
+    "build": "npm install --prefix web --include=dev && npm run build --prefix web",
     "build:web": "npm run build --prefix web",
     "build:admin": "npm run build --prefix admin",
     "lint:web": "npm run lint --prefix web"

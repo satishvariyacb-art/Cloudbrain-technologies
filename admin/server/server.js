@@ -618,7 +618,7 @@ if (fs.existsSync(distPath)) {
 // ---------------------------------------------------------------------
 // SERVER START
 // ---------------------------------------------------------------------
-app.listen(PORT, async () => {
+app.listen(PORT, '0.0.0.0', async () => {
   await initDatabase();
   console.log(`CloudBrain API Server running securely on http://localhost:${PORT}`);
 });
