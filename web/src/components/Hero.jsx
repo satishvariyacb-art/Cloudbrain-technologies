@@ -53,6 +53,11 @@ function TypewriterText() {
 
   return (
     <span className="hero-word-slot" aria-live="polite" aria-atomic="true">
+      <span className="hero-word-sizer" aria-hidden="true">
+        {TYPEWRITER_WORDS.map((word) => (
+          <span key={word.text}>{word.text}</span>
+        ))}
+      </span>
       <span
         className={`hero-word ${phase === 'slide' ? 'is-out' : 'is-rest'}`}
         style={{ color: current.color }}
@@ -86,7 +91,12 @@ export default function Hero() {
         <h1 className="hero-title">
           <span className="hero-title-line1">Building Apps That</span>
           <span className="hero-title-line2">
-            Matter, with <TypewriterText />
+            <span className="hero-line2-ghost" aria-hidden="true">
+              Matter, with <span>Strategy</span>
+            </span>
+            <span className="hero-line2-live">
+              Matter, with <TypewriterText />
+            </span>
           </span>
         </h1>
 
@@ -260,12 +270,35 @@ export default function Hero() {
         }
 
         .hero-title-line2 {
-          display: inline-flex;
+          position: relative;
+          display: flex;
           align-items: baseline;
           justify-content: center;
           white-space: nowrap;
-          gap: 0.28em;
           overflow: visible;
+        }
+
+        .hero-line2-ghost {
+          visibility: hidden;
+          pointer-events: none;
+          display: inline-flex;
+          align-items: baseline;
+          gap: 0.28em;
+          white-space: nowrap;
+        }
+
+        .hero-line2-ghost span {
+          font-weight: 700;
+        }
+
+        .hero-line2-live {
+          position: absolute;
+          left: 0;
+          top: 0;
+          display: inline-flex;
+          align-items: baseline;
+          gap: 0.28em;
+          white-space: nowrap;
         }
 
         .hero-word-slot {
@@ -273,27 +306,35 @@ export default function Hero() {
           display: inline-block;
           overflow: visible;
           vertical-align: baseline;
+          text-align: left;
+        }
+
+        .hero-word-sizer {
+          visibility: hidden;
+          pointer-events: none;
+          display: flex;
+          flex-direction: column;
+          height: 1.12em;
+          overflow: hidden;
+          font-weight: 700;
+          white-space: nowrap;
+          line-height: 1.08;
+        }
+
+        .hero-word-sizer span {
+          display: block;
         }
 
         .hero-word {
+          position: absolute;
+          left: 0;
+          top: 0;
           display: block;
           font-family: inherit;
           font-weight: 700;
           white-space: nowrap;
           line-height: 1.08;
           will-change: transform, opacity;
-        }
-
-        .hero-word.is-rest,
-        .hero-word.is-out {
-          position: relative;
-        }
-
-        .hero-word.is-wait,
-        .hero-word.is-in {
-          position: absolute;
-          left: 0;
-          top: 0;
           pointer-events: none;
         }
 

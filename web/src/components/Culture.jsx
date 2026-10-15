@@ -126,7 +126,7 @@ export default function Culture({ onSeeGallery }) {
         }
 
         .lc-head .cb-section-badge {
-          margin-bottom: 1.15rem;
+          margin-bottom: 2rem;
         }
 
         .lc-head h2 {
