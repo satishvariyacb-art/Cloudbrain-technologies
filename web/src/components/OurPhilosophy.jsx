@@ -1,32 +1,8 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 import SectionBadge from './SectionBadge';
 
-const FRAME_D =
-  'M-91.3506 0.736328H996.351C1034.96 0.736328 1066.26 32.0374 1066.26 70.6494V1093C1066.26 1167.7 1005.7 1228.26 931 1228.26H-91.3506C-129.963 1228.26 -161.264 1196.96 -161.264 1158.35V70.6494C-161.264 32.0374 -129.963 0.736328 -91.3506 0.736328Z';
-
 const THRESHOLDS = [0.1, 0.32, 0.54, 0.76];
 const MOBILE_MQ = '(max-width: 720px)';
-
-function FrameShape() {
-  return (
-    <svg
-      width="1067"
-      height="1181"
-      viewBox="0 0 1067 1181"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        opacity="0.45"
-        d={FRAME_D}
-        stroke="#000000"
-        strokeOpacity="0.3"
-        strokeWidth="1.5"
-      />
-    </svg>
-  );
-}
 
 function ValueIcon({ id, uid }) {
   const common = {
@@ -112,36 +88,36 @@ const ITEMS = [
     color: '#F42A37',
     title: 'Build with Passion',
     description: 'We ask "why" before we ask "how." Every product starts because we\'re genuinely curious about solving it.',
-    top: '20.833%',
-    d: 'M335 360 H452 Q472 360 472 340 V170 Q472 150 492 150 H632',
-    arrow: 'M623 141 L632 150 L623 159',
+    top: '16%',
+    d: 'M400 360 H518 Q546 360 546 332 V148 Q546 120 574 120 H700',
+    arrow: 'M695 115 L700 120 L695 125',
   },
   {
     id: 'green',
     color: '#04AB6B',
     title: 'Grow with Purpose',
     description: 'Nothing we build is meant to stay static. We design products that keep improving long after launch.',
-    top: '40.278%',
-    d: 'M335 360 H452 Q472 360 472 340 V310 Q472 290 492 290 H632',
-    arrow: 'M623 281 L632 290 L623 299',
+    top: '37%',
+    d: 'M400 360 H518 Q546 360 546 332 V294 Q546 266 574 266 H700',
+    arrow: 'M695 261 L700 266 L695 271',
   },
   {
     id: 'yellow',
     color: '#FFBE01',
     title: 'Think Beyond Obvious',
     description: 'We look for the simplest path to a solution, even when the obvious path takes longer.',
-    top: '59.722%',
-    d: 'M335 360 H452 Q472 360 472 380 V410 Q472 430 492 430 H632',
-    arrow: 'M623 421 L632 430 L623 439',
+    top: '61%',
+    d: 'M400 360 H518 Q546 360 546 388 V411 Q546 439 574 439 H700',
+    arrow: 'M695 434 L700 439 L695 444',
   },
   {
     id: 'blue',
     color: '#3085FF',
     title: 'Trust by Design',
     description: 'No shortcuts on the fundamentals. What we ship is stable, secure, and built to hold up.',
-    top: '79.167%',
-    d: 'M335 360 H452 Q472 360 472 380 V550 Q472 570 492 570 H632',
-    arrow: 'M623 561 L632 570 L623 579',
+    top: '83%',
+    d: 'M400 360 H518 Q546 360 546 388 V570 Q546 598 574 598 H700',
+    arrow: 'M695 593 L700 598 L695 603',
   },
 ];
 
@@ -250,15 +226,9 @@ export default function OurPhilosophy() {
           </header>
 
           <div className={`ph-board${allColorful ? ' is-complete' : ''}`}>
-            <div className="ph-frame ph-frame-outer">
-              <FrameShape />
-            </div>
-            <div className="ph-frame ph-frame-mid">
-              <FrameShape />
-            </div>
-            <div className="ph-frame ph-frame-inner">
-              <FrameShape />
-            </div>
+            <div className="ph-frame ph-frame-outer" aria-hidden="true" />
+            <div className="ph-frame ph-frame-mid" aria-hidden="true" />
+            <div className="ph-frame ph-frame-inner" aria-hidden="true" />
 
             <div className="ph-logo-tile">
               <svg
@@ -364,8 +334,7 @@ export default function OurPhilosophy() {
           position: relative;
           width: 100%;
           background: #F8FAFC;
-          overflow-x: clip;
-          overflow-y: visible;
+          overflow: visible;
           z-index: 2;
         }
 
@@ -388,22 +357,15 @@ export default function OurPhilosophy() {
         }
 
         .ph-page-curve {
-          height: 80px;
-          background: #F8FAFC;
-          position: relative;
-          z-index: 3;
-          margin-bottom: -80px;
-          pointer-events: none;
+          height: 0;
+          margin: 0;
+          background: transparent;
           overflow: hidden;
+          pointer-events: none;
         }
 
         .ph-page-curve::before {
-          content: '';
-          display: block;
-          height: 80px;
-          background: #ffffff;
-          border-bottom-left-radius: 80px;
-          border-bottom-right-radius: 80px;
+          content: none;
         }
 
         .ph-stage {
@@ -418,8 +380,10 @@ export default function OurPhilosophy() {
           background: #ffffff;
           border-top-left-radius: 80px;
           border-top-right-radius: 80px;
-          overflow: visible;
-          z-index: 1;
+          border-bottom-left-radius: 80px;
+          border-bottom-right-radius: 80px;
+          overflow: clip;
+          z-index: 4;
         }
 
         .ph-head {
@@ -470,44 +434,46 @@ export default function OurPhilosophy() {
 
         .ph-frame {
           position: absolute;
+          box-sizing: border-box;
+          aspect-ratio: 1;
+          border: 1.5px solid rgba(0, 0, 0, 0.13);
+          border-radius: 4.8cqw;
           pointer-events: none;
           z-index: 0;
         }
 
-        .ph-frame svg {
-          display: block;
-          width: 100%;
-          height: auto;
-          overflow: visible;
-        }
-
         .ph-frame-outer {
-          left: -8%;
-          top: -14%;
-          width: 60%;
+          left: -18%;
+          top: -12%;
+          width: 80%;
         }
 
         .ph-frame-mid {
-          left: -1%;
-          top: 6%;
-          width: 43.4%;
+          left: -7%;
+          top: 5%;
+          width: 58%;
         }
 
         .ph-frame-inner {
-          left: 6.4%;
-          top: 24.5%;
-          width: 26%;
+          left: 4%;
+          top: 23%;
+          width: 36%;
         }
 
         .ph-logo-tile {
           position: absolute;
-          left: 6.98%;
-          top: 33.97%;
-          width: 20.9%;
-          aspect-ratio: 270 / 240;
-          background: none;
-          box-shadow: none;
-          border-radius: 0;
+          left: 10.35%;
+          top: 33.9%;
+          width: 23%;
+          aspect-ratio: 1;
+          box-sizing: border-box;
+          padding: 0;
+          background: #ffffff;
+          box-shadow:
+            0 18px 44px rgba(15, 23, 42, 0.07),
+            0 0 64px rgba(4, 171, 107, 0.16),
+            12px 0 48px rgba(48, 133, 255, 0.1);
+          border-radius: 22%;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -516,7 +482,7 @@ export default function OurPhilosophy() {
         }
 
         .ph-logo-svg {
-          width: 100%;
+          width: 78%;
           height: auto;
           display: block;
           overflow: visible;
@@ -586,7 +552,7 @@ export default function OurPhilosophy() {
         .ph-arrow {
           fill: none;
           stroke: var(--off-line);
-          stroke-width: 2.4;
+          stroke-width: 1.7;
           stroke-linecap: round;
           stroke-linejoin: round;
           transition: stroke 0.2s ease;
@@ -604,8 +570,8 @@ export default function OurPhilosophy() {
 
         .ph-item {
           position: absolute;
-          left: 54.333%;
-          width: 39%;
+          left: 60.8%;
+          width: 35%;
           display: flex;
           align-items: flex-start;
           gap: 1.7cqw;
@@ -633,6 +599,11 @@ export default function OurPhilosophy() {
         .ph-icon svg {
           width: 58%;
           height: 58%;
+        }
+
+        .ph-copy {
+          min-width: 0;
+          flex: 1;
         }
 
         .ph-copy h3 {
@@ -733,6 +704,9 @@ export default function OurPhilosophy() {
             justify-content: flex-start;
             border-top-left-radius: 80px;
             border-top-right-radius: 80px;
+            border-bottom-left-radius: 80px;
+            border-bottom-right-radius: 80px;
+            overflow: visible;
           }
 
           .ph-head,
@@ -756,7 +730,7 @@ export default function OurPhilosophy() {
             margin: 1.25rem auto 0;
             display: flex;
             flex-direction: column;
-            gap: 1.35rem;
+            gap: 1.85rem;
             padding: 0 0.25rem 0.5rem;
           }
 
@@ -768,16 +742,20 @@ export default function OurPhilosophy() {
           }
 
           .ph-logo-tile {
-            width: 194px;
+            width: 210px;
             height: auto;
+            aspect-ratio: 1;
             margin: 0.65rem auto 0.35rem;
-            background: none;
-            box-shadow: none;
-            border-radius: 0;
+            padding: 0;
+            background: #ffffff;
+            box-shadow:
+              0 16px 48px rgba(15, 23, 42, 0.08),
+              0 0 56px rgba(4, 171, 107, 0.12);
+            border-radius: 36px;
           }
 
           .ph-logo-svg {
-            width: 100%;
+            width: 78%;
             height: auto;
           }
 

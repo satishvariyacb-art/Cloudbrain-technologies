@@ -208,7 +208,7 @@ export default function Services() {
         .services-showcase-section {
           width: 100%;
           background: #F8FAFC;
-          padding: calc(5.5rem + 80px) 0 5.5rem;
+          padding: 5.5rem 0;
           position: relative;
           overflow: visible;
           z-index: 1;
