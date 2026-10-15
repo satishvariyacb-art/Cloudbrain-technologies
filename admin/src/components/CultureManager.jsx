@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { 
-  Image as ImageIcon, Video as VideoIcon, Plus, Search, 
-  Trash2, Edit3, Play, MapPin, Clock, X, ExternalLink, Sparkles,
-  Upload, UploadCloud, CheckCircle2, Film, FileImage
+  Image as ImageIcon, Plus, Search, 
+  Trash2, Edit3, Play, MapPin, Clock, X,
+  UploadCloud, Film
 } from 'lucide-react';
 
 // Universal Video Embed Resolver (YouTube, Vimeo, or direct stream)

@@ -1,17 +1,72 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SectionBadge from './SectionBadge';
+import { apiClient } from '../services/apiClient';
 
-const MOSAIC = [
-  { src: '/culture/life-1.png', alt: 'Engineers at work in the Cloudbrain office', className: 'lc-cell lc-tl' },
-  { src: '/culture/life-2.png', alt: 'Team collaborating around a laptop', className: 'lc-cell' },
-  { src: '/culture/life-3.png', alt: 'Product walkthrough on the office display', className: 'lc-cell lc-tr' },
-  { src: '/culture/life-4.png', alt: 'Team hanging out in the lounge', className: 'lc-cell' },
-  { src: '/culture/life-5.png', alt: 'Standup at the glass wall', className: 'lc-cell' },
-  { src: '/culture/life-6.png', alt: 'Team dinner under a Good People Better Products neon', className: 'lc-cell' },
-  { src: '/culture/life-7.png', alt: 'Cloudbrain team together at sunset', className: 'lc-cell lc-wide lc-bl' },
+const SLOT_CLASS = [
+  'lc-cell lc-tl',
+  'lc-cell',
+  'lc-cell lc-tr',
+  'lc-cell',
+  'lc-cell',
+  'lc-cell',
+  'lc-cell lc-wide lc-bl',
 ];
 
+function youtubeThumb(url) {
+  if (!url) return '';
+  const match = String(url).match(/(?:youtube\.com\/(?:watch\?.*v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/i);
+  return match?.[1] ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : '';
+}
+
+function mediaSrc(item) {
+  if (!item) return '';
+  return item.image || item.poster || item.src || youtubeThumb(item.videoUrl) || '';
+}
+
+function mosaicPhotos(items) {
+  const visible = items.filter((item) => item.showInShowcase !== false);
+  const photos = visible.filter((item) => item.type === 'photo' || (!item.type && mediaSrc(item)));
+  const extras = visible.filter((item) => item.type === 'video');
+  const ordered = [...photos, ...extras];
+  const unique = [];
+  const seen = new Set();
+  for (const item of ordered) {
+    const src = mediaSrc(item);
+    if (!src || seen.has(src)) continue;
+    seen.add(src);
+    unique.push({
+      id: item.id || src,
+      src,
+      alt: item.title || item.caption || 'Life at Cloudbrain',
+    });
+    if (unique.length === 7) break;
+  }
+  return unique;
+}
+
 export default function Culture({ onSeeGallery }) {
+  const [photos, setPhotos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    async function load() {
+      try {
+        const data = await apiClient.fetchCultureItems();
+        if (!active) return;
+        setPhotos(mosaicPhotos(Array.isArray(data) ? data : []));
+      } catch {
+        if (active) setPhotos([]);
+      } finally {
+        if (active) setLoading(false);
+      }
+    }
+    load();
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const openGallery = (event) => {
     event.preventDefault();
     if (onSeeGallery) onSeeGallery();
@@ -26,15 +81,17 @@ export default function Culture({ onSeeGallery }) {
           <p>This is what it actually feels like to work at Cloudbrain.</p>
         </header>
 
-        <div className="lc-mosaic">
-          {MOSAIC.map((item) => (
-            <figure key={item.src} className={item.className}>
-              <img src={item.src} alt={item.alt} />
-              {item.src.includes('life-1') ? (
-                <span className="lc-work-tag">Work Cultures</span>
-              ) : null}
-            </figure>
-          ))}
+        <div className={`lc-mosaic${photos.length < 7 ? ' is-partial' : ''}`}>
+          {loading
+            ? Array.from({ length: 7 }, (_, index) => (
+                <figure key={`sk-${index}`} className={`${SLOT_CLASS[index]} is-skeleton`} />
+              ))
+            : photos.map((item, index) => (
+                <figure key={item.id} className={SLOT_CLASS[index] || 'lc-cell'}>
+                  <img src={item.src} alt={item.alt} />
+                  {index === 0 ? <span className="lc-work-tag">Work Cultures</span> : null}
+                </figure>
+              ))}
 
           <div className="lc-cta lc-br">
             <p>30+ Peoples who genuinely enjoy solving problems - together</p>
@@ -92,18 +149,29 @@ export default function Culture({ onSeeGallery }) {
 
         .lc-mosaic {
           display: grid;
+          width: 80%;
+          max-width: 992px;
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          grid-template-rows: minmax(168px, 1fr) minmax(168px, 1fr) minmax(188px, 1.12fr);
-          gap: 10px;
-          min-height: 560px;
+          grid-template-rows: minmax(134px, 1fr) minmax(134px, 1fr) minmax(150px, 1.12fr);
+          gap: 8px;
+          min-height: 448px;
+        }
+
+        .lc-mosaic.is-partial .lc-wide {
+          grid-column: auto;
         }
 
         .lc-cell {
           position: relative;
           margin: 0;
           overflow: hidden;
-          border-radius: 18px;
+          border-radius: 16px;
           background: #e8eef4;
+        }
+
+        .lc-cell.is-skeleton {
+          background: linear-gradient(90deg, #e8eef4 0%, #f8fafc 50%, #e8eef4 100%);
+          background-size: 200% 100%;
         }
 
         .lc-cell img {
@@ -115,25 +183,25 @@ export default function Culture({ onSeeGallery }) {
 
         .lc-work-tag {
           position: absolute;
-          left: 14px;
-          bottom: 14px;
+          left: 12px;
+          bottom: 12px;
           background: #3085FF;
           color: #ffffff;
           font-family: var(--font-main);
-          font-size: 0.68rem;
+          font-size: 0.62rem;
           font-weight: 800;
           letter-spacing: 0.06em;
           text-transform: uppercase;
           line-height: 1;
-          padding: 0.42rem 0.62rem;
+          padding: 0.38rem 0.55rem;
           border-radius: 5px;
           pointer-events: none;
         }
 
-        .lc-tl { border-top-left-radius: 32px; }
-        .lc-tr { border-top-right-radius: 32px; }
-        .lc-bl { border-bottom-left-radius: 32px; }
-        .lc-br { border-bottom-right-radius: 32px; }
+        .lc-tl { border-top-left-radius: 26px; }
+        .lc-tr { border-top-right-radius: 26px; }
+        .lc-bl { border-bottom-left-radius: 26px; }
+        .lc-br { border-bottom-right-radius: 26px; }
 
         .lc-wide {
           grid-column: 1 / 3;
@@ -142,18 +210,18 @@ export default function Culture({ onSeeGallery }) {
         .lc-cta {
           background: #3085FF;
           color: #ffffff;
-          border-radius: 18px;
-          padding: 1.65rem 1.55rem 1.4rem;
+          border-radius: 16px;
+          padding: 1.35rem 1.25rem 1.15rem;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          gap: 1.5rem;
+          gap: 1.2rem;
           min-height: 100%;
         }
 
         .lc-cta p {
           font-family: var(--font-main);
-          font-size: clamp(1.2rem, 1.7vw, 1.7rem);
+          font-size: clamp(1.05rem, 1.4vw, 1.45rem);
           font-weight: 700;
           line-height: 1.28;
           letter-spacing: -0.02em;
@@ -170,9 +238,9 @@ export default function Culture({ onSeeGallery }) {
           color: #0B1020;
           border: none;
           border-radius: 999px;
-          padding: 0.58rem 1rem 0.58rem 1.05rem;
+          padding: 0.52rem 0.9rem 0.52rem 0.95rem;
           font-family: var(--font-main);
-          font-size: 0.82rem;
+          font-size: 0.78rem;
           font-weight: 600;
           letter-spacing: -0.01em;
           cursor: pointer;
@@ -187,8 +255,9 @@ export default function Culture({ onSeeGallery }) {
 
         @media (max-width: 900px) {
           .lc-mosaic {
+            width: 100%;
             min-height: 0;
-            grid-template-rows: minmax(140px, 22vw) minmax(140px, 22vw) minmax(160px, 24vw);
+            grid-template-rows: minmax(112px, 18vw) minmax(112px, 18vw) minmax(128px, 19vw);
           }
         }
 
@@ -200,35 +269,36 @@ export default function Culture({ onSeeGallery }) {
           .lc-mosaic {
             grid-template-columns: 1fr 1fr;
             grid-template-rows: none;
-            grid-auto-rows: minmax(150px, 28vw);
+            grid-auto-rows: minmax(120px, 22vw);
             min-height: 0;
+            width: 100%;
           }
 
           .lc-wide {
             grid-column: 1 / -1;
-            min-height: 190px;
+            min-height: 152px;
           }
 
           .lc-cta {
             grid-column: 1 / -1;
-            min-height: 200px;
-            border-bottom-right-radius: 32px;
+            min-height: 168px;
+            border-bottom-right-radius: 26px;
           }
 
-          .lc-tr { border-top-right-radius: 18px; }
+          .lc-tr { border-top-right-radius: 16px; }
         }
 
         @media (max-width: 520px) {
           .lc-mosaic {
             grid-template-columns: 1fr;
-            grid-auto-rows: minmax(180px, 52vw);
+            grid-auto-rows: minmax(150px, 42vw);
           }
 
           .lc-tl,
           .lc-tr,
           .lc-bl,
           .lc-br {
-            border-radius: 18px;
+            border-radius: 16px;
           }
 
           .lc-cta p {

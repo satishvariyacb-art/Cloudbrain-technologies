@@ -158,7 +158,6 @@ export default function App() {
       {/* 1. Global Floating Header */}
       <Header 
         onOpenContact={handleOpenContact} 
-        onOpenCareers={handleOpenCareersScroll}
         onNavClick={handleNavHeaderClick}
         activeSectionId={
           isAboutPageOpen ? 'about'
@@ -183,7 +182,7 @@ export default function App() {
         ) : (
           <>
             {/* 2. Hero (with integrated compact Metrics & Live Engine Panel) */}
-            <Hero onOpenContact={handleOpenContact} />
+            <Hero />
 
             {/* 2.2 About Us Section */}
             <AboutSection />

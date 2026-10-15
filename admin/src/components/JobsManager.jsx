@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   Briefcase, Plus, Search, Edit3, Trash2, Power, 
-  MapPin, Clock, Check, X, AlertCircle, Tag, Layers, FolderPlus 
+  MapPin, X, Layers
 } from 'lucide-react';
 
 export default function JobsManager({ 

@@ -94,65 +94,11 @@ const SEED_APPLICATIONS = [
   }
 ];
 
-const SEED_CULTURE = [
-  {
-    id: "workspace-1",
-    type: "photo",
-    category: "Photos",
-    title: "Engineering Innovation Hub",
-    location: "Main HQ Studio",
-    image: "/workspace.png",
-    caption: "Our modern product engineering space equipped with high-performance Apple hardware, dual 4K displays, and collaborative glass whiteboards."
-  },
-  {
-    id: "video-1",
-    type: "video",
-    category: "Video Showcases",
-    title: "Day in the Life of a Cloudbrain Engineer",
-    duration: "2:45 min",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-software-developer-working-on-his-computer-41445-large.mp4",
-    poster: "/collaboration.png",
-    caption: "Inside our 2-week agile sprint workflow, architecture discussions, and daily standups."
-  },
-  {
-    id: "collaboration-1",
-    type: "photo",
-    category: "Photos",
-    title: "Cross-Functional UX & Mobile Sprints",
-    location: "Product Design Lab",
-    image: "/collaboration.png",
-    caption: "iOS architects, Android leads, and UI designers reviewing pixel-perfect Figma components and micro-interactions."
-  },
-  {
-    id: "video-2",
-    type: "video",
-    category: "Video Showcases",
-    title: "Cloudbrain Annual AI Hackathon 2026",
-    duration: "3:10 min",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-young-people-working-in-an-office-43522-large.mp4",
-    poster: "/hackathon.png",
-    caption: "48 hours of non-stop coding, custom LLM model building, and mobile app prototype demos."
-  }
-];
-
 function getAuthHeader() {
   const token = localStorage.getItem(TOKEN_KEY);
   return token ? { 'Authorization': `Bearer ${token}` } : {};
 }
 
-// Safe localStorage setItem helper that never throws QuotaExceededError
-function safeSetItem(key, value) {
-  try {
-    localStorage.setItem(key, value);
-  } catch (err) {
-    console.warn(`localStorage quota exceeded for key "${key}". Skipping cache to prevent crash.`);
-    try {
-      localStorage.removeItem(key);
-    } catch {}
-  }
-}
-
-// Request with fallback
 async function request(endpoint, options = {}) {
   const url = `${API_BASE}${endpoint}`;
   const headers = {

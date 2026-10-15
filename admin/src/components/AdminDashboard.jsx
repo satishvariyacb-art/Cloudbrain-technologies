@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
-  Briefcase, Users, Image as ImageIcon, Video as VideoIcon, 
-  ArrowUpRight, Clock, Plus, CheckCircle2, ChevronRight, Layers, Sparkles 
+  Briefcase, Users, Image as ImageIcon, 
+  Clock, Plus, ChevronRight
 } from 'lucide-react';
 
 export default function AdminDashboard({ 

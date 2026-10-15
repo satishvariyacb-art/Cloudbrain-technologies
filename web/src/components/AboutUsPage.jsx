@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { 
-  ArrowLeft, ArrowRight, ShieldCheck, Zap, Layers, Sparkles, 
-  Users, Globe, Trophy, Cpu, Code2, Heart, Award
+  ArrowRight, ShieldCheck, Zap, Layers, Sparkles, 
+  Users, Globe, Cpu, Code2
 } from 'lucide-react';
 import TechDotsCanvas from './TechDotsCanvas';
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
-  Users, Search, ExternalLink, Trash2, CheckCircle2, 
-  Clock, X, Mail, Globe, Calendar, FileText, ChevronRight, Phone, Download 
+  Users, Search, ExternalLink, Trash2, 
+  X, Mail, Globe, Calendar, FileText, ChevronRight, Phone, Download 
 } from 'lucide-react';
 
 export default function ApplicationsManager({ 

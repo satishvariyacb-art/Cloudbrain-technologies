@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   LayoutDashboard, Briefcase, Users, Image as ImageIcon, 
-  ArrowLeft, Bell, Sparkles, RefreshCw, Menu, X, Shield, 
+  RefreshCw, Menu, X, Shield, 
   LogOut, ExternalLink, CheckCircle2, AlertCircle 
 } from 'lucide-react';
 import { api } from './services/api';
@@ -26,7 +26,6 @@ export default function App() {
   const [teams, setTeams] = useState([]);
   const [applications, setApplications] = useState([]);
   const [cultureItems, setCultureItems] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
 
   // Modals & sub-views
@@ -69,7 +68,6 @@ export default function App() {
   const loadAllData = async () => {
     if (!isAuthenticated) return;
     try {
-      setLoading(true);
       const [fetchedJobs, fetchedTeams, fetchedApps, fetchedCulture] = await Promise.all([
         api.getJobs().catch(() => []),
         api.getTeams().catch(() => []),
@@ -83,8 +81,6 @@ export default function App() {
     } catch (err) {
       console.error('Failed to load admin data:', err);
       showToast('Could not load data from API server (Port 5000)', 'error');
-    } finally {
-      setLoading(false);
     }
   };
 

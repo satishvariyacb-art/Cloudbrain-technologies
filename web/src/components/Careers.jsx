@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { apiClient } from '../services/apiClient';
-import { Briefcase, MapPin, Clock, ArrowRight, X, CheckCircle2, Sparkles, Mail, Upload, FileText, Phone } from 'lucide-react';
+import { MapPin, Clock, ArrowRight, X, CheckCircle2, Sparkles, Mail, Upload, FileText } from 'lucide-react';
 
 export default function Careers({ isOpen, onClose }) {
   const [jobs, setJobs] = useState([]);

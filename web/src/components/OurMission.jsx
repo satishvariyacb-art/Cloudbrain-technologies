@@ -330,7 +330,7 @@ export default function OurMission() {
 
         .om-v2-description {
           font-family: var(--font-body, 'cbsans', sans-serif);
-          font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+          font-size: 32px;
           line-height: 1.55;
           color:rgb(255, 255, 255);
           margin: 0;

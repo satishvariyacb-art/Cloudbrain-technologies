@@ -11,46 +11,61 @@ const TYPEWRITER_WORDS = [
   { text: "Craft", color: "#10B981" },          // Emerald
 ];
 
+const WORD_HOLD_MS = 2200;
+const WORD_SLIDE_MS = 900;
+
 function TypewriterText() {
-  const [wordIdx, setWordIdx] = useState(0);
-  const [charIdx, setCharIdx] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [phase, setPhase] = useState('rest');
 
   useEffect(() => {
-    const currentWord = TYPEWRITER_WORDS[wordIdx].text;
-    let timer;
-
-    if (!isDeleting && charIdx < currentWord.length) {
-      // Typing next character
-      timer = setTimeout(() => {
-        setCharIdx((prev) => prev + 1);
-      }, 110);
-    } else if (!isDeleting && charIdx === currentWord.length) {
-      // Pause at full word before deleting
-      timer = setTimeout(() => {
-        setIsDeleting(true);
-      }, 2000);
-    } else if (isDeleting && charIdx > 0) {
-      // Deleting character
-      timer = setTimeout(() => {
-        setCharIdx((prev) => prev - 1);
-      }, 55);
-    } else if (isDeleting && charIdx === 0) {
-      // Move to next word
-      setIsDeleting(false);
-      setWordIdx((prev) => (prev + 1) % TYPEWRITER_WORDS.length);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return undefined;
     }
 
-    return () => clearTimeout(timer);
-  }, [charIdx, isDeleting, wordIdx]);
+    const delay = phase === 'rest' ? WORD_HOLD_MS : WORD_SLIDE_MS;
+    const timer = setTimeout(() => {
+      if (phase === 'rest') {
+        setPhase('slide');
+      } else {
+        setIndex((prev) => (prev + 1) % TYPEWRITER_WORDS.length);
+        setPhase('rest');
+      }
+    }, delay);
 
-  const currentItem = TYPEWRITER_WORDS[wordIdx];
-  const displayText = currentItem.text.substring(0, charIdx);
+    return () => clearTimeout(timer);
+  }, [phase, index]);
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!media.matches) return undefined;
+
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % TYPEWRITER_WORDS.length);
+      setPhase('rest');
+    }, WORD_HOLD_MS);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const current = TYPEWRITER_WORDS[index];
+  const next = TYPEWRITER_WORDS[(index + 1) % TYPEWRITER_WORDS.length];
 
   return (
-    <span className="typewriter-word" style={{ color: currentItem.color }}>
-      {displayText}
-      <span className="typewriter-cursor">|</span>
+    <span className="hero-word-slot" aria-live="polite" aria-atomic="true">
+      <span
+        className={`hero-word ${phase === 'slide' ? 'is-out' : 'is-rest'}`}
+        style={{ color: current.color }}
+      >
+        {current.text}
+      </span>
+      <span
+        className={`hero-word ${phase === 'slide' ? 'is-in' : 'is-wait'}`}
+        style={{ color: next.color }}
+        aria-hidden="true"
+      >
+        {next.text}
+      </span>
     </span>
   );
 }
@@ -246,32 +261,80 @@ export default function Hero() {
 
         .hero-title-line2 {
           display: inline-flex;
-          align-items: center;
+          align-items: baseline;
           justify-content: center;
           white-space: nowrap;
           gap: 0.28em;
+          overflow: visible;
         }
 
-        /* Typewriter Word & Cursor */
-        .typewriter-word {
+        .hero-word-slot {
+          position: relative;
           display: inline-block;
+          overflow: visible;
+          vertical-align: baseline;
+        }
+
+        .hero-word {
+          display: block;
           font-family: inherit;
           font-weight: 700;
-          transition: color 0.3s ease;
           white-space: nowrap;
+          line-height: 1.08;
+          will-change: transform, opacity;
         }
 
-        .typewriter-cursor {
-          display: inline-block;
-          margin-left: 4px;
-          color: #2b7fff;
-          font-weight: 300;
-          animation: typewriterBlink 0.85s infinite;
+        .hero-word.is-rest,
+        .hero-word.is-out {
+          position: relative;
         }
 
-        @keyframes typewriterBlink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
+        .hero-word.is-wait,
+        .hero-word.is-in {
+          position: absolute;
+          left: 0;
+          top: 0;
+          pointer-events: none;
+        }
+
+        .hero-word.is-rest {
+          transform: translateY(0);
+          opacity: 1;
+        }
+
+        .hero-word.is-wait {
+          transform: translateY(0.78em);
+          opacity: 0;
+        }
+
+        .hero-word.is-out {
+          animation: heroWordOut 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .hero-word.is-in {
+          animation: heroWordIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes heroWordOut {
+          from {
+            transform: translateY(0);
+            opacity: 1;
+          }
+          to {
+            transform: translateY(-0.78em);
+            opacity: 0;
+          }
+        }
+
+        @keyframes heroWordIn {
+          from {
+            transform: translateY(0.78em);
+            opacity: 0.32;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
         }
 
         /* Subtitle: ~20px (1.25rem) */
@@ -362,8 +425,21 @@ export default function Hero() {
             animation: none;
           }
 
-          .typewriter-cursor {
+          .hero-word.is-out,
+          .hero-word.is-in {
             animation: none;
+          }
+
+          .hero-word.is-out,
+          .hero-word.is-wait {
+            opacity: 0;
+            transform: translateY(0);
+          }
+
+          .hero-word.is-in,
+          .hero-word.is-rest {
+            opacity: 1;
+            transform: translateY(0);
           }
         }
       `}</style>

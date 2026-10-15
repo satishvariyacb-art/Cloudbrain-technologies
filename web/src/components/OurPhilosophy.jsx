@@ -18,11 +18,11 @@ function FrameShape() {
       aria-hidden="true"
     >
       <path
-        opacity="0.3"
+        opacity="0.45"
         d={FRAME_D}
-        stroke="black"
-        strokeOpacity="0.2"
-        strokeWidth="1.47186"
+        stroke="#000000"
+        strokeOpacity="0.3"
+        strokeWidth="1.5"
       />
     </svg>
   );
@@ -113,8 +113,8 @@ const ITEMS = [
     title: 'Build with Passion',
     description: 'We ask "why" before we ask "how." Every product starts because we\'re genuinely curious about solving it.',
     top: '20.833%',
-    d: 'M400 360 H500 Q520 360 520 340 V170 Q520 150 540 150 H680',
-    arrow: 'M671 141 L680 150 L671 159',
+    d: 'M335 360 H452 Q472 360 472 340 V170 Q472 150 492 150 H632',
+    arrow: 'M623 141 L632 150 L623 159',
   },
   {
     id: 'green',
@@ -122,8 +122,8 @@ const ITEMS = [
     title: 'Grow with Purpose',
     description: 'Nothing we build is meant to stay static. We design products that keep improving long after launch.',
     top: '40.278%',
-    d: 'M400 360 H500 Q520 360 520 340 V310 Q520 290 540 290 H680',
-    arrow: 'M671 281 L680 290 L671 299',
+    d: 'M335 360 H452 Q472 360 472 340 V310 Q472 290 492 290 H632',
+    arrow: 'M623 281 L632 290 L623 299',
   },
   {
     id: 'yellow',
@@ -131,8 +131,8 @@ const ITEMS = [
     title: 'Think Beyond Obvious',
     description: 'We look for the simplest path to a solution, even when the obvious path takes longer.',
     top: '59.722%',
-    d: 'M400 360 H500 Q520 360 520 380 V410 Q520 430 540 430 H680',
-    arrow: 'M671 421 L680 430 L671 439',
+    d: 'M335 360 H452 Q472 360 472 380 V410 Q472 430 492 430 H632',
+    arrow: 'M623 421 L632 430 L623 439',
   },
   {
     id: 'blue',
@@ -140,8 +140,8 @@ const ITEMS = [
     title: 'Trust by Design',
     description: 'No shortcuts on the fundamentals. What we ship is stable, secure, and built to hold up.',
     top: '79.167%',
-    d: 'M400 360 H500 Q520 360 520 380 V550 Q520 570 540 570 H680',
-    arrow: 'M671 561 L680 570 L671 579',
+    d: 'M335 360 H452 Q472 360 472 380 V550 Q472 570 492 570 H632',
+    arrow: 'M623 561 L632 570 L623 579',
   },
 ];
 
@@ -435,7 +435,7 @@ export default function OurPhilosophy() {
         }
 
         .ph-head .cb-section-badge {
-          margin-bottom: 1.05rem;
+          margin-bottom: 2rem;
         }
 
         .ph-title {
@@ -482,27 +482,27 @@ export default function OurPhilosophy() {
         }
 
         .ph-frame-outer {
-          left: -5%;
+          left: -8%;
           top: -14%;
           width: 60%;
         }
 
         .ph-frame-mid {
-          left: 3.3%;
+          left: -1%;
           top: 6%;
           width: 43.4%;
         }
 
         .ph-frame-inner {
-          left: 10.4%;
+          left: 6.4%;
           top: 24.5%;
           width: 26%;
         }
 
         .ph-logo-tile {
           position: absolute;
-          left: 13.38%;
-          top: 35.08%;
+          left: 6.98%;
+          top: 33.97%;
           width: 20.9%;
           aspect-ratio: 270 / 240;
           background: none;
@@ -604,7 +604,7 @@ export default function OurPhilosophy() {
 
         .ph-item {
           position: absolute;
-          left: 58.333%;
+          left: 54.333%;
           width: 39%;
           display: flex;
           align-items: flex-start;

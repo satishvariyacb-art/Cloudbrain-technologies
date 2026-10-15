@@ -19,7 +19,7 @@ function getInitialNavId() {
   return 'hero';
 }
 
-export default function Header({ onOpenContact, onOpenCareers, onNavClick, activeSectionId = null }) {
+export default function Header({ onOpenContact, onNavClick, activeSectionId = null }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState(getInitialNavId);
@@ -120,7 +120,7 @@ export default function Header({ onOpenContact, onOpenCareers, onNavClick, activ
           aria-label="Cloudbrain Home" 
           onClick={(e) => handleLinkClick(e, '#hero')}
         >
-          <CloudBrainLogo height={44} />
+          <CloudBrainLogo />
         </a>
 
         {/* Center: Nav links */}
@@ -305,6 +305,7 @@ export default function Header({ onOpenContact, onOpenCareers, onNavClick, activ
         .nav-link.is-active {
           color: #111;
           font-weight: 600;
+          background: rgba(48, 133, 255, 0.07);
         }
 
         .nav-link:focus-visible {
@@ -340,7 +341,7 @@ export default function Header({ onOpenContact, onOpenCareers, onNavClick, activ
             radial-gradient(circle at 50% 96%, rgba(154, 92, 255, 0.55) 0%, rgba(154, 92, 255, 0) 58%);
           background-size: 150% 150%;
           filter: blur(14px);
-          opacity: 0.16;
+          opacity: 0;
           transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), filter 0.45s ease;
         }
 
@@ -356,7 +357,7 @@ export default function Header({ onOpenContact, onOpenCareers, onNavClick, activ
             radial-gradient(circle at 50% 50%, rgba(90, 255, 196, 0.24) 0%, rgba(90, 255, 196, 0) 68%);
           background-size: 160% 160%;
           filter: blur(22px);
-          opacity: 0.1;
+          opacity: 0;
           transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1);
           animation-duration: 8s;
           animation-direction: alternate-reverse;
@@ -618,9 +619,6 @@ export default function Header({ onOpenContact, onOpenCareers, onNavClick, activ
           .floating-nav.is-scrolled {
             padding: 0 1.15rem !important;
             height: 56px;
-          }
-          .cloudbrain-logo-root {
-            height: 32px !important;
           }
           .header-wrapper .nav-contact-btn {
             height: 40px;

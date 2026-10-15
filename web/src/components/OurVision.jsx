@@ -69,7 +69,7 @@ export default function OurVision() {
 
         .ov-v2-description {
           font-family: var(--font-body, 'cbsans', sans-serif);
-          font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+          font-size: 32px;
           font-weight: 400;
           line-height: 1.55;
           color: rgba(255, 255, 255, 0.95);
