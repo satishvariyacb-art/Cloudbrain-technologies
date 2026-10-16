@@ -114,10 +114,10 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
     <header className={`header-wrapper ${scrolled ? 'is-scrolled-wrapper' : ''}`}>
       <div className={`floating-nav ${scrolled ? 'is-scrolled' : ''}`}>
         {/* Left: Cloudbrain Logo */}
-        <a 
-          href="#hero" 
-          className="brand-logo" 
-          aria-label="Cloudbrain Home" 
+        <a
+          href="#hero"
+          className="brand-logo"
+          aria-label="Cloudbrain Home"
           onClick={(e) => handleLinkClick(e, '#hero')}
         >
           <CloudBrainLogo />
@@ -141,17 +141,18 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
           })}
         </nav>
 
-        {/* Right: Actions (Contact button in place of We're Hiring) */}
         <div className="header-actions">
-          <button 
-            className="btn btn-primary nav-contact-btn" 
+          <button
+            className="btn btn-primary nav-contact-btn"
             onClick={onOpenContact}
           >
             <span>Let's Talk</span>
-            <ArrowRight size={15} />
+            <svg width="16" height="16" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7h9.5M8 3.5L11.5 7 8 10.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </button>
 
-          <button 
+          <button
             className="mobile-toggle"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
@@ -181,7 +182,7 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
                 </a>
               );
             })}
-            <button 
+            <button
               className="btn btn-primary mobile-drawer-contact-btn"
               onClick={() => {
                 setMobileMenuOpen(false);
@@ -214,9 +215,9 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
           align-items: center;
           justify-content: space-between;
           width: 100%;
-          max-width: 1340px;
-          height: 68px;
-          padding: 0 1.75rem;
+          max-width: 1520px;
+          height: 76px;
+          padding: 0 1.35rem 0 1.5rem;
           background: transparent;
           backdrop-filter: none;
           -webkit-backdrop-filter: none;
@@ -227,7 +228,7 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
         }
 
         .floating-nav.is-scrolled {
-          padding: 0 1.75rem;
+          padding: 0 1.35rem 0 1.5rem;
           background: rgba(255, 255, 255, 0.82);
           backdrop-filter: blur(13px) saturate(1000%);
           -webkit-backdrop-filter: blur(13px) saturate(1000%);
@@ -443,16 +444,19 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
 
         .header-wrapper .nav-contact-btn {
           position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           flex-shrink: 0;
           box-sizing: border-box;
-          height: 40px;
-          padding: 0 1.15rem;
-          gap: 0.4rem;
+          height: 48px;
+          padding: 0 1.15rem 0 1.3rem;
+          gap: 0.45rem;
           border: none;
           border-radius: 999px;
           background: #3B82F6 !important;
           color: #fff !important;
-          font-size: 15px;
+          font-size: 16px;
           font-weight: 600;
           line-height: 1;
           letter-spacing: 0;
@@ -461,6 +465,17 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
           transform: none !important;
           transition: none !important;
           animation: none !important;
+        }
+
+        .header-wrapper .nav-contact-btn span {
+          display: block;
+          line-height: 1;
+          text-align: center;
+        }
+
+        .header-wrapper .nav-contact-btn svg {
+          display: block;
+          flex-shrink: 0;
         }
 
         .header-wrapper .nav-contact-btn:hover,
@@ -643,6 +658,8 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
         @media (max-width: 640px) {
           .header-wrapper .nav-contact-btn {
             display: inline-flex;
+            align-items: center;
+            justify-content: center;
             height: 40px;
             padding: 0 0.9rem;
             font-size: 14px;

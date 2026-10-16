@@ -75,7 +75,7 @@ export default function AboutSection() {
 
                 <div className="about-v2-highlight">
                   <span className="highlight-dot">•</span>
-                  <span className="highlight-text">
+                  <span>
                     We're still growing, still learning, and still genuinely excited about what we get to build next.
                   </span>
                 </div>
@@ -113,10 +113,10 @@ export default function AboutSection() {
         /* Tier 1 - Topmost stacked card lip */
         .sheet-tier1 {
           width: 82%;
-          height: 36px;
+          height: 72px;
           background: #e2e8f0;
-          border-radius: 40px 40px 0 0;
-          margin-bottom: -22px;
+          border-radius: 56px 56px 0 0;
+          margin-bottom: -32px;
           box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.04);
           z-index: 1;
         }
@@ -124,10 +124,10 @@ export default function AboutSection() {
         /* Tier 2 - Middle stacked card lip */
         .sheet-tier2 {
           width: 91%;
-          height: 38px;
+          height: 76px;
           background: #edf2f7;
-          border-radius: 48px 48px 0 0;
-          margin-bottom: -22px;
+          border-radius: 68px 68px 0 0;
+          margin-bottom: -32px;
           box-shadow: 0 -6px 20px rgba(15, 23, 42, 0.05);
           z-index: 2;
         }
@@ -137,7 +137,7 @@ export default function AboutSection() {
           background: #ffffff;
           border-radius: 80px; /* Requested 80px radius */
           box-shadow: none; /* Shadow removed */
-          padding: 5.5rem 2rem 6.5rem 2rem;
+          padding: 4.75rem clamp(1.25rem, 2vw, 4rem) 6.5rem;
           width: 100%;
           box-sizing: border-box;
           position: relative;
@@ -146,10 +146,14 @@ export default function AboutSection() {
         }
 
         .about-v2-inner-container {
-          max-width: 1400px;
+          max-width: 1364px;
           margin: 0 auto;
           width: 100%;
           box-sizing: border-box;
+        }
+
+        .about-v2-inner-container .cb-section-badge {
+          margin-bottom: 3.25rem;
         }
 
         /* 02 ABOUT US Badge with playful tilt */
@@ -185,46 +189,62 @@ export default function AboutSection() {
         /* Headline */
         .about-v2-headline {
           font-family: var(--font-main, 'cbsans', sans-serif);
-          font-size: clamp(2.8rem, 4.6vw, 4.2rem);
-          font-weight: 800;
-          line-height: 1.1;
-          letter-spacing: -0.035em;
+          font-size: 78px;
+          font-weight: 500;
+          line-height: 94px;
+          width: 695px;
+          max-width: 100%;
+          height: 94px;
+          letter-spacing: -0.02em;
           color: #0b132b;
-          margin: 0 0 1.75rem 0;
+          margin: 0 0 3rem 0;
+          white-space: nowrap;
         }
 
         /* Subtext */
         .about-v2-subtext {
-          font-family: var(--font-body, 'cbsans', sans-serif);
-          font-size: 1.1rem;
-          line-height: 1.65;
+          font-family: 'cbsans', sans-serif;
+          font-size: 24px;
+          font-weight: 400;
+          line-height: 1.32;
+          letter-spacing: -0.01em;
+          opacity: 1;
           color: #475569;
-          max-width: 620px;
-          margin: 0 0 4.5rem 0;
+          max-width: 848px;
+          margin: 0 0 5rem 0;
         }
 
         /* 2-Column Grid */
         .about-v2-story-grid {
           display: grid;
-          grid-template-columns: 1.05fr 1.35fr;
-          gap: 4.5rem;
+          grid-template-columns: 380px 856px;
+          gap: 8rem;
           align-items: flex-start;
         }
 
         /* Left Callout Typography */
         .about-v2-callout {
-          font-family: var(--font-main, 'cbsans', sans-serif);
-          font-size: clamp(2.3rem, 3.4vw, 3.2rem);
+          font-family: 'cbsans', sans-serif;
+          font-size: 48px;
           font-weight: 800;
-          line-height: 1.2;
-          letter-spacing: -0.03em;
+          line-height: 58px;
+          letter-spacing: -0.025em;
+          opacity: 1;
+          width: 380px;
+          max-width: 100%;
           color: #0b132b;
+        }
+
+        .callout-line1,
+        .callout-line2,
+        .callout-line3 {
+          white-space: nowrap;
         }
 
         .callout-line1 {
           display: flex;
           align-items: center;
-          flex-wrap: wrap;
+          flex-wrap: nowrap;
           gap: 0.25rem;
         }
 
@@ -254,8 +274,8 @@ export default function AboutSection() {
         .callout-line3 {
           display: flex;
           align-items: flex-end;
-          flex-wrap: wrap;
-          gap: 0.45rem;
+          flex-wrap: nowrap;
+          gap: 0.2rem;
         }
 
         .callout-arrow-icon {
@@ -275,15 +295,20 @@ export default function AboutSection() {
         .about-v2-body {
           display: flex;
           flex-direction: column;
-          gap: 1.75rem;
+          gap: 2.25rem;
           padding-top: 0.35rem;
         }
 
         .about-v2-paragraph {
-          font-family: var(--font-body, 'cbsans', sans-serif);
-          font-size: 1.05rem;
-          line-height: 1.75;
+          font-size: 22px;
+          font-weight: 400;
+          line-height: 1.32;
+          letter-spacing: -0.01em;
+          opacity: 1;
           color: #475569;
+          font-family: var(--font-body, 'cbsans', sans-serif);
+          width: 856px;
+          max-width: 100%;
           margin: 0;
         }
 
@@ -293,8 +318,8 @@ export default function AboutSection() {
           gap: 0.5rem;
           color: #00AF57;
           font-family: var(--font-main, 'cbsans', sans-serif);
-          font-size: 1rem;
-          font-weight: 700;
+          font-size: 18px;
+          font-weight: 500;
           line-height: 1.55;
         }
 
@@ -333,16 +358,16 @@ export default function AboutSection() {
 
           .sheet-tier1 {
             width: 86%;
-            height: 24px;
-            margin-bottom: -14px;
-            border-radius: 28px 28px 0 0;
+            height: 48px;
+            margin-bottom: -20px;
+            border-radius: 36px 36px 0 0;
           }
 
           .sheet-tier2 {
             width: 93%;
-            height: 26px;
-            margin-bottom: -14px;
-            border-radius: 34px 34px 0 0;
+            height: 50px;
+            margin-bottom: -20px;
+            border-radius: 42px 42px 0 0;
           }
 
           .about-v2-sheet-main {
@@ -352,6 +377,11 @@ export default function AboutSection() {
 
           .about-v2-headline {
             font-size: clamp(2rem, 7.5vw, 2.3rem);
+            font-weight: 500;
+            width: auto;
+            height: auto;
+            line-height: 1.15;
+            white-space: normal;
           }
 
           .about-v2-callout {

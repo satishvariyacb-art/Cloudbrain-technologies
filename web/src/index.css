@@ -128,14 +128,14 @@
   
   /* CloudBrain 4 Brand Palette */
   --cb-red: #F42A37;
-  --cb-green: #04AB6B;
+  --cb-green: #00AF57;
   --cb-yellow: #FFBE01;
   --cb-blue: #3085FF;
   
   /* Primary Brand Definitions */
   --brand-primary: #3085FF;
-  --brand-gradient: linear-gradient(135deg, #3085FF 34%, #04AB6B 50%, #04AB6B 100%);
-  --brand-gradient-four: linear-gradient(135deg, #F42A37 0%, #FFBE01 33%, #04AB6B 66%, #3085FF 100%);
+  --brand-gradient: linear-gradient(135deg, #3085FF 34%, #00AF57 50%, #00AF57 100%);
+  --brand-gradient-four: linear-gradient(135deg, #F42A37 0%, #FFBE01 33%, #00AF57 66%, #3085FF 100%);
   --brand-subtle: rgba(48, 133, 255, 0.08);
   
   --radius-sm: 12px;
@@ -211,7 +211,6 @@ html, body {
 
 /* 100% UNIFORM SECTION TITLES (H2) */
 .section-title,
-.sv-main-title,
 .about-headline,
 .mission-title,
 .vision-title,
@@ -228,7 +227,6 @@ html, body {
 
 /* 100% UNIFORM SECTION SUBTITLES */
 .section-subtitle,
-.sv-main-sub,
 .about-lead {
   font-size: var(--text-subtitle) !important;
   font-family: var(--font-body);
@@ -239,7 +237,6 @@ html, body {
 
 @media (max-width: 768px) {
   .section-title,
-  .sv-main-title,
   .about-headline,
   .mission-title,
   .vision-title,
@@ -248,7 +245,6 @@ html, body {
     font-size: var(--text-h2-mobile) !important;
   }
   .section-subtitle,
-  .sv-main-sub,
   .about-lead {
     font-size: var(--text-subtitle-mobile) !important;
   }

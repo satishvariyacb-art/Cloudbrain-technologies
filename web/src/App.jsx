@@ -209,6 +209,7 @@ export default function App() {
       <Footer 
         onOpenContact={handleOpenContact} 
         onNavClick={handleNavHeaderClick}
+        curved={!isAboutPageOpen && !isCulturePageOpen}
       />
 
       {/* Global Interactive Project Contact Drawer */}
@@ -219,6 +220,8 @@ export default function App() {
 
       <style>{`
         .page-view-wrapper {
+          position: relative;
+          z-index: 1;
           animation: pageDissolveIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 

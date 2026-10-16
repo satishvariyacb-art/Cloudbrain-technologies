@@ -57,7 +57,7 @@ Our visual identity and four-quadrant logo represent the foundational tenets of 
 | Color | Theme | Principle | Narrative Copy |
 | :--- | :--- | :--- | :--- |
 | **Red** (`#F42A37`) | Passion | **Build with Passion** | *"We ask 'why' before we ask 'how.' Every product starts because we're genuinely curious about solving it."* |
-| **Teal / Green** (`#04AB6B`) | Purpose | **Grow with Purpose** | *"Nothing we build is meant to stay static. We design products that keep improving long after launch."* |
+| **Teal / Green** (`#00AF57`) | Purpose | **Grow with Purpose** | *"Nothing we build is meant to stay static. We design products that keep improving long after launch."* |
 | **Yellow** (`#FFBE01`) | Creativity | **Think Beyond Obvious** | *"We look for the simplest path to a solution, even when the obvious path takes longer."* |
 | **Blue** (`#3085FF`) | Trust | **Trust by Design** | *"No shortcuts on the fundamentals. What we ship is stable, secure, and built to hold up."* |
 

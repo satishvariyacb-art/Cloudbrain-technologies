@@ -54,7 +54,7 @@ export default function TechDotsCanvas() {
     canvas.parentElement?.addEventListener('mousemove', handleMouseMove);
 
     // CloudBrain Soft Brand Palette
-    const brandColors = ['#3085FF', '#04AB6B', '#F42A37', '#FFBE01'];
+    const brandColors = ['#3085FF', '#00AF57', '#F42A37', '#FFBE01'];
 
     // Mobile: 20 points; Desktop: 38 points (Optimized for 60FPS zero lag)
     const numPoints = isMobile ? 20 : 38;

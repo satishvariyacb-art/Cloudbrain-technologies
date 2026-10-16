@@ -12,7 +12,7 @@ export default function OurVision() {
             Our Vision
           </h2>
           <p className="ov-v2-description">
-            To be a global leader in technology, building seamless digital products that make everyday life genuinely better.
+            To be a global leader in technology, building seamless<br /> digital products that make everyday life genuinely better.
           </p>
         </div>
 
@@ -25,9 +25,12 @@ export default function OurVision() {
 
       <style>{`
         .ov-v2-section {
-          background-color: #04AB6B; /* Vibrant Emerald Green matching reference */
+          background-color: #00AF57; /* Vibrant Emerald Green matching reference */
           margin-top: -80px;
-          padding: 10rem 2rem 7.5rem 2rem;
+          padding: 80px 2rem 0 2rem;
+          min-height: calc(23.5vw + 80px);
+          display: flex;
+          align-items: center;
           width: 100%;
           position: relative;
           overflow: hidden;
@@ -41,6 +44,7 @@ export default function OurVision() {
         }
 
         .ov-v2-container {
+          width: 100%;
           max-width: 1400px;
           margin: 0 auto;
           display: flex;
@@ -53,14 +57,15 @@ export default function OurVision() {
 
         .ov-v2-content {
           flex: 1;
-          max-width: 720px;
+          max-width: 860px;
           text-align: left;
+          container-type: inline-size;
         }
 
         .ov-v2-title {
           font-family: var(--font-main, 'cbsans', sans-serif);
-          font-size: clamp(2.8rem, 4.8vw, 4rem);
-          font-weight: 800;
+          font-size: 78px;
+          font-weight: 500;
           line-height: 1.12;
           letter-spacing: -0.03em;
           color: #ffffff;
@@ -74,28 +79,32 @@ export default function OurVision() {
           line-height: 1.55;
           color: rgba(255, 255, 255, 0.95);
           margin: 0;
-          max-width: 540px;
+          max-width: 860px;
         }
 
         .ov-v2-graphic-wrap {
-          flex: 0 0 340px;
-          max-width: 360px;
+          flex: 0 0 auto;
+          width: auto;
+          max-width: none;
           display: flex;
           align-items: center;
           justify-content: center;
         }
 
+        .ov-v2-graphic-wrap svg,
         .ov-v2-wireframe-svg {
-          width: 100%;
+          width: auto;
+          max-width: none;
           height: auto;
-          max-height: 290px;
+          max-height: min(368px, calc(23.5vw - 24px));
           filter: drop-shadow(0 12px 24px rgba(4, 120, 87, 0.25));
         }
 
         @media (max-width: 1024px) {
           .ov-v2-section {
             margin-top: -60px;
-            padding-top: 8rem;
+            padding-top: 60px;
+            min-height: calc(23.5vw + 60px);
             border-bottom-left-radius: 60px;
             border-bottom-right-radius: 60px;
           }
@@ -103,7 +112,14 @@ export default function OurVision() {
 
         @media (max-width: 900px) {
           .ov-v2-section {
-            padding: 7.5rem 1.5rem 5rem 1.5rem;
+            display: block;
+            min-height: 0;
+            padding: 6rem 1.5rem 3.5rem 1.5rem;
+          }
+
+          .ov-v2-graphic-wrap svg,
+          .ov-v2-wireframe-svg {
+            max-height: 220px;
           }
 
           .ov-v2-container {

@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { apiClient } from '../services/apiClient';
-import { MapPin, Clock, ArrowRight, X, CheckCircle2, Sparkles, Mail, Upload, FileText } from 'lucide-react';
+import { ArrowRight, X, CheckCircle2, Mail, Upload, FileText } from 'lucide-react';
+import SectionBadge from './SectionBadge';
 
-export default function Careers({ isOpen, onClose }) {
+function jobTags(job) {
+  if (Array.isArray(job.skills) && job.skills.length) {
+    return job.skills.map((tag) => String(tag).trim()).filter(Boolean);
+  }
+  if (typeof job.skills === 'string' && job.skills.trim()) {
+    return job.skills.split(',').map((tag) => tag.trim()).filter(Boolean);
+  }
+  return [job.team, job.type, job.location, job.experience].filter(Boolean);
+}
+
+export default function Careers() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedRole, setSelectedRole] = useState(null);
@@ -115,84 +126,62 @@ export default function Careers({ isOpen, onClose }) {
 
   return (
     <section id="careers" className="careers-section">
-      <div className="section-padding">
-        <div className="careers-banner">
-          <div className="banner-content">
-            <span className="section-tag">
-              {jobs.length > 0 ? "We're Hiring" : "Talent Network"}
-            </span>
-            <h2 className="section-title">
-              {jobs.length > 0 ? "Join Cloudbrain Engineering" : "Build the Future with Cloudbrain"}
-            </h2>
-            <p className="section-subtitle">
-              {jobs.length > 0 
-                ? "We are looking for world-class iOS architects, Android lead developers, AI/ML product engineers, and linear-style UI/UX designers."
-                : "We are always eager to connect with visionary mobile architects, intelligent systems engineers, and product designers for upcoming squads."}
-            </p>
-          </div>
-        </div>
+      <div className="careers-inner">
+        <header className="careers-head">
+        <SectionBadge number="07" label="CAREERS" />
+          <h2>Join the Cloudbrain</h2>
+          <p>
+            We&apos;re looking for a people who&apos;d rather build something real than just talk
+            <br />
+            about it.
+          </p>
+        </header>
 
-        {/* Dynamic Job Roles Grid OR Offline/Empty Placeholder State */}
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '4rem 1rem', color: 'var(--text-muted)' }}>
-            <p style={{ fontSize: '0.95rem' }}>Loading current opportunities...</p>
+          <div className="roles-grid" aria-hidden="true">
+            {[0, 1, 2].map((slot) => (
+              <div key={slot} className="role-card is-skeleton" />
+            ))}
           </div>
         ) : jobs.length > 0 ? (
           <div className="roles-grid">
             {jobs.map((job) => (
-              <div key={job.id} className="card-glass role-card">
-                <div className="role-top">
-                  <span className="role-type">{job.type}</span>
-                </div>
-
+              <article key={job.id || job.role} className="role-card">
                 <h3 className="role-title">{job.role}</h3>
-                <p className="role-desc">{job.desc}</p>
-
-                <div className="role-meta">
-                  <span className="meta-item">
-                    <MapPin size={14} />
-                    <span>{job.location}</span>
-                  </span>
-                  <span className="meta-item">
-                    <Clock size={14} />
-                    <span>{job.experience}</span>
-                  </span>
-                </div>
-
-                <button 
-                  className="btn btn-secondary role-apply-btn"
+                <p className="role-desc">Role: {job.desc}</p>
+                <ul className="role-tags">
+                  {jobTags(job).map((tag) => (
+                    <li key={tag}>{tag}</li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  className="role-apply-btn"
                   onClick={() => setSelectedRole(job)}
+                  aria-label={`Apply for ${job.role}`}
                 >
-                  <span>Apply for Position</span>
-                  <ArrowRight size={15} />
+                  Apply Now
+                  <ArrowRight size={16} aria-hidden="true" />
                 </button>
-              </div>
+              </article>
             ))}
           </div>
         ) : (
-          <div className="card-glass empty-careers-card">
-            <div className="empty-careers-icon-wrap">
-              <Sparkles size={28} />
-            </div>
-            <span className="empty-careers-tag">All Squads Currently Staffed</span>
+          <div className="empty-careers-card">
             <h3 className="empty-careers-title">Currently No Open Positions</h3>
             <p className="empty-careers-desc">
               Our development, design, and AI squads are currently operating at full capacity with no active vacancies at this moment. As our roadmap continues to scale, new opportunities open regularly—stay connected with us for future roles.
             </p>
-            <div className="empty-careers-note-box">
-              <p>
-                Think you’d be a great addition to Cloudbrain? We always welcome exceptional talent. Feel free to reach out, share your work or portfolio, and we’ll get in touch as soon as a fitting role opens up.
-              </p>
-            </div>
-            <div className="empty-careers-cta-row">
-              <a 
-                href="mailto:careers@cloudbrain.tech?subject=General%20Application%20-%20Cloudbrain%20Engineering" 
-                className="btn btn-brand"
-              >
-                <Mail size={16} />
-                <span>Drop Your Portfolio (careers@cloudbrain.tech)</span>
-              </a>
-            </div>
+            <p className="empty-careers-note">
+              Think you&apos;d be a great addition to Cloudbrain? We always welcome exceptional talent. Feel free to reach out, share your work or portfolio, and we&apos;ll get in touch as soon as a fitting role opens up.
+            </p>
+            <a
+              href="mailto:careers@cloudbrain.tech?subject=General%20Application%20-%20Cloudbrain%20Engineering"
+              className="role-apply-btn empty-careers-mail"
+            >
+              <Mail size={16} aria-hidden="true" />
+              Drop Your Portfolio
+            </a>
           </div>
         )}
       </div>
@@ -322,154 +311,181 @@ export default function Careers({ isOpen, onClose }) {
 
       <style>{`
         .careers-section {
+          position: relative;
+          z-index: 2;
           background: #ffffff;
+          padding: 8.5rem 0 calc(8rem + 160px);
+          padding-bottom: 10.15rem;
+          border-bottom-left-radius: 96px;
+          border-bottom-right-radius: 96px;
         }
 
-        .careers-banner {
-          padding: 1rem 0 2.5rem 0;
-          margin-bottom: 2rem;
-          text-align: center;
-          background: transparent;
-          border: none;
-          box-shadow: none;
-        }
-
-        .banner-content {
-          max-width: 760px;
+        .careers-inner {
+          max-width: 1560px;
           margin: 0 auto;
+          padding: 0 1.5rem;
+        }
+
+        .careers-head {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          margin-bottom: 4.5rem;
+        }
+
+        .careers-head .cb-section-badge {
+          margin-bottom: 3.25rem;
+        }
+
+        .careers-head h2 {
+          font-family: var(--font-main);
+          font-size: 78px;
+          font-weight: 500;
+          line-height: 1.15;
+          letter-spacing: -0.02em;
+          color: #0B1020;
+          margin: 0 0 1.35rem;
+        }
+
+        .careers-head p {
+          max-width: 760px;
+          margin: 0;
+          font-family: var(--font-body);
+          font-size: 24px;
+          line-height: 1.55;
+          color: #64748b;
         }
 
         .roles-grid {
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 1.75rem;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 1.5rem;
+          align-items: stretch;
         }
 
         .role-card {
           display: flex;
           flex-direction: column;
-          padding: 2rem;
-          border-radius: var(--radius-xl);
+          align-items: flex-start;
+          min-width: 0;
+          height: 100%;
+          background: #F4F7FB;
+          border-radius: 32px;
+          padding: 2rem 1.65rem 1.75rem;
         }
 
-        .role-top {
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-          margin-bottom: 1rem;
-        }
-
-        .role-type {
-          font-size: 0.78rem;
-          font-weight: 600;
-          padding: 0.25rem 0.65rem;
-          background: var(--bg-secondary);
-          border-radius: var(--radius-full);
-          color: var(--text-secondary);
+        .role-card.is-skeleton {
+          min-height: 320px;
+          background: linear-gradient(90deg, #f4f7fb 0%, #ffffff 50%, #f4f7fb 100%);
+          background-size: 200% 100%;
         }
 
         .role-title {
-          font-size: 1.4rem;
-          margin-bottom: 0.5rem;
+          font-family: var(--font-main);
+          font-size: 32px;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          line-height: 1.15;
+          color: #0B1020;
+          margin: 0 0 0.75rem;
         }
 
         .role-desc {
-          font-size: 0.92rem;
-          color: var(--text-secondary);
-          margin-bottom: 1.5rem;
-          flex-grow: 1;
+          font-family: var(--font-body);
+          font-size: 18px;
+          line-height: 1.5;
+          color: #64748b;
+          margin: 0 0 1.25rem;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
 
-        .role-meta {
+        .role-tags {
           display: flex;
-          align-items: center;
-          gap: 1.25rem;
-          margin-bottom: 1.5rem;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          list-style: none;
+          margin: 0 0 1.5rem;
+          padding: 0;
         }
 
-        .meta-item {
-          display: flex;
-          align-items: center;
-          gap: 0.35rem;
-          font-size: 0.85rem;
-          color: var(--text-muted);
+        .role-tags li {
+          background: #E7EDF4;
+          color: #64748b;
+          font-family: var(--font-main);
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 1;
+          padding: 0.5rem 0.8rem;
+          border-radius: 999px;
         }
 
         .role-apply-btn {
-          width: 100%;
-          justify-content: space-between;
+          margin-top: auto;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          background: #ffffff;
+          color: #0B1020;
+          border: 1px solid #E2E8F0;
+          border-radius: 999px;
+          padding: 0.7rem 1.1rem 0.7rem 1.2rem;
+          font-family: var(--font-main);
+          font-size: 16px;
+          font-weight: 600;
+          letter-spacing: -0.01em;
+          cursor: pointer;
+          text-decoration: none;
+        }
+
+        .role-apply-btn:hover {
+          background: #3085FF;
+          color: #ffffff;
+          border-color: #3085FF;
+          transform: translateY(-1px);
+        }
+
+        .role-apply-btn:focus-visible {
+          outline: 2px solid #3085FF;
+          outline-offset: 3px;
         }
 
         .empty-careers-card {
-          padding: 3.5rem 2rem;
+          max-width: 860px;
+          margin: 0 auto;
+          background: #F4F7FB;
+          border-radius: 32px;
+          padding: 2.25rem 2rem 2rem;
           text-align: center;
-          border-radius: var(--radius-xl);
-          background: #ffffff;
-          border: 1px solid var(--border-subtle);
           display: flex;
           flex-direction: column;
           align-items: center;
-          max-width: 780px;
-          margin: 0 auto;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-        }
-
-        .empty-careers-icon-wrap {
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-          background: rgba(0, 102, 255, 0.08);
-          color: #0066ff;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-bottom: 1.25rem;
-        }
-
-        .empty-careers-tag {
-          display: inline-block;
-          font-size: 0.78rem;
-          font-weight: 700;
-          color: #64748b;
-          text-transform: uppercase;
-          letter-spacing: 0.06em;
-          margin-bottom: 0.5rem;
         }
 
         .empty-careers-title {
-          font-size: 1.75rem;
+          font-family: var(--font-main);
+          font-size: 32px;
           font-weight: 700;
-          color: var(--text-primary);
-          margin-bottom: 0.75rem;
+          letter-spacing: -0.02em;
+          line-height: 1.15;
+          color: #0B1020;
+          margin: 0 0 0.75rem;
         }
 
-        .empty-careers-desc {
-          font-size: 0.95rem;
-          color: var(--text-secondary);
-          line-height: 1.6;
-          max-width: 600px;
-          margin-bottom: 1.75rem;
+        .empty-careers-desc,
+        .empty-careers-note {
+          font-family: var(--font-body);
+          font-size: 18px;
+          line-height: 1.5;
+          color: #64748b;
+          margin: 0 0 0.9rem;
         }
 
-        .empty-careers-note-box {
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
-          border-radius: 12px;
-          padding: 1.25rem 1.5rem;
-          max-width: 620px;
-          margin-bottom: 2rem;
-        }
-
-        .empty-careers-note-box p {
-          margin: 0;
-          font-size: 0.88rem;
-          color: #475569;
-          line-height: 1.55;
-        }
-
-        .empty-careers-cta-row {
-          display: flex;
-          justify-content: center;
+        .empty-careers-mail {
+          margin-top: 0.4rem;
         }
 
         .apply-form {
@@ -599,11 +615,42 @@ export default function Careers({ isOpen, onClose }) {
         }
 
         @media (max-width: 900px) {
+          .careers-section {
+            padding-bottom: calc(6.5rem + 72px);
+            border-bottom-left-radius: 72px;
+            border-bottom-right-radius: 72px;
+          }
+        }
+
+        @media (max-width: 980px) {
+          .roles-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+
+        @media (max-width: 680px) {
+          .careers-section {
+            padding: 3.5rem 0 calc(5rem + 48px);
+            border-bottom-left-radius: 48px;
+            border-bottom-right-radius: 48px;
+          }
+
           .roles-grid {
             grid-template-columns: 1fr;
           }
-          .careers-banner {
-            padding: 0.5rem 0 1.5rem 0;
+
+          .careers-head h2 {
+            font-size: 1.85rem;
+          }
+
+          .careers-head p {
+            font-size: 1rem;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .role-apply-btn:hover {
+            transform: none;
           }
         }
       `}</style>

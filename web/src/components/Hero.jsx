@@ -107,16 +107,20 @@ export default function Hero() {
 
       <style>{`
         .hero-section {
+          --hero-title-size: clamp(3.2rem, 7.8vw, 7.5rem);
+          --hero-line-height: 1.08;
+          --hero-pad-top: 17.5rem;
+          --hero-line1-bottom: calc(var(--hero-pad-top) + var(--hero-title-size) * var(--hero-line-height));
           position: relative;
           isolation: isolate;
-          min-height: calc(100vh - 76px);
+          min-height: auto;
           display: flex;
           align-items: center;
           justify-content: center;
           text-align: center;
           background-color: #ffffff;
-          padding: 15.5rem 1.5rem 23rem 1.5rem;
-          overflow: hidden;
+          padding: 17.5rem 1.5rem calc(280px + 5rem) 1.5rem;
+          overflow: clip;
           box-sizing: border-box;
         }
 
@@ -214,13 +218,16 @@ export default function Hero() {
           z-index: 1;
           pointer-events: none;
           background-image:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cpath d='M140 118v44M118 140h44' stroke='%230f172a' stroke-opacity='.10' stroke-width='1.2'/%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cpath d='M140 118v44M118 140h44' stroke='%230f172a' stroke-opacity='.14' stroke-width='1.25' stroke-linecap='round'/%3E%3C/svg%3E"),
             linear-gradient(to right, rgba(15, 23, 42, 0.045) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(15, 23, 42, 0.045) 1px, transparent 1px);
           background-size: 280px 280px, 70px 70px, 70px 70px;
-          background-position: center;
-          -webkit-mask-image: linear-gradient(to bottom, transparent 8%, #000 30%, #000 70%, transparent 95%);
-          mask-image: linear-gradient(to bottom, transparent 8%, #000 30%, #000 70%, transparent 95%);
+          background-position:
+            calc(50% - 140px) calc(var(--hero-line1-bottom) - 140px),
+            calc(50% + 35px) var(--hero-line1-bottom),
+            calc(50% + 35px) var(--hero-line1-bottom);
+          -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 18%, #000 30%, #000 78%, transparent 96%);
+          mask-image: linear-gradient(to bottom, transparent 0%, transparent 18%, #000 30%, #000 78%, transparent 96%);
         }
 
         /* Content Container */
@@ -252,7 +259,7 @@ export default function Hero() {
         .hero-title {
           font-family: var(--font-main, 'cbsans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
           font-size: clamp(3.2rem, 7.8vw, 7.5rem);
-          font-weight: 400;
+          font-weight: 500;
           line-height: 1.08;
           letter-spacing: -0.04em;
           color: #0f172a;
@@ -381,10 +388,10 @@ export default function Hero() {
         /* Subtitle: ~20px (1.25rem) */
         .hero-subtitle {
           font-family: var(--font-body, 'cbsans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
-          font-size: clamp(1.125rem, 1.4vw, 1.25rem);
+          font-size: 24px;
           font-weight: 400;
           line-height: 1.6;
-          color: #64748b;
+          color: #4A5565;
           max-width: 1180px;
           margin: 2.25rem auto 0 auto;
           padding: 0 1rem;
@@ -401,6 +408,10 @@ export default function Hero() {
         }
 
         @media (max-width: 1100px) {
+          .hero-section {
+            --hero-title-size: clamp(2.8rem, 7vw, 5.2rem);
+          }
+
           .hero-title {
             font-size: clamp(2.8rem, 7vw, 5.2rem);
           }
@@ -408,12 +419,16 @@ export default function Hero() {
 
         @media (max-width: 1024px) {
           .hero-section {
+            --hero-pad-top: 10.5rem;
             padding: 10.5rem 1.5rem 13rem 1.5rem;
           }
         }
 
         @media (max-width: 768px) {
           .hero-section {
+            --hero-pad-top: 7rem;
+            --hero-title-size: clamp(2.2rem, 8.5vw, 3.2rem);
+            --hero-line-height: 1.15;
             min-height: calc(100vh - 70px);
             padding: 7rem 1.25rem 6.5rem 1.25rem;
           }
@@ -443,6 +458,7 @@ export default function Hero() {
 
         @media (max-width: 480px) {
           .hero-section {
+            --hero-pad-top: 6rem;
             padding: 6rem 1rem 5.5rem 1rem;
           }
 

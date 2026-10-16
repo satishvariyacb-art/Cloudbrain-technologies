@@ -171,7 +171,7 @@ export default function Preloader({ onComplete }) {
 
         .preloader-bar-fill {
           height: 100%;
-          background: linear-gradient(90deg, #F42A37, #FFBE01, #04AB6B, #3085FF);
+          background: linear-gradient(90deg, #F42A37, #FFBE01, #00AF57, #3085FF);
           transition: width 0.2s linear;
         }
 

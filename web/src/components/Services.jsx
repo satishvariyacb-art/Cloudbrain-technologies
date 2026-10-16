@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { SERVICES_DATA } from '../data/websiteData';
 import SectionBadge from './SectionBadge';
 import {
@@ -9,11 +9,6 @@ import {
   WebServiceIcon,
   AiServiceIcon,
 } from '../utils/serviceIcons';
-
-const MAX_TILT = 16;
-const TRACK_LERP = 0.2;
-const REST_LERP = 0.15;
-const SETTLE = 0.002;
 
 const CARD_ORDER = [
   'android-dev',
@@ -33,135 +28,12 @@ const SERVICE_ICONS = {
   'ai-ml': AiServiceIcon,
 };
 
-function clamp(value, min, max) {
-  return Math.min(max, Math.max(min, value));
-}
-
 function ServiceCard({ service }) {
   const Icon = SERVICE_ICONS[service.id];
-  const sceneRef = useRef(null);
-  const cardRef = useRef(null);
-
-  useEffect(() => {
-    const scene = sceneRef.current;
-    const card = cardRef.current;
-    if (!scene || !card) return;
-
-    const hoverMq = window.matchMedia('(hover: hover) and (pointer: fine)');
-    const motionMq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const target = { nx: 0, ny: 0, px: 50, py: 50, hover: 0 };
-    const current = { nx: 0, ny: 0, px: 50, py: 50, hover: 0 };
-    let enabled = hoverMq.matches && !motionMq.matches;
-    let rect = null;
-    let raf = 0;
-
-    const applyVars = () => {
-      card.style.setProperty('--tilt-x', `${(-current.ny * MAX_TILT).toFixed(3)}deg`);
-      card.style.setProperty('--tilt-y', `${(current.nx * MAX_TILT).toFixed(3)}deg`);
-      card.style.setProperty('--pointer-x', `${current.px.toFixed(2)}%`);
-      card.style.setProperty('--pointer-y', `${current.py.toFixed(2)}%`);
-      card.style.setProperty('--hover-lift', current.hover.toFixed(4));
-      card.style.setProperty('--shadow-x', `${(-current.nx * 18).toFixed(2)}px`);
-      card.style.setProperty('--shadow-y', `${(12 + current.hover * 20 + current.ny * 10).toFixed(2)}px`);
-    };
-
-    const tick = () => {
-      const k = target.hover > 0.5 ? TRACK_LERP : REST_LERP;
-      current.nx += (target.nx - current.nx) * k;
-      current.ny += (target.ny - current.ny) * k;
-      current.px += (target.px - current.px) * k;
-      current.py += (target.py - current.py) * k;
-      current.hover += (target.hover - current.hover) * k;
-      applyVars();
-
-      const settled =
-        Math.abs(current.nx - target.nx) < SETTLE &&
-        Math.abs(current.ny - target.ny) < SETTLE &&
-        Math.abs(current.hover - target.hover) < SETTLE;
-
-      if (settled && target.hover === 0) {
-        current.nx = 0;
-        current.ny = 0;
-        current.px = 50;
-        current.py = 50;
-        current.hover = 0;
-        applyVars();
-        raf = 0;
-        return;
-      }
-
-      raf = requestAnimationFrame(tick);
-    };
-
-    const ensureTick = () => {
-      if (!raf) raf = requestAnimationFrame(tick);
-    };
-
-    const readPointer = (event) => {
-      if (!rect || rect.width === 0 || rect.height === 0) return;
-      const pointerX = (event.clientX - rect.left) / rect.width;
-      const pointerY = (event.clientY - rect.top) / rect.height;
-      target.nx = clamp((pointerX - 0.5) * 2, -1, 1);
-      target.ny = clamp((pointerY - 0.5) * 2, -1, 1);
-      target.px = clamp(pointerX * 100, 0, 100);
-      target.py = clamp(pointerY * 100, 0, 100);
-      target.hover = 1;
-    };
-
-    const onEnter = (event) => {
-      if (!enabled || event.pointerType === 'touch') return;
-      scene.classList.add('is-hover');
-      rect = scene.getBoundingClientRect();
-      readPointer(event);
-      ensureTick();
-    };
-
-    const onMove = (event) => {
-      if (!enabled || event.pointerType === 'touch') return;
-      rect = scene.getBoundingClientRect();
-      readPointer(event);
-      ensureTick();
-    };
-
-    const onLeave = () => {
-      scene.classList.remove('is-hover');
-      target.nx = 0;
-      target.ny = 0;
-      target.px = 50;
-      target.py = 50;
-      target.hover = 0;
-      rect = null;
-      ensureTick();
-    };
-
-    const syncEnabled = () => {
-      enabled = hoverMq.matches && !motionMq.matches;
-      if (!enabled) onLeave();
-    };
-
-    hoverMq.addEventListener('change', syncEnabled);
-    motionMq.addEventListener('change', syncEnabled);
-    scene.addEventListener('pointerenter', onEnter);
-    scene.addEventListener('pointermove', onMove);
-    scene.addEventListener('pointerleave', onLeave);
-    scene.addEventListener('pointercancel', onLeave);
-
-    return () => {
-      hoverMq.removeEventListener('change', syncEnabled);
-      motionMq.removeEventListener('change', syncEnabled);
-      scene.removeEventListener('pointerenter', onEnter);
-      scene.removeEventListener('pointermove', onMove);
-      scene.removeEventListener('pointerleave', onLeave);
-      scene.removeEventListener('pointercancel', onLeave);
-      scene.classList.remove('is-hover');
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, []);
 
   return (
-    <div ref={sceneRef} className="sv-card-scene">
-      <div ref={cardRef} className="sv-card">
-        <div className="sv-card-glare" aria-hidden="true" />
+    <div className="sv-card-scene">
+      <div className="sv-card">
         <div className="sv-icon-wrap">
           {Icon ? <Icon /> : null}
         </div>
@@ -190,7 +62,7 @@ export default function Services() {
             pillColor="#ffffff"
           />
           <h2 className="sv-main-title">
-            What We Build, Start to Finish
+            What We Build,<br />Start to Finish
           </h2>
           <p className="sv-main-sub">
             Mobile, web, design, marketing, AI - whatever your product needs, we&apos;ve already got the team for it.
@@ -208,14 +80,14 @@ export default function Services() {
         .services-showcase-section {
           width: 100%;
           background: #F8FAFC;
-          padding: 5.5rem 0;
+          padding: 9rem 0 5.5rem;
           position: relative;
           overflow: visible;
           z-index: 1;
         }
 
         .sv-container {
-          max-width: 1240px;
+          max-width: 1560px;
           margin: 0 auto;
           padding: 0 1.5rem;
         }
@@ -226,11 +98,15 @@ export default function Services() {
           margin: 0 auto 3.5rem auto;
         }
 
+        .sv-main-header .cb-section-badge {
+          margin-bottom: 3.5rem;
+        }
+
         .sv-main-title {
           font-family: var(--font-main);
-          font-size: 2.5rem;
-          font-weight: 700;
-          line-height: 1.2;
+          font-size: 78px;
+          font-weight: 500;
+          line-height: 1.15;
           letter-spacing: -0.03em;
           color: #0f172a;
           margin: 0 0 0.85rem;
@@ -238,88 +114,38 @@ export default function Services() {
 
         .sv-main-sub {
           font-family: var(--font-body);
-          font-size: 1.05rem;
+          font-size: 24px;
           color: #64748b;
           line-height: 1.6;
           margin: 0 auto;
-          max-width: 560px;
         }
 
         .sv-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1.25rem;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 1.5rem;
           overflow: visible;
         }
 
         .sv-card-scene {
           position: relative;
-          z-index: 1;
           height: 100%;
-          perspective: 720px;
-          transform-style: preserve-3d;
-        }
-
-        .sv-card-scene:hover {
-          z-index: 4;
         }
 
         .sv-card {
-          --tilt-x: 0deg;
-          --tilt-y: 0deg;
-          --pointer-x: 50%;
-          --pointer-y: 50%;
-          --hover-lift: 0;
-          --shadow-x: 0px;
-          --shadow-y: 10px;
           background: #ffffff;
           border-radius: 32px;
-          padding: 1.7rem 1.55rem 1.65rem;
-          min-height: 292px;
+          padding: 2rem 1.65rem 2.1rem;
+          min-height: 440px;
           height: 100%;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
+          gap: 1.85rem;
           cursor: default;
           position: relative;
-          transform-origin: center center;
-          transform-style: preserve-3d;
-          overflow: visible;
-          transform:
-            translate3d(0, calc(var(--hover-lift) * -14px), calc(var(--hover-lift) * 56px))
-            rotateX(var(--tilt-x))
-            rotateY(var(--tilt-y))
-            scale3d(
-              calc(1 + var(--hover-lift) * 0.035),
-              calc(1 + var(--hover-lift) * 0.035),
-              1
-            );
-          box-shadow:
-            var(--shadow-x) var(--shadow-y) 36px rgba(15, 23, 42, calc(0.04 + var(--hover-lift) * 0.08)),
-            0 calc(var(--hover-lift) * 26px) 56px rgba(48, 134, 255, calc(var(--hover-lift) * 0.38));
-          transition:
-            background-color 0.28s ease,
-            color 0.28s ease;
-        }
-
-        .sv-card-scene:hover .sv-card {
-          will-change: transform;
-        }
-
-        .sv-card-glare {
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          pointer-events: none;
-          z-index: 1;
-          opacity: var(--hover-lift);
-          transform: translateZ(2px);
-          background: radial-gradient(
-            circle at var(--pointer-x) var(--pointer-y),
-            rgba(255, 255, 255, 0.34),
-            rgba(255, 255, 255, 0.1) 24%,
-            transparent 62%
-          );
+          box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+          transition: background-color 0.28s ease;
         }
 
         .sv-icon-wrap {
@@ -347,22 +173,22 @@ export default function Services() {
         .sv-content {
           position: relative;
           z-index: 2;
-          max-width: 96%;
         }
 
         .sv-content h3 {
           font-family: var(--font-main);
-          font-size: 1.18rem;
+          font-size: 32px;
           font-weight: 700;
+          line-height: 1.15;
           color: #0f172a;
-          margin: 0 0 0.45rem 0;
+          margin: 0 0 0.75rem 0;
           letter-spacing: -0.02em;
           transition: color 0.35s ease;
         }
 
         .sv-content p {
           font-family: var(--font-body);
-          font-size: 0.9rem;
+          font-size: 18px;
           color: #4A5565;
           line-height: 1.5;
           margin: 0;
@@ -370,39 +196,33 @@ export default function Services() {
         }
 
         @media (hover: hover) and (pointer: fine) {
-          .sv-card-scene:hover .sv-card,
-          .sv-card-scene.is-hover .sv-card {
+          .sv-card-scene:hover .sv-card {
             background-color: #3085FF;
           }
 
-          .sv-card-scene:hover .sv-icon-wrap,
-          .sv-card-scene.is-hover .sv-icon-wrap {
+          .sv-card-scene:hover .sv-icon-wrap {
             background-color: #ffffff;
           }
 
-          .sv-card-scene:hover .sv-icon-svg,
-          .sv-card-scene.is-hover .sv-icon-svg {
+          .sv-card-scene:hover .sv-icon-svg {
             color: #3085FF;
-            filter: drop-shadow(0 8px 12px rgba(15, 23, 42, 0.12));
           }
 
           .sv-card-scene:hover .sv-content h3,
-          .sv-card-scene:hover .sv-content p,
-          .sv-card-scene.is-hover .sv-content h3,
-          .sv-card-scene.is-hover .sv-content p {
+          .sv-card-scene:hover .sv-content p {
             color: #ffffff;
           }
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1500px) {
           .sv-grid {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
           }
         }
 
         @media (max-width: 640px) {
           .sv-main-title {
-            font-size: 1.85rem;
+            font-size: 78px;
           }
           .services-showcase-section {
             padding: 3.5rem 0;
@@ -411,32 +231,18 @@ export default function Services() {
             grid-template-columns: 1fr;
           }
           .sv-card {
-            min-height: 248px;
-          }
-        }
-
-        @media (hover: none), (pointer: coarse) {
-          .sv-card-glare {
-            display: none;
-          }
-          .sv-card {
-            transform: none;
+            padding: 1.6rem 1.35rem 1.75rem;
+            gap: 1.5rem;
           }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .sv-card {
-            transform: none;
-            transition: background-color 0.2s ease;
-          }
-          .sv-card-glare {
-            display: none;
-          }
+          .sv-card,
+          .sv-icon-wrap,
           .sv-icon-svg,
-          .sv-card-scene:hover .sv-icon-svg,
-          .sv-card-scene.is-hover .sv-icon-svg {
-            transition: color 0.2s ease;
-            filter: none;
+          .sv-content h3,
+          .sv-content p {
+            transition: none;
           }
         }
       `}</style>

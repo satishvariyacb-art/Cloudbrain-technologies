@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function CloudBrainLogo({ height, className = "" }) {
+export default function CloudBrainLogo({ height, className = "", variant = "default" }) {
   return (
     <div
       className={`cloudbrain-logo-root ${className}`}
@@ -11,7 +11,7 @@ export default function CloudBrainLogo({ height, className = "" }) {
       }}
     >
       <img
-        src="/logo.svg"
+        src={variant === "light" ? "/logo-light.svg" : "/logo.svg"}
         alt="CloudBrain Logo"
         style={{
           height: height != null ? '100%' : 'auto',

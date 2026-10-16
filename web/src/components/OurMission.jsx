@@ -11,7 +11,7 @@ export default function OurMission() {
             Our Mission
           </h2>
           <p className="om-v2-description">
-            We build digital products for users through innovation to deliver real value.
+            We build digital products for users through innovation to<br /> deliver real value.
           </p>
         </div>
 
@@ -288,7 +288,10 @@ export default function OurMission() {
         .om-v2-section {
           background-color: #3086FF; /* Warm Vivid Yellow matching reference */
           margin-top: -80px; /* Moves Yellow section up under About Card so About bottom radius shows over Yellow */
-          padding: 10rem 2rem 7.5rem 2rem; /* Increased top padding to maintain internal spacing when pulled up */
+          padding: 80px 2rem 0 2rem; /* 80px is the hidden overlap; content centers in the visible area */
+          min-height: calc(23.5vw + 80px);
+          display: flex;
+          align-items: center;
           width: 100%;
           position: relative;
           overflow: hidden;
@@ -302,6 +305,7 @@ export default function OurMission() {
         }
 
         .om-v2-container {
+          width: 100%;
           max-width: 1400px;
           margin: 0 auto;
           display: flex;
@@ -314,14 +318,15 @@ export default function OurMission() {
 
         .om-v2-content {
           flex: 1;
-          max-width: 720px;
+          max-width: 860px;
           text-align: left;
+          container-type: inline-size;
         }
 
         .om-v2-title {
           font-family: var(--font-main, 'cbsans', sans-serif);
-          font-size: clamp(2.8rem, 4.8vw, 4rem);
-          font-weight: 800;
+          font-size: 78px;
+          font-weight: 500;
           line-height: 1.12;
           letter-spacing: -0.03em;
           color:rgb(255, 255, 255);
@@ -334,7 +339,7 @@ export default function OurMission() {
           line-height: 1.55;
           color:rgb(255, 255, 255);
           margin: 0;
-          max-width: 540px;
+          max-width: 860px;
         }
 
         .om-v2-graphic-wrap {
@@ -345,17 +350,20 @@ export default function OurMission() {
           justify-content: center;
         }
 
+        .om-v2-graphic-wrap svg,
         .om-v2-wireframe-svg {
-          width: 100%;
+          width: auto;
+          max-width: 100%;
           height: auto;
-          max-height: 290px;
+          max-height: 15vw;
           filter: drop-shadow(0 12px 24px rgba(217, 119, 6, 0.2));
         }
 
         @media (max-width: 1024px) {
           .om-v2-section {
             margin-top: -60px;
-            padding-top: 8rem;
+            padding-top: 60px;
+            min-height: calc(23.5vw + 60px);
             border-bottom-left-radius: 60px;
             border-bottom-right-radius: 60px;
           }
@@ -363,7 +371,14 @@ export default function OurMission() {
 
         @media (max-width: 900px) {
           .om-v2-section {
-            padding: 7.5rem 1.5rem 5rem 1.5rem;
+            display: block;
+            min-height: 0;
+            padding: 6rem 1.5rem 3.5rem 1.5rem;
+          }
+
+          .om-v2-graphic-wrap svg,
+          .om-v2-wireframe-svg {
+            max-height: 220px;
           }
 
           .om-v2-container {
