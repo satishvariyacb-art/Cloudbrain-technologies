@@ -544,7 +544,7 @@ export default function OurPhilosophy() {
         .ph-frame {
           position: absolute;
           box-sizing: border-box;
-          border: 1.5px solid rgba(210, 214, 220, 0.7);
+          border: 1.5px solid rgba(210, 214, 220, 0.35);
           background: transparent;
           pointer-events: none;
           z-index: 0;
@@ -566,12 +566,13 @@ export default function OurPhilosophy() {
           border-radius: 3cqw;
         }
 
-        .ph-frame-mid {
-          left: -17%;
-          top: 21.5%;
-          width: 74%;
-          height: 80%;
-          border-radius: 3cqw;
+        .ph-frame-inner {
+          left: 11.3%;
+          top: 46.2%;
+          width: 24.5%;
+          height: 26%;
+          border-radius: 2.5cqw;
+          border-color: rgba(214, 218, 224, 0.25);
         }
 
         .ph-frame-inner {

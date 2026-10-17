@@ -171,6 +171,7 @@ export default function Careers() {
   };
 
   return (
+    <div className="careers-shell">
     <section id="careers" className="careers-section">
       <div className="careers-inner">
         <header className="careers-head">
@@ -454,14 +455,20 @@ export default function Careers() {
       )}
 
       <style>{`
+        .careers-shell {
+          background: #071A3A;
+        }
+
         .careers-section {
           position: relative;
           z-index: 2;
           background: #ffffff;
           padding: 8.5rem var(--page-gutter) calc(8rem + 160px);
           padding-bottom: 10.15rem;
-          border-bottom-left-radius: 80px;
-          border-bottom-right-radius: 80px;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+          border-bottom-left-radius: 64px;
+          border-bottom-right-radius: 64px;
         }
 
         .careers-inner {
@@ -493,12 +500,13 @@ export default function Careers() {
         }
 
         .careers-head p {
-          max-width: 1100px;
+          width: 859px;
+          max-width: 100%;
           margin: 0;
           font-family: var(--font-body);
           font-size: 24px;
           line-height: 1.55;
-          color: #64748b;
+          color: #020618;
         }
 
         .roles-grid {
@@ -1254,5 +1262,6 @@ export default function Careers() {
         }
       `}</style>
     </section>
+    </div>
   );
 }

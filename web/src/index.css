@@ -444,3 +444,42 @@ html, body {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+h2[data-hz='play'] .hz-word,
+h3[data-hz='play'] .hz-word {
+  display: inline-block;
+  transform-origin: center center;
+  animation: hz-word-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--hz-i) * 100ms);
+}
+
+h2[data-hz='done'] .hz-word,
+h3[data-hz='done'] .hz-word {
+  display: inline-block;
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+@keyframes hz-word-in {
+  from {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html, body {
+    scroll-behavior: auto;
+  }
+
+  .hz-word {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

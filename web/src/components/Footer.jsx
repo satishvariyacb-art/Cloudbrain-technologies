@@ -67,7 +67,7 @@ export default function Footer({ onNavClick, curved = false }) {
 
         <div className="site-footer-grid">
           <nav className="site-footer-col" aria-label="Quick Links">
-            <h2>Quick Links</h2>
+            <p className="site-footer-label">Quick Links</p>
             <ul>
               {QUICK_LINKS.map((item) => (
                 <li key={item.label}>
@@ -85,7 +85,7 @@ export default function Footer({ onNavClick, curved = false }) {
           </nav>
 
           <nav className="site-footer-col" aria-label="Our Services">
-            <h2>Our Services</h2>
+            <p className="site-footer-label">Our Services</p>
             <ul>
               {SERVICE_LINKS.map((item) => (
                 <li key={item.label}>
@@ -103,7 +103,7 @@ export default function Footer({ onNavClick, curved = false }) {
           </nav>
 
           <div className="site-footer-col">
-            <h2>Contact Information</h2>
+            <p className="site-footer-label">Contact Information</p>
             <ul className="site-footer-contact">
               <li>
                 <span className="site-footer-icon" aria-hidden="true">
@@ -215,7 +215,7 @@ export default function Footer({ onNavClick, curved = false }) {
           margin-bottom: 8rem;
         }
 
-        .site-footer-col h2 {
+        .site-footer-label {
           margin: 0 0 1.5rem;
           font-family: var(--font-main);
           font-size: 18px;
@@ -375,7 +375,7 @@ export default function Footer({ onNavClick, curved = false }) {
             grid-column: 1 / -1;
           }
 
-          .site-footer-col h2 {
+          .site-footer-label {
             font-size: 0.95rem;
             margin-bottom: 0.7rem;
           }

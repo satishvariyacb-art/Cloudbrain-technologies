@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { apiClient } from '../services/apiClient';
 import SectionBadge from './SectionBadge';
@@ -13,49 +13,42 @@ const REASONS = [
     icon: Heart,
     title: 'Employee-First Philosophy',
     desc: 'We prioritize engineer wellbeing, psychological safety, zero crunch culture, and long-term career growth.',
-    bg: '#EAF2FF',
-    color: '#3B82F6'
+    color: '#308BFF'
   },
   {
     icon: Medal,
     title: 'Reward & Recognition',
     desc: 'Performance-based bonuses, quarterly spot awards, equity stock options, and instant recognition for high impact.',
-    bg: '#FFF6DE',
     color: '#E0A800'
   },
   {
     icon: Users,
     title: 'Positive & Inclusive Environment',
     desc: 'A vibrant, open culture built on mutual respect, meritocracy, transparent feedback, and psychological safety.',
-    bg: '#E7F8EE',
     color: '#22A06B'
   },
   {
     icon: Monitor,
     title: 'Advanced Tools & Technologies',
     desc: 'Work with M3 Max MacBooks, CoreML, SwiftUI 6, Jetpack Compose, OpenAI APIs, and high-end hardware.',
-    bg: '#FFECEE',
     color: '#F25C6B'
   },
   {
     icon: Globe,
     title: 'Onsite & Global Opportunities',
     desc: 'Opportunities to work with international clients across North America, EU, and Asia with onsite client visits.',
-    bg: '#EAF2FF',
-    color: '#3B82F6'
+    color: '#308BFF'
   },
   {
     icon: PartyPopper,
     title: 'Fun, Festivals & Connect',
     desc: 'Quarterly team retreats, festival celebrations, gaming tournaments, hackathons, and Friday social connects.',
-    bg: '#FFF6DE',
     color: '#E0A800'
   },
   {
     icon: Gift,
     title: 'Birthday Appreciations',
     desc: 'Special birthday leaves, personalized celebration gifts, team treats, and custom appreciation gestures.',
-    bg: '#F2F4F7',
     color: '#8B95A5'
   }
 ];
@@ -89,7 +82,7 @@ export default function CulturePage() {
   const [loading, setLoading] = useState(true);
   const [activeAlbum, setActiveAlbum] = useState(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     let cancelled = false;
     async function loadCulture() {
@@ -115,8 +108,20 @@ export default function CulturePage() {
 
   useEffect(() => {
     document.body.style.overflow = activeAlbum ? 'hidden' : '';
+    if (!activeAlbum) {
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }
+    const onKey = (event) => {
+      if (event.key === 'Escape') setActiveAlbum(null);
+      if (event.key === 'ArrowRight') stepAlbum(1);
+      if (event.key === 'ArrowLeft') stepAlbum(-1);
+    };
+    window.addEventListener('keydown', onKey);
     return () => {
       document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
     };
   }, [activeAlbum]);
 
@@ -183,7 +188,15 @@ export default function CulturePage() {
               </div>
             )}
           </div>
-        ) : null}
+        ) : (
+          <div className="cp-mosaic" aria-hidden="true">
+            <div className="cp-shot cp-shot-main" />
+            <div className="cp-shot-stack">
+              <div className="cp-shot" />
+              <div className="cp-shot" />
+            </div>
+          </div>
+        )}
       </section>
 
       <section className="cp-reasons">
@@ -199,11 +212,13 @@ export default function CulturePage() {
             const Icon = reason.icon;
             return (
               <article key={reason.title} className="cp-reason">
-                <span className="cp-reason-icon" style={{ background: reason.bg, color: reason.color }}>
-                  <Icon size={26} strokeWidth={1.8} />
+                <span className="cp-reason-icon" style={{ background: `${reason.color}1a`, color: reason.color }}>
+                  <Icon size={60} strokeWidth={1.6} />
                 </span>
-                <h3>{reason.title}</h3>
-                <p>{reason.desc}</p>
+                <div className="cp-reason-copy">
+                  <h3>{reason.title}</h3>
+                  <p>{reason.desc}</p>
+                </div>
               </article>
             );
           })}
@@ -235,6 +250,8 @@ export default function CulturePage() {
                 className="cp-album"
                 onClick={() => openItem(item)}
               >
+                <span className="cp-album-peek cp-album-peek-back" aria-hidden="true" />
+                <span className="cp-album-peek" aria-hidden="true" />
                 <img src={mediaSrc(item)} alt={item.title || 'Cloudbrain moment'} />
                 {index === 0 && (
                   <>
@@ -265,34 +282,91 @@ export default function CulturePage() {
 
       {current && createPortal(
         <div className="cp-lightbox" onClick={() => setActiveAlbum(null)}>
-          <div className="cp-lightbox-card" onClick={(event) => event.stopPropagation()}>
-            <button type="button" className="cp-lightbox-close" onClick={() => setActiveAlbum(null)} aria-label="Close">
-              <X size={18} />
-            </button>
-            {activeAlbum.items.length > 1 && (
-              <>
-                <button type="button" className="cp-lightbox-nav cp-lightbox-prev" onClick={() => stepAlbum(-1)} aria-label="Previous">
-                  <ChevronLeft size={22} />
+          <div
+            className="cp-lightbox-card"
+            role="dialog"
+            aria-modal="true"
+            aria-label={activeAlbum.items[0]?.title || activeAlbum.items[0]?.category || 'Gallery'}
+          >
+            <span className="cp-lightbox-rule" aria-hidden="true" />
+            <header className="cp-lightbox-bar" onClick={(event) => event.stopPropagation()}>
+              <div className="cp-lightbox-id">
+                <div className="cp-lightbox-id-top">
+                  <span className="cp-lightbox-badge">
+                    {(activeAlbum.items[0]?.category || 'Work').split(/\s+/)[0]}
+                  </span>
+                  <strong>{activeAlbum.items[0]?.title || activeAlbum.items[0]?.category || 'Our moments'}</strong>
+                </div>
+                <span className="cp-lightbox-meta">
+                  <ImageIcon size={12} />
+                  {activeAlbum.items.filter((item) => !isVideo(item)).length} Images
+                  {activeAlbum.items.some(isVideo) && (
+                    <>
+                      <Video size={12} />
+                      {activeAlbum.items.filter(isVideo).length} Videos
+                    </>
+                  )}
+                </span>
+              </div>
+              <div className="cp-lightbox-tools">
+                <span className="cp-lightbox-count">{activeAlbum.index + 1}/{activeAlbum.items.length}</span>
+                <button type="button" className="cp-lightbox-close" onClick={() => setActiveAlbum(null)} aria-label="Close gallery">
+                  <X size={16} strokeWidth={1.5} />
                 </button>
-                <button type="button" className="cp-lightbox-nav cp-lightbox-next" onClick={() => stepAlbum(1)} aria-label="Next">
-                  <ChevronRight size={22} />
-                </button>
-              </>
-            )}
-            {isVideo(current) && current.videoUrl ? (
-              getEmbedInfo(current.videoUrl) ? (
-                <iframe
-                  src={getEmbedInfo(current.videoUrl).embedUrl}
-                  title={current.title || 'Video'}
-                  allow="autoplay; encrypted-media; picture-in-picture"
-                  allowFullScreen
-                />
-              ) : (
-                <video src={current.videoUrl} controls autoPlay playsInline />
-              )
-            ) : (
-              <img src={mediaSrc(current)} alt={current.title || 'Cloudbrain moment'} />
-            )}
+              </div>
+            </header>
+
+            <div className="cp-lightbox-focus" onClick={(event) => event.stopPropagation()}>
+              <div className="cp-lightbox-stage">
+                {activeAlbum.items.length > 1 && (
+                  <>
+                    <button type="button" className="cp-lightbox-nav cp-lightbox-prev" onClick={() => stepAlbum(-1)} aria-label="Previous">
+                      <ChevronLeft size={18} strokeWidth={1.5} />
+                    </button>
+                    <button type="button" className="cp-lightbox-nav cp-lightbox-next" onClick={() => stepAlbum(1)} aria-label="Next">
+                      <ChevronRight size={18} strokeWidth={1.5} />
+                    </button>
+                  </>
+                )}
+                {isVideo(current) && current.videoUrl ? (
+                  getEmbedInfo(current.videoUrl) ? (
+                    <iframe
+                      src={getEmbedInfo(current.videoUrl).embedUrl}
+                      title={current.title || 'Video'}
+                      allow="autoplay; encrypted-media; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <video src={current.videoUrl} controls autoPlay playsInline />
+                  )
+                ) : (
+                  <img src={mediaSrc(current)} alt={current.title || 'Cloudbrain moment'} />
+                )}
+              </div>
+
+              {activeAlbum.items.length > 1 && (
+                <div className="cp-lightbox-thumbs">
+                  {activeAlbum.items.map((item, index) => (
+                    <button
+                      key={item.id || `${item.title}-${index}`}
+                      type="button"
+                      className={`cp-lightbox-thumb${index === activeAlbum.index ? ' is-active' : ''}`}
+                      onClick={() => setActiveAlbum((album) => (album ? { ...album, index } : album))}
+                      aria-label={`Show ${index + 1} of ${activeAlbum.items.length}`}
+                      aria-current={index === activeAlbum.index ? 'true' : undefined}
+                    >
+                      <img src={mediaSrc(item)} alt="" />
+                      {isVideo(item) && (
+                        <>
+                          <Video size={12} />
+                          {item.duration ? <em className="cp-lightbox-duration">{item.duration}</em> : null}
+                        </>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>,
         document.body
@@ -421,27 +495,35 @@ export default function CulturePage() {
         .cp-hero h1 {
           margin: 0;
           font-family: var(--font-main);
-          font-size: 64px;
-          font-weight: 700;
+          font-size: 78px;
+          font-weight: 500;
           line-height: 1.05;
           letter-spacing: -0.035em;
           color: #0b1020;
         }
 
         .cp-hero-copy p {
-          max-width: 34rem;
+          width: 859px;
+          max-width: 100%;
           margin: 1.15rem 0 0;
           font-family: var(--font-body);
-          font-size: 18px;
+          font-size: 24px;
           line-height: 1.55;
-          color: #64748b;
+          color: #020618;
         }
 
         .cp-mosaic {
           display: grid;
+          width: 100%;
+          aspect-ratio: 1500 / 460;
+          min-height: 240px;
           grid-template-columns: 1.72fr 1fr;
           gap: 16px;
           margin-top: 2.75rem;
+        }
+
+        .cp-mosaic[aria-hidden='true'] .cp-shot {
+          cursor: default;
         }
 
         .cp-shot,
@@ -463,7 +545,8 @@ export default function CulturePage() {
 
         .cp-shot-main,
         .cp-shot-stack {
-          height: 460px;
+          height: 100%;
+          min-height: 0;
         }
 
         .cp-shot-stack {
@@ -487,14 +570,24 @@ export default function CulturePage() {
 
         .cp-reasons,
         .cp-gallery {
-          padding: 4.5rem var(--page-gutter) 2rem;
+          padding: 7.5rem var(--page-gutter) 2rem;
         }
 
         .cp-reasons {
           position: relative;
           z-index: 1;
-          margin-top: -4.75rem;
+          margin-top: -3.75rem;
+          padding-bottom: calc(2rem + 64px);
           background: #F8FAFC;
+          border-top-left-radius: 64px;
+          border-top-right-radius: 64px;
+        }
+
+        .cp-gallery {
+          position: relative;
+          z-index: 2;
+          margin-top: -64px;
+          background: #ffffff;
           border-top-left-radius: 64px;
           border-top-right-radius: 64px;
         }
@@ -508,7 +601,9 @@ export default function CulturePage() {
         .cp-reasons-head {
           align-items: center;
           text-align: center;
-          margin-bottom: 2.75rem;
+          width: min(838px, 100%);
+          margin: 0 auto 2.75rem;
+          gap: 32px;
         }
 
         .cp-gallery-head {
@@ -519,7 +614,11 @@ export default function CulturePage() {
 
         .cp-reasons-head .cb-section-badge,
         .cp-gallery-head .cb-section-badge {
-          margin-bottom: 1.35rem;
+          margin-bottom: 2.35rem;
+        }
+
+        .cp-reasons-head .cb-section-badge {
+          margin-bottom: 0;
         }
 
         .cp-reasons h2,
@@ -533,7 +632,8 @@ export default function CulturePage() {
         }
 
         .cp-reasons h2 {
-          font-size: 64px;
+          font-size: 78px;
+          font-weight: 500;
         }
 
         .cp-gallery h2 {
@@ -550,7 +650,11 @@ export default function CulturePage() {
         }
 
         .cp-reasons-head p {
-          max-width: 38rem;
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+          font-size: 24px;
+          color: #020618;
         }
 
         .cp-reasons-grid {
@@ -572,41 +676,55 @@ export default function CulturePage() {
           background: #ffffff;
           border-radius: 48px;
           padding: 32px;
-          min-height: 461px;
-          height: 100%;
+          height: 461px;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
+          gap: 64px;
           box-shadow: none;
         }
 
         .cp-reason-icon {
-          width: 64px;
-          height: 64px;
-          border-radius: 18px;
+          width: 100px;
+          height: 100px;
+          border-radius: 20px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: 0;
           flex: none;
         }
 
+        .cp-reason-icon svg {
+          width: 60px;
+          height: 60px;
+        }
+
+        .cp-reason-copy {
+          width: 100%;
+          margin-top: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
         .cp-reason h3 {
-          margin: auto 0 0.55rem;
+          margin: 0;
           font-family: var(--font-main);
-          font-size: 22px;
+          font-size: 32px;
           font-weight: 700;
-          letter-spacing: -0.02em;
-          line-height: 1.25;
-          color: #0b1020;
+          letter-spacing: 0;
+          line-height: 42px;
+          color: #020618;
         }
 
         .cp-reason p {
           margin: 0;
-          font-family: var(--font-body);
-          font-size: 15px;
-          line-height: 1.5;
-          color: #64748b;
+          font-family: var(--font-main);
+          font-size: 16px;
+          font-weight: 500;
+          letter-spacing: 0;
+          line-height: 28px;
+          color: #4A5565;
         }
 
         .cp-albums {
@@ -619,7 +737,45 @@ export default function CulturePage() {
           position: relative;
           aspect-ratio: 1.08 / 1;
           border-radius: 26px;
-          overflow: hidden;
+          overflow: visible;
+        }
+
+        .cp-album img {
+          position: relative;
+          z-index: 1;
+          border-radius: 26px;
+        }
+
+        .cp-album-peek {
+          position: absolute;
+          z-index: 0;
+          left: 50%;
+          top: 0;
+          width: 80%;
+          height: 18px;
+          border-radius: 999px;
+          background: #e4ebf3;
+          transform: translate(-50%, 8px);
+          opacity: 0;
+          pointer-events: none;
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+        }
+
+        .cp-album-peek-back {
+          width: 64%;
+          height: 16px;
+          background: #f2f6fa;
+        }
+
+        .cp-album:hover .cp-album-peek,
+        .cp-album:focus-visible .cp-album-peek {
+          opacity: 1;
+          transform: translate(-50%, -12px);
+        }
+
+        .cp-album:hover .cp-album-peek-back,
+        .cp-album:focus-visible .cp-album-peek-back {
+          transform: translate(-50%, -22px);
         }
 
         .cp-album-skeleton {
@@ -629,12 +785,15 @@ export default function CulturePage() {
 
         .cp-album-shade {
           position: absolute;
+          z-index: 2;
           inset: 0;
+          border-radius: 26px;
           background: linear-gradient(180deg, rgba(0, 0, 0, 0.02) 28%, rgba(8, 16, 32, 0.72) 100%);
         }
 
         .cp-album-tag {
           position: absolute;
+          z-index: 2;
           top: 14px;
           left: 14px;
           background: #3085ff;
@@ -650,6 +809,7 @@ export default function CulturePage() {
 
         .cp-album-meta {
           position: absolute;
+          z-index: 2;
           left: 16px;
           right: 16px;
           bottom: 16px;
@@ -722,60 +882,276 @@ export default function CulturePage() {
           position: fixed;
           inset: 0;
           z-index: 10000;
-          background: rgba(8, 16, 32, 0.72);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 1.5rem;
+          background: rgba(8, 13, 30, 0.88);
+          color: #ffffff;
         }
 
         .cp-lightbox-card {
           position: relative;
-          max-width: min(1100px, 100%);
-          max-height: 86vh;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
         }
 
-        .cp-lightbox-card img,
-        .cp-lightbox-card video,
-        .cp-lightbox-card iframe {
-          display: block;
-          max-width: 100%;
-          max-height: 86vh;
-          width: auto;
-          height: auto;
-          border: 0;
-          border-radius: 18px;
-          background: #0b1020;
-        }
-
-        .cp-lightbox-card iframe,
-        .cp-lightbox-card video {
-          width: min(1100px, 86vw);
-          height: min(68vh, 620px);
-        }
-
-        .cp-lightbox-close,
-        .cp-lightbox-nav {
+        .cp-lightbox-rule {
           position: absolute;
+          top: 47px;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: rgba(255, 255, 255, 0.2);
+        }
+
+        .cp-lightbox-bar,
+        .cp-lightbox-focus,
+        .cp-lightbox-nav,
+        .cp-lightbox-thumb,
+        .cp-lightbox-close {
+          pointer-events: auto;
+        }
+
+        .cp-lightbox-bar {
+          position: absolute;
+          top: 10px;
+          left: 22px;
+          right: 26px;
+          z-index: 2;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 16px;
+        }
+
+        .cp-lightbox-id {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 4px;
+          min-width: 0;
+        }
+
+        .cp-lightbox-id-top {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          min-width: 0;
+          max-width: 100%;
+        }
+
+        .cp-lightbox-badge {
+          flex: none;
+          padding: 2px 6px;
+          border-radius: 3px;
+          background: #3086ff;
+          color: #ffffff;
+          font-family: var(--font-main);
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+          line-height: 1.3;
+          text-transform: uppercase;
+        }
+
+        .cp-lightbox-id strong {
+          min-width: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-family: var(--font-main);
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 1.2;
+          color: #ffffff;
+        }
+
+        .cp-lightbox-meta {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          color: #b7c3d1;
+          font-size: 11px;
+          line-height: 1;
+        }
+
+        .cp-lightbox-tools {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          flex: none;
+          margin-top: 10px;
+        }
+
+        .cp-lightbox-count {
+          color: #e7edf4;
+          font-family: var(--font-main);
+          font-size: 13px;
+          font-weight: 500;
+          line-height: 1;
+        }
+
+        .cp-lightbox-close {
           border: 0;
-          background: #ffffff;
-          color: #0b1020;
-          width: 40px;
-          height: 40px;
-          border-radius: 999px;
+          background: transparent;
+          color: #ffffff;
+          width: 24px;
+          height: 24px;
+          padding: 0;
           display: inline-flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
         }
 
-        .cp-lightbox-close {
-          top: 12px;
-          right: 12px;
+        .cp-lightbox-focus {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: min(925px, calc(100vw - 96px), calc((100vh - 340px) * 925 / 554));
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 40px;
         }
 
-        .cp-lightbox-prev { left: 12px; top: 50%; transform: translateY(-50%); }
-        .cp-lightbox-next { right: 12px; top: 50%; transform: translateY(-50%); }
+        .cp-lightbox-stage {
+          position: relative;
+          width: 100%;
+        }
+
+        .cp-lightbox-stage img,
+        .cp-lightbox-stage video,
+        .cp-lightbox-stage iframe {
+          display: block;
+          width: 100%;
+          aspect-ratio: 925 / 554;
+          height: auto;
+          object-fit: cover;
+          border: 0;
+          border-radius: 32px;
+          background: #0b1220;
+        }
+
+        .cp-lightbox-nav {
+          position: absolute;
+          top: 50%;
+          z-index: 1;
+          transform: translateY(-50%);
+          border: 0;
+          background: transparent;
+          color: rgba(255, 255, 255, 0.88);
+          width: 32px;
+          height: 44px;
+          padding: 0;
+          border-radius: 0;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          box-shadow: none;
+        }
+
+        .cp-lightbox-prev { left: -36px; }
+        .cp-lightbox-next { right: -36px; }
+
+        .cp-lightbox-thumbs {
+          position: absolute;
+          top: calc(100% + 40px);
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          justify-content: safe center;
+          gap: 12px;
+          width: max-content;
+          max-width: 100vw;
+          margin: 0;
+          overflow-x: auto;
+          scrollbar-width: none;
+        }
+
+        .cp-lightbox-thumbs::-webkit-scrollbar {
+          display: none;
+        }
+
+        .cp-lightbox-thumb {
+          position: relative;
+          flex: none;
+          width: 177px;
+          height: 106px;
+          padding: 0;
+          border: 3px solid #1B1F2D;
+          border-radius: 8px;
+          overflow: hidden;
+          background: #0b1220;
+          cursor: pointer;
+        }
+
+        .cp-lightbox-thumb.is-active {
+          border-color: #1B1F2D;
+        }
+
+        .cp-lightbox-thumb img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          filter: brightness(0.62);
+        }
+
+        .cp-lightbox-thumb.is-active img {
+          filter: none;
+        }
+
+        .cp-lightbox-thumb svg {
+          position: absolute;
+          left: 50%;
+          top: 46%;
+          transform: translate(-50%, -50%);
+          color: #ffffff;
+          filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.65));
+        }
+
+        .cp-lightbox-duration {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 3px;
+          font-style: normal;
+          font-size: 9px;
+          font-weight: 600;
+          line-height: 1;
+          text-align: center;
+          color: #ffffff;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+        }
+
+        @media (max-width: 700px) {
+          .cp-lightbox-bar {
+            left: 16px;
+            right: 16px;
+          }
+
+          .cp-lightbox-id strong {
+            max-width: 42vw;
+          }
+
+          .cp-lightbox-focus {
+            width: calc(100vw - 32px);
+            gap: 18px;
+          }
+
+          .cp-lightbox-thumbs {
+            top: calc(100% + 18px);
+          }
+
+          .cp-lightbox-prev { left: 6px; }
+          .cp-lightbox-next { right: 6px; }
+
+          .cp-lightbox-thumb {
+            width: 96px;
+            height: 58px;
+          }
+        }
 
         @media (max-width: 1200px) {
           .cp-hero h1,
@@ -785,11 +1161,6 @@ export default function CulturePage() {
 
           .cp-gallery h2 {
             font-size: 40px;
-          }
-
-          .cp-shot-main,
-          .cp-shot-stack {
-            height: 360px;
           }
         }
 
@@ -802,9 +1173,11 @@ export default function CulturePage() {
           .cp-reason:nth-child(-n + 3),
           .cp-reason:nth-child(n + 4) {
             grid-column: auto;
+            height: auto;
             min-height: 0;
             border-radius: 32px;
             padding: 28px;
+            gap: 32px;
           }
 
           .cp-reason-icon {
@@ -813,20 +1186,6 @@ export default function CulturePage() {
         }
 
         @media (max-width: 900px) {
-          .cp-mosaic {
-            grid-template-columns: 1fr;
-          }
-
-          .cp-shot-main {
-            height: 320px;
-          }
-
-          .cp-shot-stack {
-            grid-template-rows: none;
-            grid-template-columns: 1fr 1fr;
-            height: 180px;
-          }
-
           .cp-albums {
             grid-template-columns: 1fr 1fr;
           }
@@ -842,6 +1201,10 @@ export default function CulturePage() {
           .cp-blob {
             animation: none;
           }
+
+          .cp-album-peek {
+            transition: none;
+          }
         }
 
         @media (max-width: 640px) {
@@ -851,6 +1214,13 @@ export default function CulturePage() {
 
           .cp-reasons {
             margin-top: -2rem;
+            padding-bottom: calc(1.5rem + 28px);
+            border-top-left-radius: 28px;
+            border-top-right-radius: 28px;
+          }
+
+          .cp-gallery {
+            margin-top: -28px;
             border-top-left-radius: 28px;
             border-top-right-radius: 28px;
           }
@@ -879,21 +1249,16 @@ export default function CulturePage() {
             padding: 2.5rem 1.25rem 1.5rem;
           }
 
+          .cp-reasons {
+            padding-bottom: calc(1.5rem + 28px);
+          }
+
           .cp-reasons h2 {
             font-size: 2.05rem;
           }
 
           .cp-gallery h2 {
             font-size: 1.85rem;
-          }
-
-          .cp-shot-stack {
-            grid-template-columns: 1fr;
-            height: auto;
-          }
-
-          .cp-shot-stack .cp-shot {
-            height: 180px;
           }
 
           .cp-reasons-grid,
@@ -914,10 +1279,12 @@ export default function CulturePage() {
 
           .cp-reason h3 {
             font-size: 1.2rem;
+            line-height: 1.25;
           }
 
           .cp-reason p {
             font-size: 0.95rem;
+            line-height: 1.5;
           }
         }
       `}</style>

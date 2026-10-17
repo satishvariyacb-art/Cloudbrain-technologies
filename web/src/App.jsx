@@ -14,6 +14,8 @@ import Culture from './components/Culture';
 import Careers from './components/Careers';
 import ContactModal from './components/ContactModal';
 import Footer from './components/Footer';
+import HeadingZoom from './components/HeadingZoom';
+import SmoothScroll from './components/SmoothScroll';
 
 export default function App() {
   const [contactModalOpen, setContactModalOpen] = useState(false);
@@ -21,6 +23,7 @@ export default function App() {
   const [isAboutPageOpen, setIsAboutPageOpen] = useState(false);
 
   const savedHomeScrollPos = React.useRef(0);
+  const pendingHomeScroll = React.useRef(null);
 
   const isSubPageOpen = Boolean(isCulturePageOpen || isAboutPageOpen);
 
@@ -98,8 +101,9 @@ export default function App() {
   };
 
   const scrollToTargetSection = (targetId, behavior = 'smooth') => {
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : behavior;
     if (targetId === 'hero') {
-      window.scrollTo({ top: 0, behavior });
+      window.scrollTo({ top: 0, behavior: motion });
       return;
     }
     const target = document.getElementById(targetId);
@@ -109,10 +113,55 @@ export default function App() {
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
       window.scrollTo({
         top: offsetPosition,
-        behavior: behavior
+        behavior: motion
       });
     }
   };
+
+  useEffect(() => {
+    if (isSubPageOpen) return undefined;
+    const targetId = pendingHomeScroll.current;
+    if (!targetId) return undefined;
+
+    let lastTop = null;
+    let stableFrames = 0;
+    let frame = 0;
+    let finished = false;
+    const started = performance.now();
+
+    const align = () => {
+      if (targetId === 'hero') {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        stableFrames += 1;
+        return;
+      }
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      const top = target.getBoundingClientRect().top + window.pageYOffset;
+      if (lastTop === null || Math.abs(top - lastTop) > 1) {
+        lastTop = top;
+        stableFrames = 0;
+        window.scrollTo({ top: Math.max(top - 90, 0), behavior: 'instant' });
+      } else {
+        stableFrames += 1;
+      }
+    };
+
+    const step = () => {
+      align();
+      if (stableFrames < 8 && performance.now() - started < 1800) {
+        frame = requestAnimationFrame(step);
+        return;
+      }
+      finished = true;
+      if (pendingHomeScroll.current === targetId) pendingHomeScroll.current = null;
+    };
+    frame = requestAnimationFrame(step);
+    return () => {
+      cancelAnimationFrame(frame);
+      if (finished && pendingHomeScroll.current === targetId) pendingHomeScroll.current = null;
+    };
+  }, [isSubPageOpen]);
 
   const handleNavHeaderClick = (href) => {
     if (href === '#contact') {
@@ -132,13 +181,12 @@ export default function App() {
     const targetId = href.replace('#', '');
 
     if (isSubPageOpen) {
-      // Exit detailed pages to home view & INSTANTLY jump to target section (no long scroll down from top 0)
+      // Home section is not in the document yet. Scroll after it mounts,
+      // then again until content above it (photos, pin height) stops moving.
+      pendingHomeScroll.current = targetId;
       setIsCulturePageOpen(false);
       setIsAboutPageOpen(false);
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
-      requestAnimationFrame(() => {
-        scrollToTargetSection(targetId, 'instant');
-      });
     } else {
       // Direct smooth scroll when already browsing Home view
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
@@ -152,6 +200,8 @@ export default function App() {
 
   return (
     <div className="app-container">
+      <HeadingZoom />
+      <SmoothScroll />
       {/* 0. Initial Smooth Font Loading Preloader */}
       <Preloader />
 
