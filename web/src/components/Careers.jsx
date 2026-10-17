@@ -1,8 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { apiClient } from '../services/apiClient';
-import { ArrowRight, X, CheckCircle2, Mail, Upload, FileText, Search, Phone, Link2, Lock } from 'lucide-react';
+import { ArrowRight, X, Check, Mail, Upload, FileText, Search, Phone, Link2, Lock, Briefcase, User, Clock, MessageSquare } from 'lucide-react';
 import SectionBadge from './SectionBadge';
+
+function formatFileSize(bytes) {
+  if (!bytes) return '';
+  if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))}KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(2)}MB`;
+}
+
+function fileKind(name) {
+  const ext = String(name || '').split('.').pop()?.toUpperCase() || 'FILE';
+  if (ext === 'DOCX') return 'DOC';
+  return ext.slice(0, 4);
+}
+
+function makeRef() {
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 6; i += 1) {
+    code += alphabet[Math.floor(Math.random() * alphabet.length)];
+  }
+  return `CB-${code}`;
+}
+
+function formatSubmitted(date) {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  let hours = date.getHours();
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const suffix = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12 || 12;
+  return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}, ${hours}:${minutes} ${suffix}`;
+}
 
 function jobTags(job) {
   if (Array.isArray(job.skills) && job.skills.length) {
@@ -25,9 +55,11 @@ export default function Careers() {
     email: '', 
     portfolio: '', 
     resume: '', 
-    resumeName: '', 
+    resumeName: '',
+    resumeSize: 0,
     notes: '' 
   });
+  const [receipt, setReceipt] = useState(null);
   const [uploadingResume, setUploadingResume] = useState(false);
   const [resumeError, setResumeError] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -74,7 +106,8 @@ export default function Careers() {
       setApplicant(prev => ({
         ...prev,
         resume: reader.result,
-        resumeName: file.name
+        resumeName: file.name,
+        resumeSize: file.size
       }));
       setUploadingResume(false);
     };
@@ -89,8 +122,19 @@ export default function Careers() {
     setApplicant(prev => ({
       ...prev,
       resume: '',
-      resumeName: ''
+      resumeName: '',
+      resumeSize: 0
     }));
+  };
+
+  const closeApply = () => {
+    const wasSuccess = appliedSuccess;
+    setSelectedRole(null);
+    if (!wasSuccess) return;
+    setAppliedSuccess(false);
+    setReceipt(null);
+    setResumeError(false);
+    setApplicant({ name: '', phone: '', email: '', portfolio: '', resume: '', resumeName: '', resumeSize: 0, notes: '' });
   };
 
   const handleApplySubmit = async (e) => {
@@ -117,13 +161,8 @@ export default function Careers() {
           roleTeam: selectedRole.team
         });
       }
+      setReceipt({ ref: makeRef(), at: new Date() });
       setAppliedSuccess(true);
-      setTimeout(() => {
-        setAppliedSuccess(false);
-        setSelectedRole(null);
-        setResumeError(false);
-        setApplicant({ name: '', phone: '', email: '', portfolio: '', resume: '', resumeName: '', notes: '' });
-      }, 2800);
     } catch (err) {
       console.error('Error submitting application:', err);
     } finally {
@@ -135,7 +174,6 @@ export default function Careers() {
     <section id="careers" className="careers-section">
       <div className="careers-inner">
         <header className="careers-head">
-        <SectionBadge number="07" label="CAREERS" />
           <h2>Join the Cloudbrain</h2>
           <p>
             We&apos;re looking for a people who&apos;d rather build something real than just talk about it.
@@ -193,13 +231,66 @@ export default function Careers() {
 
       {/* Role Application Modal */}
       {selectedRole && createPortal(
-        <div className="modal-backdrop" onClick={() => setSelectedRole(null)}>
+        <div className="modal-backdrop" onClick={closeApply}>
           <div className="modal-content apply-modal" onClick={(e) => e.stopPropagation()}>
+            <button type="button" className="modal-close apply-modal-close" onClick={closeApply} aria-label="Close">
+              <X size={18} />
+            </button>
             {appliedSuccess ? (
-              <div className="applied-success-view">
-                <CheckCircle2 size={48} className="success-icon" />
+              <div className="apply-success">
+                <div className="apply-success-mark" aria-hidden="true">
+                  <Check size={30} strokeWidth={3} />
+                </div>
                 <h3>Application Submitted!</h3>
-                <p>Thank you for applying for <strong>{selectedRole.role}</strong>. Our engineering lead will review your profile and reach out within 48 hours.</p>
+                <p>
+                  Thank you for applying to CloudBrain. We&apos;ve received your application and will get back to you if your profile matches an available opportunity.
+                </p>
+                <div className="apply-receipt">
+                  <div className="apply-receipt-head">
+                    <strong>Your Application Details</strong>
+                    <span className="apply-ref">REF: {receipt?.ref}</span>
+                  </div>
+                  <div className="apply-receipt-row">
+                    <span><Briefcase size={16} aria-hidden="true" /> Position</span>
+                    <strong>{selectedRole.role}</strong>
+                  </div>
+                  <div className="apply-receipt-row">
+                    <span><User size={16} aria-hidden="true" /> Full Name</span>
+                    <strong>{applicant.name}</strong>
+                  </div>
+                  <div className="apply-receipt-row">
+                    <span><Mail size={16} aria-hidden="true" /> Email Address</span>
+                    <strong>{applicant.email}</strong>
+                  </div>
+                  <div className="apply-receipt-row">
+                    <span><Phone size={16} aria-hidden="true" /> Mobile Number</span>
+                    <strong>{applicant.phone.trim() || '—'}</strong>
+                  </div>
+                  <div className="apply-receipt-row">
+                    <span><FileText size={16} aria-hidden="true" /> Resume/CV</span>
+                    <strong className="apply-file">
+                      <span className="apply-file-kind">{fileKind(applicant.resumeName)}</span>
+                      <a href={applicant.resume} download={applicant.resumeName}>{applicant.resumeName}</a>
+                      {applicant.resumeSize ? <em>({formatFileSize(applicant.resumeSize)})</em> : null}
+                    </strong>
+                  </div>
+                  <div className="apply-receipt-row">
+                    <span><Link2 size={16} aria-hidden="true" /> Work URL</span>
+                    {applicant.portfolio.trim() ? (
+                      <a className="apply-work-link" href={applicant.portfolio} target="_blank" rel="noreferrer">{applicant.portfolio.replace(/^https?:\/\//, '')}</a>
+                    ) : (
+                      <strong>—</strong>
+                    )}
+                  </div>
+                  <div className="apply-receipt-row">
+                    <span><MessageSquare size={16} aria-hidden="true" /> Why Cloudbrain?</span>
+                    <strong>{applicant.notes.trim() || '—'}</strong>
+                  </div>
+                  <div className="apply-receipt-foot">
+                    <Clock size={15} aria-hidden="true" />
+                    Submitted on {receipt?.at ? formatSubmitted(receipt.at) : ''}
+                  </div>
+                </div>
               </div>
             ) : (
               <>
@@ -345,7 +436,7 @@ export default function Careers() {
                       Your details are kept private and used only for recruitment.
                     </p>
                     <div className="apply-actions">
-                      <button type="button" className="btn btn-secondary" onClick={() => setSelectedRole(null)} disabled={submitting}>
+                      <button type="button" className="btn btn-secondary" onClick={closeApply} disabled={submitting}>
                         Cancel
                       </button>
                       <button type="submit" className="btn btn-brand" disabled={submitting || uploadingResume}>
@@ -654,17 +745,165 @@ export default function Careers() {
           background: rgba(239, 68, 68, 0.1);
         }
 
-        .applied-success-view {
+        .apply-success {
           display: flex;
           flex-direction: column;
           align-items: center;
           text-align: center;
-          padding: 3rem 1rem;
+          padding: 0.85rem 0.35rem 0.2rem;
         }
 
-        .success-icon {
-          color: var(--accent-green);
-          margin-bottom: 1rem;
+        .apply-success-mark {
+          width: 68px;
+          height: 68px;
+          border-radius: 18px;
+          display: grid;
+          place-items: center;
+          color: #ffffff;
+          background: linear-gradient(180deg, #4ade80 0%, #22c55e 100%);
+          box-shadow: 0 12px 24px rgba(34, 197, 94, 0.28);
+          margin-bottom: 1.15rem;
+        }
+
+        .apply-success h3 {
+          margin: 0;
+          font-family: var(--font-main);
+          font-size: 2rem;
+          font-weight: 800;
+          letter-spacing: -0.03em;
+          line-height: 1.15;
+          color: #0b1020;
+        }
+
+        .apply-success > p {
+          max-width: 34rem;
+          margin: 0.7rem 0 0;
+          font-family: var(--font-body);
+          font-size: 0.95rem;
+          line-height: 1.55;
+          color: #64748b;
+        }
+
+        .apply-receipt {
+          width: 100%;
+          margin-top: 1.45rem;
+          text-align: left;
+          background: #f5f7fb;
+          border: 1px solid #e7edf5;
+          border-radius: 16px;
+          overflow: hidden;
+        }
+
+        .apply-receipt-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.75rem;
+          padding: 0.85rem 1.05rem;
+        }
+
+        .apply-receipt-head strong {
+          font-family: var(--font-main);
+          font-size: 0.92rem;
+          font-weight: 700;
+          color: #0b1020;
+        }
+
+        .apply-ref {
+          flex: none;
+          background: #e7f0ff;
+          color: #3b82f6;
+          border-radius: 7px;
+          padding: 0.22rem 0.5rem;
+          font-family: var(--font-main);
+          font-size: 0.72rem;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+        }
+
+        .apply-receipt-row {
+          display: grid;
+          grid-template-columns: 168px minmax(0, 1fr);
+          gap: 0.75rem;
+          align-items: start;
+          padding: 0.72rem 1.05rem;
+          border-top: 1px solid #e6edf5;
+        }
+
+        .apply-receipt-row > span {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          color: #64748b;
+          font-family: var(--font-body);
+          font-size: 0.9rem;
+          line-height: 1.4;
+        }
+
+        .apply-receipt-row > span svg {
+          flex: none;
+          color: #94a3b8;
+        }
+
+        .apply-receipt-row > strong,
+        .apply-work-link {
+          font-family: var(--font-body);
+          font-size: 0.92rem;
+          font-weight: 700;
+          line-height: 1.45;
+          color: #0b1020;
+          min-width: 0;
+          overflow-wrap: anywhere;
+        }
+
+        .apply-work-link {
+          color: #3085ff;
+          text-decoration: underline;
+          text-underline-offset: 2px;
+        }
+
+        .apply-file {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 0.4rem;
+        }
+
+        .apply-file-kind {
+          flex: none;
+          background: #e7f0ff;
+          color: #3085ff;
+          border-radius: 5px;
+          padding: 0.08rem 0.32rem;
+          font-size: 0.68rem;
+          font-weight: 800;
+          letter-spacing: 0.03em;
+        }
+
+        .apply-file a {
+          color: #3085ff;
+          font-weight: 700;
+          text-decoration: underline;
+          text-underline-offset: 2px;
+          overflow-wrap: anywhere;
+        }
+
+        .apply-file em {
+          font-style: normal;
+          font-weight: 500;
+          color: #94a3b8;
+        }
+
+        .apply-receipt-foot {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          padding: 0.72rem 1.05rem;
+          border-top: 1px solid #e6edf5;
+          background: #f8fafc;
+          color: #94a3b8;
+          font-family: var(--font-body);
+          font-size: 0.82rem;
         }
 
         @media (max-width: 1100px) {
@@ -761,6 +1000,15 @@ export default function Careers() {
           border-radius: 28px;
           scrollbar-width: none;
           -ms-overflow-style: none;
+        }
+
+        .apply-modal-close {
+          z-index: 2;
+          top: 1rem;
+          right: 1rem;
+          background: #f4f7fb;
+          border-color: #e6edf5;
+          color: #475569;
         }
 
         .apply-modal.modal-content::-webkit-scrollbar {
@@ -982,6 +1230,20 @@ export default function Careers() {
 
           .resume-filename {
             max-width: 180px;
+          }
+
+          .apply-success h3 {
+            font-size: 1.45rem;
+          }
+
+          .apply-receipt-row {
+            grid-template-columns: 1fr;
+            gap: 0.2rem;
+          }
+
+          .apply-receipt-head {
+            align-items: flex-start;
+            flex-direction: column;
           }
         }
 

@@ -359,7 +359,7 @@ export default function Culture({ onSeeGallery }) {
         .lc-gallery-btn {
           align-self: flex-start;
           flex-shrink: 0;
-          margin-top: 0;
+          margin-top: auto;
           display: inline-flex;
           align-items: center;
           gap: 0.35rem;

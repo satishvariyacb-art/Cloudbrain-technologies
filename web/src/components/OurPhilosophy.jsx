@@ -278,24 +278,30 @@ export default function OurPhilosophy() {
       const availableHeight = Math.max(vh - availableTop - inset, 0);
 
       const canvasTop = canvas.getBoundingClientRect().top;
+      const head = canvas.querySelector('.ph-head');
       const nodes = canvas.querySelectorAll('.ph-logo-tile, .ph-item');
-      if (!nodes.length) return;
+      if (!head || !nodes.length) return;
 
-      let diagramTop = Infinity;
-      let diagramBottom = -Infinity;
+      const relTop = (el) => el.getBoundingClientRect().top - canvasTop;
+      const relBottom = (el) => el.getBoundingClientRect().bottom - canvasTop;
+      let itemsTop = Infinity;
+      let itemsBottom = -Infinity;
       nodes.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        diagramTop = Math.min(diagramTop, rect.top - canvasTop);
-        diagramBottom = Math.max(diagramBottom, rect.bottom - canvasTop);
+        itemsTop = Math.min(itemsTop, relTop(el));
+        itemsBottom = Math.max(itemsBottom, relBottom(el));
       });
-      if (!Number.isFinite(diagramTop)) return;
-
-      const diagramHeight = diagramBottom - diagramTop;
-      const targetTop = diagramHeight >= availableHeight
+      const headTop = relTop(head);
+      const contentTop = Math.min(headTop, itemsTop);
+      const contentBottom = Math.max(relBottom(head), itemsBottom);
+      const contentHeight = contentBottom - contentTop;
+      const itemsHeight = itemsBottom - itemsTop;
+      const focusTop = contentHeight <= availableHeight ? contentTop : itemsTop;
+      const focusHeight = contentHeight <= availableHeight ? contentHeight : itemsHeight;
+      const targetTop = focusHeight >= availableHeight
         ? availableTop
-        : availableTop + (availableHeight - diagramHeight) / 2;
+        : availableTop + (availableHeight - focusHeight) / 2;
 
-      stage.style.top = `${targetTop - diagramTop}px`;
+      stage.style.top = `${targetTop - focusTop}px`;
       section.style.height = `${Math.max(vh * 4, canvasH + vh * 3)}px`;
     };
 
@@ -588,10 +594,6 @@ export default function OurPhilosophy() {
           align-items: center;
           text-align: center;
           pointer-events: none;
-        }
-
-        .ph-track.is-pinned .ph-head {
-          visibility: hidden;
         }
 
         .ph-head .cb-section-badge {

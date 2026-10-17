@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import SectionBadge from './SectionBadge';
 import {
   IntegrityIcon,
@@ -28,6 +28,44 @@ function ValueCard({ item }) {
 }
 
 export default function CoreValues() {
+  const gridRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    let lastWidth = -1;
+
+    const equalize = () => {
+      const width = grid.clientWidth;
+      if (width === lastWidth) return;
+      lastWidth = width;
+
+      const cards = [...grid.querySelectorAll('.c1-card')];
+      cards.forEach((card) => {
+        card.style.minHeight = '';
+      });
+
+      if (window.matchMedia('(max-width: 640px)').matches) return;
+
+      const max = Math.max(...cards.map((card) => card.offsetHeight));
+      if (!max) return;
+      cards.forEach((card) => {
+        card.style.minHeight = `${max}px`;
+      });
+    };
+
+    equalize();
+    const ro = new ResizeObserver(equalize);
+    ro.observe(grid);
+    document.fonts?.ready.then(() => {
+      lastWidth = -1;
+      equalize();
+    });
+
+    return () => ro.disconnect();
+  }, []);
+
   const valuesData = [
     {
       id: '01',
@@ -85,7 +123,7 @@ export default function CoreValues() {
           <p className="cv-subtext">The values that guide how we build, decide, and work - every single day.</p>
         </div>
 
-        <div className="c1-grid">
+        <div className="c1-grid" ref={gridRef}>
           {valuesData.map((item) => (
             <ValueCard key={item.id} item={item} />
           ))}
@@ -148,7 +186,9 @@ export default function CoreValues() {
 
         .c1-card-scene {
           position: relative;
-          height: auto;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
           container-type: inline-size;
         }
 
@@ -158,8 +198,10 @@ export default function CoreValues() {
           border-radius: 32px;
           padding: 2.2rem 2rem 2rem;
           min-height: calc(100cqw * 212 / 260);
-          height: auto;
+          height: 100%;
           aspect-ratio: auto;
+          flex: 1;
+          width: 100%;
           display: flex;
           flex-direction: column;
           justify-content: space-between;

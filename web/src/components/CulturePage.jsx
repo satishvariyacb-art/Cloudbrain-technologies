@@ -151,6 +151,7 @@ export default function CulturePage() {
     <div className="culture-page">
       <section className="cp-hero">
         <div className="cp-blobs" aria-hidden="true">
+          <div className="cp-blob cp-blob-blue" />
           <div className="cp-blob cp-blob-green" />
           <div className="cp-blob cp-blob-yellow" />
           <div className="cp-blob cp-blob-pink" />
@@ -162,7 +163,12 @@ export default function CulturePage() {
           </p>
         </div>
 
-        {hero.length > 0 && (
+        {!loading && hero.length === 0 ? (
+          <div className="cp-soon" role="status">
+            <strong>Coming soon</strong>
+            <p>Photos from life at Cloudbrain will show up here.</p>
+          </div>
+        ) : hero.length > 0 ? (
           <div className="cp-mosaic">
             <button type="button" className="cp-shot cp-shot-main" onClick={() => openItem(hero[0])}>
               <img src={mediaSrc(hero[0])} alt={hero[0].title || 'Life at Cloudbrain'} />
@@ -177,7 +183,7 @@ export default function CulturePage() {
               </div>
             )}
           </div>
-        )}
+        ) : null}
       </section>
 
       <section className="cp-reasons">
@@ -216,7 +222,10 @@ export default function CulturePage() {
             {[0, 1, 2].map((slot) => <div key={slot} className="cp-album cp-album-skeleton" />)}
           </div>
         ) : photos.length === 0 ? (
-          <p className="cp-empty">Gallery moments will show up here as they are published.</p>
+          <div className="cp-soon" role="status">
+            <strong>Coming soon</strong>
+            <p>Gallery moments will show up here.</p>
+          </div>
         ) : (
           <div className="cp-albums">
             {photos.map((item, index) => (
@@ -319,6 +328,17 @@ export default function CulturePage() {
           animation-direction: alternate;
         }
 
+        .cp-blob-blue {
+          width: 46vw;
+          height: 46vw;
+          top: -12vw;
+          left: -10vw;
+          background: radial-gradient(circle, #3B82F6 0%, rgba(59, 130, 246, 0) 68%);
+          opacity: 0.35;
+          animation-name: cp-drift-blue;
+          animation-duration: 22s;
+        }
+
         .cp-blob-green {
           width: 40vw;
           height: 40vw;
@@ -353,6 +373,12 @@ export default function CulturePage() {
           animation-name: cp-drift-pink;
           animation-duration: 28s;
           animation-delay: -3s;
+        }
+
+        @keyframes cp-drift-blue {
+          0%   { transform: translate(0, 0) scale(1); }
+          50%  { transform: translate(10vw, 8vh) scale(1.12); }
+          100% { transform: translate(4vw, 18vh) scale(0.95); }
         }
 
         @keyframes cp-drift-green {
@@ -561,12 +587,12 @@ export default function CulturePage() {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: 64px;
+          margin-bottom: 0;
           flex: none;
         }
 
         .cp-reason h3 {
-          margin: 0 0 0.55rem;
+          margin: auto 0 0.55rem;
           font-family: var(--font-main);
           font-size: 22px;
           font-weight: 700;
@@ -655,10 +681,41 @@ export default function CulturePage() {
           flex: none;
         }
 
-        .cp-empty {
+        .cp-soon {
+          margin-top: 2.75rem;
+          min-height: 460px;
+          border-radius: 22px;
+          background: #eef4fb;
+          border: 1px dashed #c5d4e6;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          gap: 0.4rem;
+          padding: 2rem 1.5rem;
+        }
+
+        .cp-gallery .cp-soon {
+          margin-top: 0;
+          min-height: 280px;
+        }
+
+        .cp-soon strong {
+          font-family: var(--font-main);
+          font-size: 1.45rem;
+          font-weight: 650;
+          letter-spacing: -0.03em;
+          color: #0b1020;
+        }
+
+        .cp-soon p {
           margin: 0;
-          color: #64748b;
+          max-width: 22rem;
           font-family: var(--font-body);
+          font-size: 1rem;
+          line-height: 1.5;
+          color: #64748b;
         }
 
         .cp-lightbox {
@@ -800,6 +857,15 @@ export default function CulturePage() {
 
           .cp-hero h1 {
             font-size: 2.15rem;
+          }
+
+          .cp-soon {
+            min-height: 220px;
+            margin-top: 1.75rem;
+          }
+
+          .cp-gallery .cp-soon {
+            margin-top: 0;
           }
 
           .cp-hero-copy p,
