@@ -27,7 +27,7 @@ export default function OurVision() {
         .ov-v2-section {
           background-color: #00AF57; /* Vibrant Emerald Green matching reference */
           margin-top: -80px;
-          padding: 80px 210px 0 210px;
+          padding: 80px var(--page-gutter) 0 var(--page-gutter);
           min-height: calc(23.5vw + 80px);
           display: flex;
           align-items: center;
@@ -100,6 +100,44 @@ export default function OurVision() {
           filter: drop-shadow(0 12px 24px rgba(4, 120, 87, 0.25));
         }
 
+        @media (max-width: 1600px) {
+          .ov-v2-container {
+            gap: 2rem;
+          }
+
+          .ov-v2-title {
+            font-size: clamp(40px, 4vw, 60px);
+            margin-bottom: 0.85rem;
+          }
+
+          .ov-v2-description {
+            font-size: clamp(18px, 1.65vw, 24px);
+            line-height: 1.45;
+          }
+
+          .ov-v2-description br {
+            display: none;
+          }
+
+          .ov-v2-graphic-wrap {
+            flex: 0 0 210px;
+            max-width: 230px;
+          }
+
+          .ov-v2-graphic-wrap svg,
+          .ov-v2-wireframe-svg {
+            max-width: 100%;
+            max-height: min(190px, 16vw);
+          }
+        }
+
+        @media (max-width: 1100px) {
+          .ov-v2-section {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+          }
+        }
+
         @media (max-width: 1024px) {
           .ov-v2-section {
             margin-top: -60px;
@@ -114,45 +152,100 @@ export default function OurVision() {
           .ov-v2-section {
             display: block;
             min-height: 0;
-            padding: 6rem 1.5rem 3.5rem 1.5rem;
-          }
-
-          .ov-v2-graphic-wrap svg,
-          .ov-v2-wireframe-svg {
-            max-height: 220px;
+            padding: 5.5rem 2rem 3rem;
           }
 
           .ov-v2-container {
             flex-direction: column;
-            align-items: flex-start;
-            gap: 2.5rem;
+            align-items: stretch;
+            gap: 1.15rem;
+          }
+
+          .ov-v2-content {
+            width: 100%;
+            max-width: none;
+          }
+
+          .ov-v2-title {
+            font-size: 2.85rem;
+            line-height: 1.15;
+            margin-bottom: 0.75rem;
+          }
+
+          .ov-v2-description {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            max-width: none;
+          }
+
+          .ov-v2-description br {
+            display: none;
           }
 
           .ov-v2-graphic-wrap {
-            align-self: flex-end;
-            max-width: 260px;
+            order: -1;
+            flex: 0 0 auto;
+            height: auto;
+            align-self: flex-start;
+            max-width: 200px;
+          }
+
+          .ov-v2-graphic-wrap svg,
+          .ov-v2-wireframe-svg {
+            width: 100%;
+            max-width: 200px;
+            max-height: 168px;
           }
         }
 
         @media (max-width: 640px) {
           .ov-v2-section {
-            margin-top: -45px;
-            padding: 6.5rem 1.25rem 4rem 1.25rem;
+            margin-top: -40px;
+            min-height: 0;
+            padding: 4.6rem 1.25rem 2.35rem;
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
           }
 
+          .ov-v2-container {
+            gap: 0.85rem;
+          }
+
+          .ov-v2-content {
+            width: 100%;
+            max-width: none;
+          }
+
           .ov-v2-title {
-            font-size: 2.3rem;
+            font-size: 2.15rem;
+            line-height: 1.15;
+            margin-bottom: 0.7rem;
           }
 
           .ov-v2-description {
             font-size: 1rem;
+            line-height: 1.5;
+            max-width: none;
+          }
+
+          .ov-v2-description br {
+            display: none;
           }
 
           .ov-v2-graphic-wrap {
-            align-self: center;
-            max-width: 220px;
+            order: -1;
+            flex: 0 0 auto;
+            height: auto;
+            align-self: flex-start;
+            max-width: 150px;
+            margin-bottom: 0;
+          }
+
+          .ov-v2-graphic-wrap svg,
+          .ov-v2-wireframe-svg {
+            width: 100%;
+            max-width: 150px;
+            max-height: 132px;
           }
         }
       `}</style>

@@ -257,9 +257,11 @@ export default function OurPhilosophy() {
     const stage = stageRef.current;
     const canvas = canvasRef.current;
 
+    const usesPin = () => !mq.matches;
+
     const layoutPin = () => {
       if (!stage || !canvas) return;
-      if (mq.matches) {
+      if (!usesPin()) {
         section.style.height = '';
         stage.style.top = '';
         section.classList.remove('is-pinned');
@@ -267,15 +269,33 @@ export default function OurPhilosophy() {
       }
       const canvasH = canvas.offsetHeight;
       const vh = window.innerHeight;
-      const headerEl = document.querySelector('.header-wrapper');
-      const headerBottom = headerEl ? headerEl.getBoundingClientRect().bottom + 18 : 124;
-      const items = canvas.querySelectorAll('.ph-item');
-      const logo = canvas.querySelector('.ph-logo-tile');
-      if (!items.length || !logo || !canvasH) return;
+      if (!canvasH) return;
+
+      const headerEl = document.querySelector('.floating-nav') || document.querySelector('.header-wrapper');
+      const headerBottom = headerEl ? headerEl.getBoundingClientRect().bottom : 0;
+      const inset = 12;
+      const availableTop = headerBottom + inset;
+      const availableHeight = Math.max(vh - availableTop - inset, 0);
+
       const canvasTop = canvas.getBoundingClientRect().top;
-      const rel = (el, edge) => el.getBoundingClientRect()[edge] - canvasTop;
-      const diagramTop = Math.min(rel(items[0], 'top'), rel(logo, 'top')) - 8;
-      stage.style.top = `${headerBottom - diagramTop}px`;
+      const nodes = canvas.querySelectorAll('.ph-logo-tile, .ph-item');
+      if (!nodes.length) return;
+
+      let diagramTop = Infinity;
+      let diagramBottom = -Infinity;
+      nodes.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        diagramTop = Math.min(diagramTop, rect.top - canvasTop);
+        diagramBottom = Math.max(diagramBottom, rect.bottom - canvasTop);
+      });
+      if (!Number.isFinite(diagramTop)) return;
+
+      const diagramHeight = diagramBottom - diagramTop;
+      const targetTop = diagramHeight >= availableHeight
+        ? availableTop
+        : availableTop + (availableHeight - diagramHeight) / 2;
+
+      stage.style.top = `${targetTop - diagramTop}px`;
       section.style.height = `${Math.max(vh * 4, canvasH + vh * 3)}px`;
     };
 
@@ -300,7 +320,7 @@ export default function OurPhilosophy() {
     };
 
     const onScroll = () => {
-      if (mobile) return;
+      if (!usesPin()) return;
       if (raf) cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
         raf = 0;
@@ -309,8 +329,7 @@ export default function OurPhilosophy() {
     };
 
     const onResize = () => {
-      layoutPin();
-      onScroll();
+      syncMode();
     };
 
     const bindMobile = () => {
@@ -341,8 +360,8 @@ export default function OurPhilosophy() {
       mobile = mq.matches;
       teardownMobile();
       layoutPin();
-      if (mobile) bindMobile();
-      else applyDesktop();
+      if (usesPin()) applyDesktop();
+      else bindMobile();
     };
 
     syncMode();
@@ -830,6 +849,39 @@ export default function OurPhilosophy() {
           }
         }
 
+        @media (max-width: 1440px) {
+          .ph-copy h3 {
+            font-size: clamp(16px, 1.85cqw, 28px);
+            line-height: 1.15;
+          }
+
+          .ph-copy p {
+            font-size: clamp(12px, 1.25cqw, 15px);
+            line-height: 1.35;
+          }
+        }
+
+        @media (max-width: 1200px) {
+          .ph-head {
+            top: 4%;
+          }
+
+          .ph-head .cb-section-badge {
+            margin-bottom: 0.85rem;
+          }
+
+          .ph-lead {
+            max-width: 22rem;
+            margin-top: 0.45rem;
+            font-size: 0.875rem;
+            line-height: 1.35;
+          }
+
+          .ph-lead br {
+            display: none;
+          }
+        }
+
         @media (max-width: 720px) {
           .ph-track {
             height: auto;
@@ -930,6 +982,42 @@ export default function OurPhilosophy() {
 
           .ph-copy p span + span::before {
             content: ' ';
+          }
+        }
+
+        @media (max-width: 640px) {
+          .ph-logo-tile {
+            display: none;
+          }
+
+          .ph-canvas {
+            gap: 1.55rem;
+            padding: 2.15rem 1.5rem 2.65rem;
+          }
+
+          .ph-head .cb-section-badge {
+            margin-bottom: 1.1rem;
+          }
+
+          .ph-lead {
+            margin-top: 0.75rem;
+          }
+
+          .ph-copy h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.3;
+          }
+
+          .ph-copy p {
+            margin-top: 0.45rem;
+            font-size: 0.92rem;
+            line-height: 1.45;
+          }
+
+          .ph-icon {
+            width: 44px;
+            border-radius: 12px;
           }
         }
       `}</style>

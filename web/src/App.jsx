@@ -209,7 +209,7 @@ export default function App() {
       <Footer 
         onOpenContact={handleOpenContact} 
         onNavClick={handleNavHeaderClick}
-        curved={!isAboutPageOpen && !isCulturePageOpen}
+        curved={!isAboutPageOpen}
       />
 
       {/* Global Interactive Project Contact Drawer */}

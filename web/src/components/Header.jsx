@@ -518,6 +518,12 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
           width: 100%;
         }
 
+        @media (max-width: 1240px) {
+          .desktop-nav {
+            gap: 16px;
+          }
+        }
+
         @media (max-width: 1100px) {
           .desktop-nav {
             display: none;
@@ -573,9 +579,39 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
           }
         }
 
-        @media (max-width: 360px) {
-          .nav-contact-btn {
-            display: none;
+        @media (max-width: 480px) {
+          .header-wrapper {
+            padding: 0 0.6rem;
+          }
+
+          .floating-nav,
+          .floating-nav.is-scrolled {
+            height: 52px;
+            padding: 0 0.65rem !important;
+          }
+
+          .brand-logo .cloudbrain-logo-root,
+          .brand-logo img {
+            height: 34px !important;
+            width: auto;
+            max-width: 148px;
+          }
+
+          .header-actions {
+            gap: 0.35rem;
+          }
+
+          .header-wrapper .nav-contact-btn {
+            display: inline-flex;
+            height: 34px;
+            padding: 0 0.65rem 0 0.72rem;
+            font-size: 12px;
+            gap: 0.22rem;
+          }
+
+          .header-wrapper .nav-contact-btn svg {
+            width: 12px;
+            height: 12px;
           }
         }
 

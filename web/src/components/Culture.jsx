@@ -169,9 +169,9 @@ export default function Culture({ onSeeGallery }) {
               tile.kind === 'cta' ? (
                 <div key="life-cta" className={`lc-cta lc-span-${tile.span}`}>
                   <p>
-                    30+ Peoples who<br />
-                    genuinely enjoy solving<br />
-                    problems - together
+                    <span>30+ Peoples who</span>
+                    <span>genuinely enjoy solving</span>
+                    <span>problems - together</span>
                   </p>
                   <button type="button" className="lc-gallery-btn" onClick={openGallery}>
                     See the gallery
@@ -189,6 +189,7 @@ export default function Culture({ onSeeGallery }) {
                     decoding="async"
                     onError={() => markFailed(tile.photo.id)}
                   />
+                  {index === 1 ? <span className="lc-work-tag">Work Cultures</span> : null}
                 </figure>
               )
             ))}
@@ -200,7 +201,7 @@ export default function Culture({ onSeeGallery }) {
         .life-culture-section {
           width: 100%;
           background: #F8FAFC;
-          padding: 5.5rem 210px 11rem;
+          padding: 5.5rem var(--page-gutter) 11rem;
           position: relative;
           z-index: 2;
           border-bottom-left-radius: 80px;
@@ -308,6 +309,7 @@ export default function Culture({ onSeeGallery }) {
         }
 
         .lc-work-tag {
+          display: none;
           position: absolute;
           left: 12px;
           bottom: 12px;
@@ -328,12 +330,12 @@ export default function Culture({ onSeeGallery }) {
           background: #3085FF;
           color: #ffffff;
           border-radius: 0;
-          padding: 2.6rem 2.15rem 1.8rem;
+          padding: 1.7rem 1.6rem 1.45rem;
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
           align-items: flex-start;
-          gap: 3.15rem;
+          gap: 1.15rem;
           min-width: 0;
           min-height: 0;
           height: 100%;
@@ -341,31 +343,44 @@ export default function Culture({ onSeeGallery }) {
 
         .lc-cta p {
           font-family: var(--font-main);
-          font-size: clamp(28px, 2.55cqi, 40px);
-          font-weight: 400;
-          line-height: 1.22;
+          font-size: clamp(26px, 2.15cqi, 34px);
+          font-weight: 500;
+          line-height: 1.2;
           letter-spacing: -0.03em;
           margin: 0;
-          max-width: none;
+          max-width: 100%;
+        }
+
+        .lc-cta p span {
+          display: block;
+          white-space: nowrap;
         }
 
         .lc-gallery-btn {
           align-self: flex-start;
+          flex-shrink: 0;
+          margin-top: 0;
           display: inline-flex;
           align-items: center;
-          gap: 0.55rem;
+          gap: 0.35rem;
           background: #ffffff;
           color: #1f2937;
           border: none;
           border-radius: 999px;
-          padding: 0.85rem 1.25rem 0.85rem 1.35rem;
+          padding: 0.5rem 0.95rem 0.5rem 1.05rem;
           font-family: var(--font-main);
-          font-size: 1rem;
+          font-size: 0.9rem;
           font-weight: 500;
           letter-spacing: -0.01em;
           line-height: 1;
           cursor: pointer;
           box-shadow: none;
+          white-space: nowrap;
+        }
+
+        .lc-gallery-btn svg {
+          width: 14px;
+          height: 14px;
         }
 
         .lc-gallery-btn:hover {
@@ -393,6 +408,22 @@ export default function Culture({ onSeeGallery }) {
           font-size: 1.05rem;
           font-weight: 650;
           color: #64748b;
+        }
+
+        @media (max-width: 1500px) {
+          .lc-cta {
+            padding: 1.2rem 1.15rem 1.05rem;
+            gap: 0.85rem;
+          }
+
+          .lc-cta p {
+            font-size: clamp(22px, 2.35cqi, 30px);
+          }
+
+          .lc-gallery-btn {
+            padding: 0.42rem 0.8rem 0.42rem 0.9rem;
+            font-size: 0.84rem;
+          }
         }
 
         @media (max-width: 1100px) {
@@ -424,40 +455,113 @@ export default function Culture({ onSeeGallery }) {
           .lc-mosaic .lc-cta {
             grid-column: span 2;
           }
+
+          .lc-cta {
+            padding: 0.85rem 1rem 0.75rem;
+            gap: 0.55rem;
+          }
+
+          .lc-cta p {
+            font-size: 1.15rem;
+            line-height: 1.18;
+          }
+
+          .lc-gallery-btn {
+            padding: 0.38rem 0.7rem 0.38rem 0.8rem;
+            font-size: 0.8rem;
+          }
         }
 
         @media (max-width: 640px) {
           .life-culture-section {
-            padding: 4rem 1.25rem 4.5rem;
+            padding: 2.4rem 1rem 2.75rem;
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
           }
 
+          .lc-head {
+            margin-bottom: 0.85rem;
+          }
+
+          .lc-head .cb-section-badge {
+            display: none;
+          }
+
           .lc-head h2 {
-            font-size: 1.85rem;
+            max-width: 8.6ch;
+            font-size: 2.45rem;
+            font-weight: 700;
+            line-height: 1.02;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.55rem;
           }
 
           .lc-head p {
-            font-size: 1rem;
+            max-width: 18rem;
+            font-size: 0.98rem;
+            line-height: 1.4;
           }
 
           .lc-mosaic {
-            grid-template-columns: 1fr;
-            grid-auto-rows: 200px;
-            border-radius: 14px;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            grid-auto-rows: auto;
+            gap: 3px;
+            border-radius: 22px;
+            overflow: hidden;
+            background: #ffffff;
           }
 
-          .lc-mosaic .lc-cell,
-          .lc-mosaic .lc-cta,
-          .lc-mosaic .lc-span-2,
-          .lc-mosaic .lc-span-3,
-          .lc-mosaic .lc-span-4,
-          .lc-mosaic .lc-span-6 {
-            grid-column: auto;
+          .lc-mosaic .lc-cell:nth-child(1) { grid-column: span 2; height: 132px; }
+          .lc-mosaic .lc-cell:nth-child(2) { grid-column: span 5; height: 132px; }
+          .lc-mosaic .lc-cell:nth-child(3) { grid-column: span 3; height: 132px; }
+          .lc-mosaic .lc-cell:nth-child(4) { grid-column: span 2; height: 132px; }
+          .lc-mosaic .lc-cell:nth-child(5) { grid-column: span 3; height: 108px; }
+          .lc-mosaic .lc-cell:nth-child(6) { grid-column: span 6; height: 108px; }
+          .lc-mosaic .lc-cell:nth-child(7) { grid-column: span 3; height: 108px; }
+
+          .lc-mosaic .lc-cell:nth-child(n + 8) {
+            display: none;
+          }
+
+          .lc-cell {
+            height: 100%;
+            min-height: 0;
+            border-radius: 0;
+          }
+
+          .lc-mosaic .lc-cell:nth-child(2) .lc-work-tag {
+            display: block;
+            left: 8px;
+            bottom: 8px;
+            font-size: 0.58rem;
+            padding: 0.32rem 0.42rem;
+          }
+
+          .lc-mosaic .lc-cta {
+            grid-column: 1 / -1;
+            height: auto;
+            min-height: 0;
+            margin-top: -3px;
+            border-radius: 0;
+            padding: 1.05rem 1rem 1rem;
+            gap: 0.9rem;
           }
 
           .lc-cta p {
-            max-width: none;
+            max-width: 16rem;
+            font-size: 1.28rem;
+            font-weight: 650;
+            line-height: 1.22;
+          }
+
+          .lc-cta p span {
+            white-space: normal;
+          }
+
+          .lc-gallery-btn {
+            padding: 0.62rem 0.95rem 0.62rem 1rem;
+            font-size: 0.9rem;
+            gap: 0.4rem;
           }
         }
 

@@ -137,7 +137,7 @@ export default function AboutSection() {
           background: #ffffff;
           border-radius: 80px; /* Requested 80px radius */
           box-shadow: none; /* Shadow removed */
-          padding: 4.75rem 210px 6.5rem;
+          padding: 4.75rem var(--page-gutter) 6.5rem;
           width: 100%;
           box-sizing: border-box;
           position: relative;
@@ -217,7 +217,8 @@ export default function AboutSection() {
         /* 2-Column Grid */
         .about-v2-story-grid {
           display: grid;
-          grid-template-columns: 380px 856px;
+          grid-template-columns: minmax(0, 380px) minmax(0, 856px);
+          width: 100%;
           gap: 8rem;
           align-items: flex-start;
         }
@@ -230,8 +231,8 @@ export default function AboutSection() {
           line-height: 58px;
           letter-spacing: -0.025em;
           opacity: 1;
-          width: 380px;
-          max-width: 100%;
+          width: 100%;
+          max-width: 380px;
           color: #0b132b;
         }
 
@@ -297,6 +298,7 @@ export default function AboutSection() {
           flex-direction: column;
           gap: 2.25rem;
           padding-top: 0.35rem;
+          min-width: 0;
         }
 
         .about-v2-paragraph {
@@ -307,14 +309,15 @@ export default function AboutSection() {
           opacity: 1;
           color: #475569;
           font-family: var(--font-body, 'cbsans', sans-serif);
-          width: 856px;
-          max-width: 100%;
+          width: 100%;
+          max-width: 856px;
+          min-width: 0;
           margin: 0;
         }
 
         .about-v2-highlight {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           gap: 0.5rem;
           color: #00AF57;
           font-family: var(--font-main, 'cbsans', sans-serif);
@@ -327,6 +330,7 @@ export default function AboutSection() {
           flex-shrink: 0;
           font-size: 1.15em;
           line-height: 1;
+          padding-top: 0.22em;
         }
 
         /* Responsive Breakpoints */
@@ -338,6 +342,12 @@ export default function AboutSection() {
           .about-v2-sheet-main {
             padding: 4.5rem 1.5rem 5rem 1.5rem;
             border-radius: 44px;
+          }
+
+          .about-v2-headline {
+            width: auto;
+            height: auto;
+            white-space: normal;
           }
 
           .about-v2-story-grid {
@@ -371,8 +381,12 @@ export default function AboutSection() {
           }
 
           .about-v2-sheet-main {
-            padding: 3rem 1.25rem 3.5rem 1.25rem;
+            padding: 2.35rem 1.25rem 3.25rem;
             border-radius: 36px;
+          }
+
+          .about-v2-inner-container .cb-section-badge {
+            margin-bottom: 1.35rem;
           }
 
           .about-v2-headline {
@@ -380,17 +394,43 @@ export default function AboutSection() {
             font-weight: 500;
             width: auto;
             height: auto;
-            line-height: 1.15;
+            line-height: 1.2;
             white-space: normal;
+            margin: 0 0 0.9rem;
+          }
+
+          .about-v2-subtext {
+            margin: 0 0 1.6rem;
+            line-height: 1.55;
+          }
+
+          .about-v2-story-grid {
+            gap: 1.75rem;
           }
 
           .about-v2-callout {
             font-size: clamp(1.65rem, 6.2vw, 2rem);
+            line-height: 1.18;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+          }
+
+          .about-v2-body {
+            gap: 1.15rem;
+            padding-top: 0;
           }
 
           .about-v2-subtext,
           .about-v2-paragraph {
             font-size: 0.98rem;
+            line-height: 1.55;
+          }
+
+          .about-v2-highlight {
+            align-items: flex-start;
+            line-height: 1.5;
+            gap: 0.45rem;
           }
         }
       `}</style>

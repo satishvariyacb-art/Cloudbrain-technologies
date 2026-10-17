@@ -61,8 +61,7 @@ export default function Footer({ onNavClick, curved = false }) {
         </a>
 
         <p className="site-footer-tagline">
-          Enabling digital transformation strategies, problem solving benchmarks and agile business models and helping our
-          <br />
+          Enabling digital transformation strategies, problem solving benchmarks and agile business           models and helping our <br />
           clients to digitalize, scale and transform into high performance businesses.
         </p>
 
@@ -343,14 +342,120 @@ export default function Footer({ onNavClick, curved = false }) {
         }
 
         @media (max-width: 640px) {
+          .site-footer-inner {
+            align-items: center;
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
+          }
+
+          .site-footer-tagline,
+          .site-footer-copy {
+            text-align: center;
+          }
+
+          .site-footer-tagline {
+            font-size: 0.9rem;
+            line-height: 1.55;
+            margin-bottom: 1.85rem;
+          }
+
+          .site-footer-tagline br {
+            display: none;
+          }
+
+          .site-footer-grid {
+            grid-template-columns: 1fr 1fr;
+            column-gap: 1.15rem;
+            row-gap: 1.6rem;
+            margin-bottom: 1.75rem;
+            width: 100%;
+          }
+
+          .site-footer-col:last-child {
+            grid-column: 1 / -1;
+          }
+
+          .site-footer-col h2 {
+            font-size: 0.95rem;
+            margin-bottom: 0.7rem;
+          }
+
+          .site-footer-col ul {
+            gap: 0.72rem;
+          }
+
+          .site-footer-col a,
+          .site-footer-contact li {
+            font-size: 0.88rem;
+            line-height: 1.4;
+          }
+
+          .site-footer-contact {
+            gap: 1.15rem;
+          }
+
+          .site-footer-icon {
+            width: 32px;
+            height: 32px;
+          }
+
+          .site-footer-copy {
+            font-size: 0.8rem;
+            line-height: 1.45;
+          }
+
+          .site-footer-logo {
+            max-width: 196px;
+            margin-bottom: 1.15rem;
+          }
+
+          .site-footer-logo .cloudbrain-logo-root {
+            height: 46px !important;
+          }
+
+          .site-footer-logo svg,
+          .site-footer-logo img {
+            width: auto;
+            max-width: 196px;
+            height: 46px !important;
+          }
+
+          .site-footer-grid,
+          .site-footer-col {
+            min-width: 0;
+            max-width: 100%;
+          }
+
+          .site-footer-col a,
+          .site-footer-contact li {
+            min-width: 0;
+            max-width: 100%;
+          }
+
+          .site-footer-col a {
+            display: inline;
+          }
+
+          .site-footer-col a svg {
+            display: inline-block;
+            vertical-align: -0.15em;
+            margin-left: 0.2rem;
+          }
+
+          .site-footer-contact li > span:last-child {
+            min-width: 0;
+            flex: 1;
+          }
+
+          .site-footer-contact a {
+            display: inline;
+            overflow-wrap: anywhere;
+          }
+
           .site-footer-glow {
             height: 120px;
             background: radial-gradient(ellipse 50% 24% at 50% 58px, #3EC8D4 0%, #13818E 34%, #177496 54%, rgba(27, 88, 151, 0.28) 74%, rgba(19, 52, 106, 0) 100%);
             filter: blur(10px);
-          }
-
-          .site-footer-tagline {
-            margin-bottom: 2.75rem;
           }
 
           .site-footer.is-curved {

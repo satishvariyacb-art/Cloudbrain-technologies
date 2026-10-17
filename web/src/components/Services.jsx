@@ -80,7 +80,7 @@ export default function Services() {
         .services-showcase-section {
           width: 100%;
           background: #F8FAFC;
-          padding: 9rem 210px 5.5rem;
+          padding: 9rem var(--page-gutter) 5.5rem;
           position: relative;
           overflow: visible;
           z-index: 1;
@@ -228,18 +228,63 @@ export default function Services() {
         }
 
         @media (max-width: 640px) {
-          .sv-main-title {
-            font-size: 78px;
-          }
           .services-showcase-section {
-            padding: 3.5rem 1.25rem;
+            padding: 3.25rem 1.25rem 3.5rem;
           }
+
+          .sv-main-header {
+            margin-bottom: 1.85rem;
+          }
+
+          .sv-main-header .cb-section-badge {
+            margin-bottom: 1.1rem;
+          }
+
+          .sv-main-title {
+            font-size: 1.85rem;
+            line-height: 1.18;
+            margin-bottom: 0.75rem;
+          }
+
+          .sv-main-sub {
+            font-size: 1rem;
+            line-height: 1.55;
+          }
+
           .sv-grid {
             grid-template-columns: 1fr;
+            gap: 0.9rem;
           }
+
           .sv-card {
-            padding: 1.6rem 1.35rem 1.75rem;
-            gap: 1.5rem;
+            min-height: 0;
+            height: auto;
+            justify-content: flex-start;
+            padding: 1.35rem 1.25rem 1.45rem;
+            gap: 1.15rem;
+            border-radius: 22px;
+          }
+
+          .sv-icon-wrap {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+          }
+
+          .sv-icon-svg {
+            width: 44px;
+            height: 44px;
+          }
+
+          .sv-content h3 {
+            font-size: 1.35rem;
+            line-height: 1.2;
+            margin-bottom: 0.4rem;
+          }
+
+          .sv-content p {
+            font-size: 0.98rem;
+            line-height: 1.5;
           }
         }
 

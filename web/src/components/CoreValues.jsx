@@ -98,7 +98,7 @@ export default function CoreValues() {
         .core-values-section {
           width: 100%;
           background: #f8fafc;
-          padding: 7.5rem 210px 12rem;
+          padding: 7.5rem var(--page-gutter) 12rem;
           position: relative;
           border-top: 1px solid #f1f5f9;
           overflow: visible;
@@ -149,6 +149,7 @@ export default function CoreValues() {
         .c1-card-scene {
           position: relative;
           height: auto;
+          container-type: inline-size;
         }
 
         .c1-card {
@@ -156,9 +157,9 @@ export default function CoreValues() {
           border: none;
           border-radius: 32px;
           padding: 2.2rem 2rem 2rem;
-          min-height: 0;
+          min-height: calc(100cqw * 212 / 260);
           height: auto;
-          aspect-ratio: 260 / 212;
+          aspect-ratio: auto;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -247,12 +248,47 @@ export default function CoreValues() {
           .c1-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
           }
+
+          .c1-card-scene {
+            height: 100%;
+          }
+
+          .c1-card {
+            aspect-ratio: auto;
+            min-height: 0;
+            height: 100%;
+            padding: 1.5rem 1.25rem 1.35rem;
+            gap: 1rem;
+          }
+
+          .c1-icon-wrap,
+          .c1-icon-svg {
+            width: 64px;
+            height: 64px;
+          }
+
+          .c1-content h3 {
+            font-size: 22px;
+            margin-bottom: 0.4rem;
+          }
+
+          .c1-content p {
+            font-size: 15px;
+            line-height: 1.45;
+          }
         }
 
         @media (max-width: 640px) {
           .core-values-section .cv-headline {
             font-size: 1.85rem;
-            margin-bottom: 1.25rem;
+            line-height: 1.18;
+            margin-bottom: 0.85rem;
+          }
+
+          .cv-subtext {
+            font-size: 1rem;
+            line-height: 1.55;
+            max-width: none;
           }
           .core-values-section {
             padding: 4.5rem 1.25rem 6.5rem;
@@ -267,8 +303,46 @@ export default function CoreValues() {
             grid-template-columns: 1fr;
           }
           .c1-card {
-            padding: 1.6rem 1.35rem 1.75rem;
-            gap: 1.5rem;
+            aspect-ratio: auto;
+            min-height: 0;
+            height: auto;
+            padding: 1.35rem 1.25rem 1.4rem;
+            gap: 1.15rem;
+            border-radius: 22px;
+          }
+
+          .c1-icon-wrap,
+          .c1-icon-svg {
+            width: 52px;
+            height: 52px;
+          }
+
+          .c1-content h3 {
+            font-size: 1.35rem;
+            margin-bottom: 0.4rem;
+          }
+
+          .c1-content p {
+            font-size: 0.98rem;
+            line-height: 1.45;
+          }
+
+          .c1-grid .c1-card-scene:first-child .c1-card {
+            background-color: #3085FF;
+          }
+
+          .c1-grid .c1-card-scene:first-child .c1-icon-wrap {
+            background-color: #ffffff;
+            border-radius: 14px;
+          }
+
+          .c1-grid .c1-card-scene:first-child .c1-icon-svg {
+            color: #3085FF;
+          }
+
+          .c1-grid .c1-card-scene:first-child .c1-content h3,
+          .c1-grid .c1-card-scene:first-child .c1-content p {
+            color: #ffffff;
           }
         }
 

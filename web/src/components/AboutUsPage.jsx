@@ -229,7 +229,7 @@ export default function AboutUsPage({ onBack, onOpenContact, onOpenCareers }) {
         .about-nav-container {
           max-width: none;
           margin: 0 auto;
-          padding: 0 210px;
+          padding: 0 var(--page-gutter);
           display: flex;
           align-items: center;
           justify-content: space-between;

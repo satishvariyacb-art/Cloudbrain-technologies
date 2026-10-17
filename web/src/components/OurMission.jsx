@@ -288,7 +288,7 @@ export default function OurMission() {
         .om-v2-section {
           background-color: #3086FF; /* Warm Vivid Yellow matching reference */
           margin-top: -80px; /* Moves Yellow section up under About Card so About bottom radius shows over Yellow */
-          padding: 80px 210px 0 210px; /* 80px is the hidden overlap; content centers in the visible area */
+          padding: 80px var(--page-gutter) 0 var(--page-gutter); /* 80px is the hidden overlap; content centers in the visible area */
           min-height: calc(23.5vw + 80px);
           display: flex;
           align-items: center;
@@ -359,6 +359,43 @@ export default function OurMission() {
           filter: drop-shadow(0 12px 24px rgba(217, 119, 6, 0.2));
         }
 
+        @media (max-width: 1600px) {
+          .om-v2-container {
+            gap: 2rem;
+          }
+
+          .om-v2-title {
+            font-size: clamp(40px, 4vw, 60px);
+            margin-bottom: 0.85rem;
+          }
+
+          .om-v2-description {
+            font-size: clamp(18px, 1.65vw, 24px);
+            line-height: 1.45;
+          }
+
+          .om-v2-description br {
+            display: none;
+          }
+
+          .om-v2-graphic-wrap {
+            flex: 0 0 220px;
+            max-width: 240px;
+          }
+
+          .om-v2-graphic-wrap svg,
+          .om-v2-wireframe-svg {
+            max-height: min(180px, 16vw);
+          }
+        }
+
+        @media (max-width: 1100px) {
+          .om-v2-section {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+          }
+        }
+
         @media (max-width: 1024px) {
           .om-v2-section {
             margin-top: -60px;
@@ -373,45 +410,100 @@ export default function OurMission() {
           .om-v2-section {
             display: block;
             min-height: 0;
-            padding: 6rem 1.5rem 3.5rem 1.5rem;
-          }
-
-          .om-v2-graphic-wrap svg,
-          .om-v2-wireframe-svg {
-            max-height: 220px;
+            padding: 5.75rem 2rem 3.25rem;
           }
 
           .om-v2-container {
             flex-direction: column;
-            align-items: flex-start;
-            gap: 2.5rem;
+            align-items: stretch;
+            gap: 1.15rem;
+          }
+
+          .om-v2-content {
+            width: 100%;
+            max-width: none;
+          }
+
+          .om-v2-title {
+            font-size: 2.85rem;
+            line-height: 1.15;
+            margin-bottom: 0.75rem;
+          }
+
+          .om-v2-description {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            max-width: none;
+          }
+
+          .om-v2-description br {
+            display: none;
           }
 
           .om-v2-graphic-wrap {
-            align-self: flex-end;
-            max-width: 260px;
+            order: -1;
+            flex: 0 0 auto;
+            height: auto;
+            align-self: flex-start;
+            max-width: 210px;
+          }
+
+          .om-v2-graphic-wrap svg,
+          .om-v2-wireframe-svg {
+            width: 100%;
+            max-width: 210px;
+            max-height: 176px;
           }
         }
 
         @media (max-width: 640px) {
           .om-v2-section {
-            margin-top: -45px;
-            padding: 6.5rem 1.25rem 4rem 1.25rem;
+            margin-top: -40px;
+            min-height: 0;
+            padding: 4.75rem 1.25rem 3.15rem;
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
           }
 
+          .om-v2-container {
+            gap: 0.85rem;
+          }
+
+          .om-v2-content {
+            width: 100%;
+            max-width: none;
+          }
+
           .om-v2-title {
-            font-size: 2.3rem;
+            font-size: 2.15rem;
+            line-height: 1.15;
+            margin-bottom: 0.7rem;
           }
 
           .om-v2-description {
             font-size: 1rem;
+            line-height: 1.5;
+            max-width: none;
+          }
+
+          .om-v2-description br {
+            display: none;
           }
 
           .om-v2-graphic-wrap {
-            align-self: center;
-            max-width: 220px;
+            order: -1;
+            flex: 0 0 auto;
+            height: auto;
+            align-self: flex-start;
+            max-width: 156px;
+            margin-bottom: 0;
+          }
+
+          .om-v2-graphic-wrap svg,
+          .om-v2-wireframe-svg {
+            width: 100%;
+            max-width: 156px;
+            max-height: 136px;
           }
         }
       `}</style>

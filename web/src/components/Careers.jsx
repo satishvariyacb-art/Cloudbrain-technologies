@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { apiClient } from '../services/apiClient';
-import { ArrowRight, X, CheckCircle2, Mail, Upload, FileText } from 'lucide-react';
+import { ArrowRight, X, CheckCircle2, Mail, Upload, FileText, Search, Phone, Link2, Lock } from 'lucide-react';
 import SectionBadge from './SectionBadge';
 
 function jobTags(job) {
@@ -29,6 +29,7 @@ export default function Careers() {
     notes: '' 
   });
   const [uploadingResume, setUploadingResume] = useState(false);
+  const [resumeError, setResumeError] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -61,14 +62,15 @@ export default function Careers() {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
 
-    if (file.size > 10 * 1024 * 1024) {
-      alert('File size exceeds 10MB limit. Please choose a smaller document.');
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size exceeds 5MB limit. Please choose a smaller document.');
       return;
     }
 
     setUploadingResume(true);
     const reader = new FileReader();
     reader.onload = () => {
+      setResumeError(false);
       setApplicant(prev => ({
         ...prev,
         resume: reader.result,
@@ -93,7 +95,11 @@ export default function Careers() {
 
   const handleApplySubmit = async (e) => {
     e.preventDefault();
-    if (!applicant.name.trim()) return;
+    if (!applicant.resume) {
+      setResumeError(true);
+      return;
+    }
+    if (!applicant.name.trim() || !applicant.email.trim()) return;
 
     setSubmitting(true);
     try {
@@ -115,6 +121,7 @@ export default function Careers() {
       setTimeout(() => {
         setAppliedSuccess(false);
         setSelectedRole(null);
+        setResumeError(false);
         setApplicant({ name: '', phone: '', email: '', portfolio: '', resume: '', resumeName: '', notes: '' });
       }, 2800);
     } catch (err) {
@@ -155,7 +162,7 @@ export default function Careers() {
                 <button
                   type="button"
                   className="role-apply-btn"
-                  onClick={() => setSelectedRole(job)}
+                  onClick={() => { setResumeError(false); setSelectedRole(job); }}
                   aria-label={`Apply for ${job.role}`}
                 >
                   Apply Now
@@ -187,11 +194,7 @@ export default function Careers() {
       {/* Role Application Modal */}
       {selectedRole && createPortal(
         <div className="modal-backdrop" onClick={() => setSelectedRole(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelectedRole(null)}>
-              <X size={20} />
-            </button>
-
+          <div className="modal-content apply-modal" onClick={(e) => e.stopPropagation()}>
             {appliedSuccess ? (
               <div className="applied-success-view">
                 <CheckCircle2 size={48} className="success-icon" />
@@ -200,55 +203,72 @@ export default function Careers() {
               </div>
             ) : (
               <>
-                <div className="modal-header">
-                  <h3 className="modal-title">Apply for {selectedRole.role}</h3>
-                  <p className="modal-subtitle">{selectedRole.location} • {selectedRole.type}</p>
+                <div className="apply-head">
+                  <h3 className="apply-title">Apply Now</h3>
+                  <p className="apply-for">
+                    Apply for
+                    <span className="apply-role-pill">{selectedRole.role}</span>
+                  </p>
                 </div>
 
                 <form onSubmit={handleApplySubmit} className="apply-form">
                   <div className="form-group">
-                    <label>Full Name <span className="field-required">*</span></label>
-                    <input 
-                      type="text" 
-                      required 
-                      placeholder="e.g. Alex Morgan"
-                      value={applicant.name}
-                      onChange={(e) => setApplicant({ ...applicant, name: e.target.value })}
-                    />
+                    <label htmlFor="apply-name">Full Name <span className="field-required">*</span></label>
+                    <div className="apply-field">
+                      <Search size={16} aria-hidden="true" />
+                      <input
+                        id="apply-name"
+                        type="text"
+                        required
+                        placeholder="Enter full name"
+                        value={applicant.name}
+                        onChange={(e) => setApplicant({ ...applicant, name: e.target.value })}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="apply-row">
+                    <div className="form-group">
+                      <label htmlFor="apply-email">Email Address <span className="field-required">*</span></label>
+                      <div className="apply-field">
+                        <Mail size={16} aria-hidden="true" />
+                        <input
+                          id="apply-email"
+                          type="email"
+                          required
+                          placeholder="Enter email address"
+                          value={applicant.email}
+                          onChange={(e) => setApplicant({ ...applicant, email: e.target.value })}
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="apply-phone">Mobile Number (optional)</label>
+                      <div className="apply-field">
+                        <Phone size={16} aria-hidden="true" />
+                        <input
+                          id="apply-phone"
+                          type="tel"
+                          placeholder="Enter mobile number"
+                          value={applicant.phone}
+                          onChange={(e) => setApplicant({ ...applicant, phone: e.target.value })}
+                        />
+                      </div>
+                    </div>
                   </div>
 
                   <div className="form-group">
-                    <label>Mobile Number <span className="field-optional">(Optional)</span></label>
-                    <input 
-                      type="tel" 
-                      placeholder="+1 (555) 000-0000 or +91 98765 43210"
-                      value={applicant.phone}
-                      onChange={(e) => setApplicant({ ...applicant, phone: e.target.value })}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Email Address <span className="field-optional">(Optional)</span></label>
-                    <input 
-                      type="email" 
-                      placeholder="alex@domain.com"
-                      value={applicant.email}
-                      onChange={(e) => setApplicant({ ...applicant, email: e.target.value })}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Upload Resume / CV <span className="field-optional">(Optional)</span></label>
+                    <label>Upload Resume / CV <span className="field-required">*</span></label>
                     {applicant.resume ? (
                       <div className="resume-attached-box">
                         <div className="resume-attached-info">
-                          <FileText size={18} color="var(--brand-primary)" />
+                          <FileText size={18} color="#3085FF" />
                           <span className="resume-filename" title={applicant.resumeName}>
                             {applicant.resumeName}
                           </span>
                         </div>
-                        <button 
-                          type="button" 
+                        <button
+                          type="button"
                           className="resume-remove-btn"
                           onClick={handleRemoveResume}
                           title="Remove resume"
@@ -257,47 +277,82 @@ export default function Careers() {
                         </button>
                       </div>
                     ) : (
-                      <label className="resume-upload-zone">
-                        <Upload size={18} />
-                        <span>{uploadingResume ? 'Processing document...' : 'Attach Resume (PDF, DOC, DOCX up to 10MB)'}</span>
-                        <input 
-                          type="file" 
-                          accept=".pdf,.doc,.docx" 
-                          style={{ display: 'none' }}
+                      <label
+                        className="resume-upload-zone"
+                        onDragOver={(event) => event.preventDefault()}
+                        onDrop={(event) => {
+                          event.preventDefault();
+                          const file = event.dataTransfer.files && event.dataTransfer.files[0];
+                          if (file) handleResumeChange({ target: { files: [file] } });
+                        }}
+                      >
+                        <span className="resume-upload-icon" aria-hidden="true">
+                          <Upload size={18} />
+                        </span>
+                        <span className="resume-upload-copy">
+                          {uploadingResume ? 'Processing document...' : (
+                            <>
+                              <span>Drag & drop your file here, or <span className="resume-browse">browse</span></span>
+                              <small>PDF, DOC or DOCX. Max 5mb</small>
+                            </>
+                          )}
+                        </span>
+                        <input
+                          type="file"
+                          accept=".pdf,.doc,.docx"
                           disabled={uploadingResume}
                           onChange={handleResumeChange}
                         />
                       </label>
                     )}
+                    {resumeError && !applicant.resume ? (
+                      <span className="apply-resume-error">Please upload your resume to continue.</span>
+                    ) : null}
                   </div>
 
                   <div className="form-group">
-                    <label>LinkedIn / Portfolio / Work URL <span className="field-optional">(Optional)</span></label>
-                    <input 
-                      type="url" 
-                      placeholder="https://linkedin.com/in/yourprofile"
-                      value={applicant.portfolio}
-                      onChange={(e) => setApplicant({ ...applicant, portfolio: e.target.value })}
-                    />
+                    <label htmlFor="apply-portfolio">LinkedIn / Portfolio / Work URL (optional)</label>
+                    <div className="apply-field">
+                      <Link2 size={16} aria-hidden="true" />
+                      <input
+                        id="apply-portfolio"
+                        type="url"
+                        placeholder="https://linkedin.com/in/yourname"
+                        value={applicant.portfolio}
+                        onChange={(e) => setApplicant({ ...applicant, portfolio: e.target.value })}
+                      />
+                    </div>
                   </div>
 
                   <div className="form-group">
-                    <label>Why Cloudbrain? (Brief Note) <span className="field-optional">(Optional)</span></label>
-                    <textarea 
-                      rows={3} 
-                      placeholder="Tell us about your experience building iOS, Android, or AI products..."
-                      value={applicant.notes}
-                      onChange={(e) => setApplicant({ ...applicant, notes: e.target.value })}
-                    />
+                    <label htmlFor="apply-notes">Why Cloudbrain? (Brief Note) (optional)</label>
+                    <div className="apply-note">
+                      <textarea
+                        id="apply-notes"
+                        rows={4}
+                        maxLength={500}
+                        placeholder="Tell us briefly what draws you to Cloudbrain."
+                        value={applicant.notes}
+                        onChange={(e) => setApplicant({ ...applicant, notes: e.target.value.slice(0, 500) })}
+                      />
+                      <span className="apply-count">{applicant.notes.length}/500</span>
+                    </div>
                   </div>
 
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" onClick={() => setSelectedRole(null)} disabled={submitting}>
-                      Cancel
-                    </button>
-                    <button type="submit" className="btn btn-brand" disabled={submitting || uploadingResume}>
-                      {submitting ? 'Submitting...' : 'Submit Application'}
-                    </button>
+                  <div className="apply-footer">
+                    <p className="apply-privacy">
+                      <Lock size={14} aria-hidden="true" />
+                      Your details are kept private and used only for recruitment.
+                    </p>
+                    <div className="apply-actions">
+                      <button type="button" className="btn btn-secondary" onClick={() => setSelectedRole(null)} disabled={submitting}>
+                        Cancel
+                      </button>
+                      <button type="submit" className="btn btn-brand" disabled={submitting || uploadingResume}>
+                        {submitting ? 'Submitting...' : 'Apply Now'}
+                        {!submitting && <ArrowRight size={16} aria-hidden="true" />}
+                      </button>
+                    </div>
                   </div>
                 </form>
               </>
@@ -312,7 +367,7 @@ export default function Careers() {
           position: relative;
           z-index: 2;
           background: #ffffff;
-          padding: 8.5rem 210px calc(8rem + 160px);
+          padding: 8.5rem var(--page-gutter) calc(8rem + 160px);
           padding-bottom: 10.15rem;
           border-bottom-left-radius: 80px;
           border-bottom-right-radius: 80px;
@@ -635,21 +690,298 @@ export default function Careers() {
 
         @media (max-width: 680px) {
           .careers-section {
-            padding: 3.5rem 1.25rem calc(5rem + 48px);
+            padding: 3.25rem 1.25rem calc(5rem + 48px);
             border-bottom-left-radius: 48px;
             border-bottom-right-radius: 48px;
           }
 
-          .roles-grid {
-            grid-template-columns: 1fr;
+          .careers-head {
+            margin-bottom: 1.6rem;
+          }
+
+          .careers-head .cb-section-badge {
+            margin-bottom: 1rem;
           }
 
           .careers-head h2 {
-            font-size: 1.85rem;
+            font-size: 1.95rem;
+            line-height: 1.15;
+            margin-bottom: 0.7rem;
           }
 
           .careers-head p {
             font-size: 1rem;
+            line-height: 1.5;
+          }
+
+          .roles-grid {
+            grid-template-columns: 1fr;
+            gap: 0.85rem;
+          }
+
+          .role-card,
+          .empty-careers-card {
+            border-radius: 22px;
+            padding: 1.25rem 1.15rem 1.2rem;
+          }
+
+          .role-title,
+          .empty-careers-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.45rem;
+          }
+
+          .role-desc,
+          .empty-careers-desc,
+          .empty-careers-note {
+            font-size: 0.95rem;
+            line-height: 1.45;
+            margin-bottom: 0.9rem;
+          }
+
+          .role-tags {
+            gap: 0.4rem;
+            margin-bottom: 1.05rem;
+          }
+
+          .role-tags li {
+            font-size: 0.8rem;
+            padding: 0.42rem 0.7rem;
+          }
+
+          .role-apply-btn {
+            font-size: 0.95rem;
+            padding: 0.62rem 1rem 0.62rem 1.05rem;
+          }
+        }
+
+        .apply-modal.modal-content {
+          max-width: 760px;
+          padding: 1.6rem 1.7rem 1.15rem;
+          border-radius: 28px;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+
+        .apply-modal.modal-content::-webkit-scrollbar {
+          display: none;
+        }
+
+        .apply-title {
+          margin: 0 0 0.7rem;
+          font-family: var(--font-main);
+          font-size: 2.35rem;
+          font-weight: 700;
+          letter-spacing: -0.03em;
+          line-height: 1.05;
+          color: #0B1020;
+        }
+
+        .apply-for {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 0.55rem;
+          margin: 0;
+          font-size: 0.95rem;
+          color: #64748b;
+        }
+
+        .apply-role-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          padding: 0.28rem 0.7rem;
+          border-radius: 999px;
+          background: #eef4ff;
+          color: #3085FF;
+          font-size: 0.82rem;
+          font-weight: 600;
+        }
+
+        .apply-role-pill::before {
+          content: '';
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #3085FF;
+        }
+
+        .apply-form {
+          gap: 0.95rem;
+        }
+
+        .apply-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.9rem;
+        }
+
+        .apply-modal .form-group label {
+          font-size: 0.82rem;
+          font-weight: 600;
+          color: #1e293b;
+        }
+
+        .apply-field {
+          position: relative;
+        }
+
+        .apply-field svg {
+          position: absolute;
+          left: 14px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #94a3b8;
+          pointer-events: none;
+        }
+
+        .apply-modal .apply-field input,
+        .apply-modal textarea {
+          width: 100%;
+          background: #f8fafc;
+          border: 1px solid #e6ebf2;
+          border-radius: 12px;
+          color: #0B1020;
+        }
+
+        .apply-modal .apply-field input {
+          padding-left: 2.45rem;
+        }
+
+        .apply-note {
+          position: relative;
+        }
+
+        .apply-modal textarea {
+          min-height: 110px;
+          resize: vertical;
+          padding-bottom: 1.6rem;
+        }
+
+        .apply-count {
+          position: absolute;
+          right: 12px;
+          bottom: 8px;
+          font-size: 0.75rem;
+          color: #94a3b8;
+        }
+
+        .apply-modal .resume-upload-zone {
+          position: relative;
+          min-height: 148px;
+          flex-direction: column;
+          gap: 0.55rem;
+          border: 1.5px dashed #3085FF;
+          border-radius: 14px;
+          background: #f8fbff;
+          text-align: center;
+        }
+
+        .apply-modal .resume-upload-zone input {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+          cursor: pointer;
+        }
+
+        .resume-upload-icon {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+          display: grid;
+          place-items: center;
+          background: #3085FF;
+          color: #ffffff;
+        }
+
+        .resume-upload-copy {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+          color: #334155;
+          font-size: 0.92rem;
+          font-weight: 500;
+        }
+
+        .resume-upload-copy small {
+          color: #94a3b8;
+          font-size: 0.78rem;
+          font-weight: 400;
+        }
+
+        .resume-browse {
+          color: #3085FF;
+          font-weight: 600;
+        }
+
+        .apply-resume-error {
+          color: #ef4444;
+          font-size: 0.8rem;
+        }
+
+        .apply-footer {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1rem;
+          margin-top: 0.35rem;
+          padding-top: 0.9rem;
+          border-top: 1px solid #eef2f6;
+        }
+
+        .apply-privacy {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          margin: 0;
+          color: #94a3b8;
+          font-size: 0.78rem;
+        }
+
+        .apply-actions {
+          display: flex;
+          align-items: center;
+          gap: 0.55rem;
+        }
+
+        .apply-modal .btn {
+          border-radius: 999px;
+          padding: 0.62rem 1.05rem;
+          font-size: 0.92rem;
+        }
+
+        .apply-modal .btn-secondary {
+          background: #ffffff;
+        }
+
+        @media (max-width: 680px) {
+          .apply-modal.modal-content {
+            max-width: none;
+            max-height: calc(100vh - 1.25rem);
+            padding: 1.15rem 1rem 0.9rem;
+            border-radius: 20px;
+          }
+
+          .apply-title {
+            font-size: 1.7rem;
+          }
+
+          .apply-row {
+            grid-template-columns: 1fr;
+          }
+
+          .apply-footer {
+            flex-direction: column;
+            align-items: stretch;
+          }
+
+          .apply-actions {
+            justify-content: flex-end;
+          }
+
+          .resume-filename {
+            max-width: 180px;
           }
         }
 

@@ -449,6 +449,19 @@ export default function Hero() {
             flex-wrap: wrap;
           }
 
+          .hero-line2-ghost {
+            display: none;
+          }
+
+          .hero-line2-live {
+            position: static;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            white-space: normal;
+            max-width: 100%;
+          }
+
           .hero-subtitle {
             font-size: 0.95rem;
             line-height: 1.55;
