@@ -211,9 +211,9 @@ export default function AboutUsPage({ onBack, onOpenContact, onOpenCareers }) {
         }
 
         .about-container {
-          max-width: 1200px;
+          max-width: none;
           margin: 0 auto;
-          padding: 0 1.5rem;
+          padding: 0;
         }
 
         .about-nav-bar {
@@ -227,9 +227,9 @@ export default function AboutUsPage({ onBack, onOpenContact, onOpenCareers }) {
         }
 
         .about-nav-container {
-          max-width: 1200px;
+          max-width: none;
           margin: 0 auto;
-          padding: 0 1.5rem;
+          padding: 0 210px;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -271,9 +271,9 @@ export default function AboutUsPage({ onBack, onOpenContact, onOpenCareers }) {
           grid-template-columns: 1fr 1fr;
           gap: 3.5rem;
           align-items: center;
-          max-width: 1200px;
+          max-width: none;
           margin: 0 auto;
-          padding: 0 1.5rem;
+          padding: 0;
         }
 
         .about-title {
@@ -498,6 +498,13 @@ export default function AboutUsPage({ onBack, onOpenContact, onOpenCareers }) {
         .cta-actions {
           display: flex;
           gap: 1rem;
+        }
+
+        @media (max-width: 1100px) {
+          .about-nav-container {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+          }
         }
 
         @media (max-width: 1024px) {

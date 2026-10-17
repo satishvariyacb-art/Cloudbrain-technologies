@@ -82,62 +82,100 @@ function ValueIcon({ id, uid }) {
 
 const THRESHOLDS = [0.1, 0.32, 0.54, 0.76];
 const MOBILE_MQ = '(max-width: 720px)';
-const GLOW_OFF = '#7FB0E6';
 const VB_W = 1024;
 const VB_H = 940;
 
-function connectorPath(ox, oy, ix, iy) {
-  const tip = ix - 1;
-  const head = 16;
-  const wing = 4.6;
-  const base = tip - head;
-  const bus = ox + Math.max(28, (base - ox) * 0.38);
-  const room = Math.abs(iy - oy);
-  const r = Math.max(0, Math.min(16, room / 2, (bus - ox) / 2, (base - bus) / 2));
-  const dir = iy < oy - 0.5 ? -1 : iy > oy + 0.5 ? 1 : 0;
-  const d = dir === 0
-    ? `M${ox} ${oy} H${base}`
-    : `M${ox} ${oy} H${bus - r} Q${bus} ${oy} ${bus} ${oy + dir * r} V${iy - dir * r} Q${bus} ${iy} ${bus + r} ${iy} H${base}`;
-  const arrow = `M${base} ${iy - wing} L${tip} ${iy} L${base} ${iy + wing} Z`;
-  return { d, arrow };
+function buildConnectors(ox, oy, specs, busX) {
+  const head = 5.1;
+  const wing = 4.64;
+  const tipOf = (ix) => ix - 1;
+  const tip0 = tipOf(specs[0].ix);
+  const bus = Math.min(tip0 - 36, Math.max(ox + 28, busX || ox + Math.max(52, (tip0 - ox) * 0.3)));
+  const rises = specs.map((spec) => Math.abs(spec.iy - oy)).filter((rise) => rise > 0.5);
+  const closest = rises.length ? Math.min(...rises) : 24;
+  const rIn = Math.max(10, Math.min(20, closest / 2, (bus - ox) / 2));
+  const fromLogo = `M${ox} ${oy} H${bus - rIn}`;
+
+  const meta = specs.map((spec) => {
+    const tip = tipOf(spec.ix);
+    const dir = spec.iy < oy - 0.5 ? -1 : spec.iy > oy + 0.5 ? 1 : 0;
+    const rise = Math.abs(spec.iy - oy);
+    const rOut = dir === 0 ? 0 : Math.max(10, Math.min(20, Math.max(0, (rise - rIn) / 2), (tip - bus) / 2));
+    const back = tip - head;
+    return {
+      tip,
+      dir,
+      rOut,
+      yEnter: oy + dir * rIn,
+      yLeave: spec.iy - dir * rOut,
+      iy: spec.iy,
+      arrow: `M${back} ${spec.iy - wing} L${tip} ${spec.iy} L${back} ${spec.iy + wing}`,
+    };
+  });
+
+  const lines = meta.map((item) => ({ d: `${fromLogo} H${item.tip}`, arrow: item.arrow }));
+  const paint = (group) => {
+    let shared = fromLogo;
+    group.forEach((item, order) => {
+      const current = meta[item.index];
+      const elbow = `Q${bus} ${current.iy} ${bus + current.rOut} ${current.iy} H${current.tip}`;
+      if (order === 0) {
+        const hasSpine = current.dir < 0 ? current.yLeave < current.yEnter - 0.5 : current.yLeave > current.yEnter + 0.5;
+        const spine = hasSpine ? `V${current.yLeave}` : '';
+        const turn = `Q${bus} ${oy} ${bus} ${current.yEnter} ${spine}`;
+        lines[item.index] = { d: `${fromLogo} ${turn} ${elbow}`, arrow: current.arrow };
+        shared = `${fromLogo} ${turn}`;
+        return;
+      }
+      const startY = meta[group[order - 1].index].yLeave;
+      const hasSpine = current.dir < 0 ? current.yLeave < startY - 0.5 : current.yLeave > startY + 0.5;
+      const spine = hasSpine ? `V${current.yLeave}` : '';
+      lines[item.index] = { d: `${shared} ${spine} ${elbow}`, arrow: current.arrow };
+      shared = `${shared} ${spine}`;
+    });
+  };
+
+  paint(meta.map((item, index) => ({ index, iy: item.iy })).filter((item) => meta[item.index].dir < 0).sort((a, b) => b.iy - a.iy));
+  paint(meta.map((item, index) => ({ index, iy: item.iy })).filter((item) => meta[item.index].dir > 0).sort((a, b) => a.iy - b.iy));
+  return { trunk: '', lines, bus, tip: tip0 };
 }
 
 const ITEMS = [
   {
     id: 'red',
-    color: '#F52837',
+    color: '#FF4654',
     title: 'Red - Build with Passion',
-    description: 'We ask "why" before we ask "how." Every product starts because we\'re genuinely curious about solving it.',
+    description: ['We ask "why" before we ask "how." Every product starts because we\'re', 'genuinely curious about solving it.'],
     top: '38.40%',
     d: 'M318 557 H402 Q416 557 416 543 V403 Q416 389 430 389 H546',
-    arrow: 'M536 383.2 L548 389 L536 394.8 Z',
+    arrow: 'M542.9 384.36 L548 389 L542.9 393.64',
   },
   {
     id: 'green',
-    color: '#00AF57',
+    color: '#00B96B',
     title: 'Teal/Green - Grow with Purpose',
-    description: 'Nothing we build is meant to stay static. We design products that keep improving long after launch.',
+    description: ['Nothing we build is meant to stay static. We design products that keep', 'improving long after launch.'],
     top: '49.89%',
     d: 'M318 557 H402 Q416 557 416 543 V511 Q416 497 430 497 H546',
-    arrow: 'M536 491.2 L548 497 L536 502.8 Z',
+    arrow: 'M542.9 492.36 L548 497 L542.9 501.64',
   },
   {
     id: 'yellow',
-    color: '#FFBE00',
+    color: '#FFBB00',
     title: 'Yellow - Think Beyond Obvious',
-    description: 'We look for the simplest path to a solution, even when the obvious path takes longer.',
+    description: ['We look for the simplest path to a solution, even when the obvious path', 'takes longer.'],
     top: '61.38%',
     d: 'M318 557 H402 Q416 557 416 571 V591 Q416 605 430 605 H546',
-    arrow: 'M536 599.2 L548 605 L536 610.8 Z',
+    arrow: 'M542.9 600.36 L548 605 L542.9 609.64',
   },
   {
     id: 'blue',
-    color: '#3085FF',
+    color: '#3285FF',
     title: 'Blue - Trust by Design',
-    description: 'No shortcuts on the fundamentals. What we ship is stable, secure, and built to hold up.',
+    description: ['No shortcuts on the fundamentals. What we ship is stable, secure, and', 'built to hold up.'],
     top: '72.87%',
     d: 'M318 557 H402 Q416 557 416 571 V699 Q416 713 430 713 H546',
-    arrow: 'M536 707.2 L548 713 L536 718.8 Z',
+    arrow: 'M542.9 708.36 L548 713 L542.9 717.64',
   },
 ];
 
@@ -151,11 +189,10 @@ export default function OurPhilosophy() {
   const [active, setActive] = useState([false, false, false, false]);
   const [hovered, setHovered] = useState(-1);
   const [lines, setLines] = useState(() => ITEMS.map((item) => ({ d: item.d, arrow: item.arrow })));
-
+  const [trunk, setTrunk] = useState('');
   const allColorful = active[0] && active[1] && active[2] && active[3];
   const currentStep = active.reduce((last, on, index) => (on ? index : last), -1);
   const litIndex = allColorful && hovered >= 0 ? hovered : currentStep;
-  const glow = litIndex >= 0 ? `${ITEMS[litIndex].color}99` : GLOW_OFF;
 
   useLayoutEffect(() => {
     const canvas = canvasRef.current;
@@ -173,13 +210,26 @@ export default function OurPhilosophy() {
       const sy = VB_H / cr.height;
       const ox = (lr.right - cr.left) * sx - 3;
       const oy = (lr.top + lr.height / 2 - cr.top) * sy;
-      const next = ITEMS.map((_, index) => {
+      const large = canvas.querySelector('.ph-frame-large');
+      const inner = canvas.querySelector('.ph-frame-inner');
+      let busX = 0;
+      if (large && inner) {
+        const right = Math.max(large.getBoundingClientRect().right, inner.getBoundingClientRect().right);
+        busX = ox + ((right - cr.left) * sx - ox) * 0.62;
+      }
+      const specs = ITEMS.map(() => ({ ix: 0, iy: 0 }));
+      ITEMS.forEach((_, index) => {
         const ir = icons[index].getBoundingClientRect();
-        const ix = (ir.left - cr.left) * sx - 4;
-        const iy = (ir.top + ir.height / 2 - cr.top) * sy;
-        return connectorPath(ox, oy, ix, iy);
+        specs[index].ix = (ir.left - cr.left) * sx - 18;
+        specs[index].iy = (ir.top + ir.height / 2 - cr.top) * sy;
       });
-      setLines(next);
+      const next = buildConnectors(ox, oy, specs, busX);
+      setTrunk((prev) => (prev === next.trunk ? prev : next.trunk));
+      setLines((prev) => (
+        prev.length === next.lines.length && prev.every((line, index) => line.d === next.lines[index].d && line.arrow === next.lines[index].arrow)
+          ? prev
+          : next.lines
+      ));
     };
 
     measure();
@@ -226,7 +276,7 @@ export default function OurPhilosophy() {
       const rel = (el, edge) => el.getBoundingClientRect()[edge] - canvasTop;
       const diagramTop = Math.min(rel(items[0], 'top'), rel(logo, 'top')) - 8;
       stage.style.top = `${headerBottom - diagramTop}px`;
-      section.style.height = `${canvasH + vh * 3}px`;
+      section.style.height = `${Math.max(vh * 4, canvasH + vh * 3)}px`;
     };
 
     const applyDesktop = () => {
@@ -329,7 +379,7 @@ export default function OurPhilosophy() {
             </p>
           </header>
 
-          <div className="ph-glow" style={{ '--glow': glow }} aria-hidden="true" />
+          <div className={`ph-glow${currentStep >= 0 ? ` is-${ITEMS[currentStep].id}` : ''}`} aria-hidden="true" />
 
           <div className="ph-logo-tile" ref={logoRef}>
             <svg
@@ -373,19 +423,23 @@ export default function OurPhilosophy() {
           </div>
 
           <svg className="ph-lines" viewBox={`0 0 ${VB_W} ${VB_H}`} aria-hidden="true">
+            {trunk ? <path className="ph-base" d={trunk} fill="none" /> : null}
             {ITEMS.map((item, index) => (
               <path key={`base-${item.id}`} className="ph-base" d={lines[index].d} fill="none" />
             ))}
-            {ITEMS.map((item, index) => (
-              <g
-                key={item.id}
-                className={`ph-step${active[index] ? ' on' : ''}${allColorful && hovered === index ? ' is-hover' : ''}`}
-                style={{ '--c': item.color }}
-              >
-                <path className="ph-live" pathLength="1" d={lines[index].d} fill="none" />
-                <path className="ph-arrow" d={lines[index].arrow} />
-              </g>
-            ))}
+            {[0, 1, 2, 3].map((index) => {
+              const item = ITEMS[index];
+              return (
+                <g
+                  key={item.id}
+                  className={`ph-step${active[index] ? ' on' : ''}${allColorful && hovered === index ? ' is-hover' : ''}`}
+                  style={{ '--c': item.color }}
+                >
+                  <path className="ph-live" pathLength="1" d={lines[index].d} fill="none" />
+                  <path className="ph-arrow" d={lines[index].arrow} fill="none" />
+                </g>
+              );
+            })}
           </svg>
 
           {ITEMS.map((item, index) => (
@@ -407,7 +461,11 @@ export default function OurPhilosophy() {
               </div>
               <div className="ph-copy">
                 <h3>{item.title}</h3>
-                <p>{item.description}</p>
+                <p>
+                  {item.description.map((line) => (
+                    <span key={line}>{line}</span>
+                  ))}
+                </p>
               </div>
             </article>
           ))}
@@ -461,7 +519,7 @@ export default function OurPhilosophy() {
         .ph-frame {
           position: absolute;
           box-sizing: border-box;
-          border: 1.5px solid rgba(176, 190, 204, 0.72);
+          border: 1.5px solid rgba(210, 214, 220, 0.7);
           background: transparent;
           pointer-events: none;
           z-index: 0;
@@ -497,7 +555,7 @@ export default function OurPhilosophy() {
           width: 24.5%;
           height: 26%;
           border-radius: 2.5cqw;
-          border-color: rgba(186, 204, 198, 0.55);
+          border-color: rgba(214, 218, 224, 0.5);
         }
 
         .ph-head {
@@ -545,16 +603,32 @@ export default function OurPhilosophy() {
           position: absolute;
           left: 23.4%;
           top: 59.23%;
-          width: 20%;
+          width: 28%;
           aspect-ratio: 1;
           transform: translate(-50%, -50%);
           border-radius: 50%;
-          background: radial-gradient(circle, var(--glow, #7FB0E6) 0%, transparent 58%);
-          filter: blur(46px);
-          opacity: 0.32;
+          background: radial-gradient(circle, #D7F0FB 0%, #EAF6FC 48%, transparent 72%);
+          filter: blur(10px);
+          opacity: 1;
           z-index: 1;
           pointer-events: none;
           transition: background 0.6s ease;
+        }
+
+        .ph-glow.is-red {
+          background: radial-gradient(circle, rgba(245, 40, 55, 0.22) 0%, rgba(245, 40, 55, 0.06) 48%, transparent 72%);
+        }
+
+        .ph-glow.is-green {
+          background: radial-gradient(circle, rgba(0, 175, 87, 0.22) 0%, rgba(0, 175, 87, 0.06) 48%, transparent 72%);
+        }
+
+        .ph-glow.is-yellow {
+          background: radial-gradient(circle, rgba(255, 190, 0, 0.28) 0%, rgba(255, 190, 0, 0.08) 48%, transparent 72%);
+        }
+
+        .ph-glow.is-blue {
+          background: radial-gradient(circle, #D7F0FB 0%, #EAF6FC 48%, transparent 72%);
         }
 
         .ph-logo-tile {
@@ -566,10 +640,7 @@ export default function OurPhilosophy() {
           box-sizing: border-box;
           background: #ffffff;
           border: 1px solid rgba(226, 232, 240, 0.9);
-          box-shadow:
-            0 18px 40px rgba(15, 23, 42, 0.08),
-            0 0 48px rgba(4, 171, 107, 0.1),
-            10px 0 36px rgba(48, 133, 255, 0.08);
+          box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
           border-radius: 2cqw;
           display: flex;
           align-items: center;
@@ -640,10 +711,13 @@ export default function OurPhilosophy() {
         }
 
         .ph-arrow {
-          fill: var(--off-line);
-          stroke: none;
-          transition: fill 0.2s ease;
-          transition-delay: calc(var(--fill-dur) - 0.2s);
+          fill: none;
+          stroke: var(--off-line);
+          stroke-width: 1.7;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          transition: stroke 0.2s ease;
+          transition-delay: var(--fill-dur);
         }
 
         .ph-step.on .ph-live {
@@ -652,7 +726,7 @@ export default function OurPhilosophy() {
         }
 
         .ph-step.on .ph-arrow {
-          fill: var(--c);
+          stroke: var(--c);
           transition-delay: var(--line-dur);
         }
 
@@ -697,24 +771,35 @@ export default function OurPhilosophy() {
         .ph-copy h3 {
           margin: 0;
           font-family: var(--font-main);
-          font-size: 1.52cqw;
-          font-weight: 700;
+          font-size: 32px;
+          font-weight: 500;
           line-height: 1.2;
           letter-spacing: -0.02em;
           color: var(--off-title);
-          white-space: nowrap;
+          white-space: normal;
           transition: color var(--fill-dur) ease;
         }
 
         .ph-copy p {
           margin: 0.35cqw 0 0;
-          max-width: 33cqw;
+          max-width: none;
           font-family: var(--font-body);
-          font-size: 1.14cqw;
+          font-size: 16px;
           font-weight: 400;
           line-height: 1.42;
           color: var(--off-text);
           transition: color var(--fill-dur) ease;
+        }
+
+        .ph-copy p span {
+          display: block;
+          white-space: nowrap;
+        }
+
+        @media (max-width: 1360px) {
+          .ph-copy p span {
+            white-space: normal;
+          }
         }
 
         .ph-item.on .ph-icon {
@@ -722,12 +807,12 @@ export default function OurPhilosophy() {
           color: #ffffff;
           box-shadow: 0 0.7cqw 1.5cqw -0.55cqw var(--c);
           transform: scale(1.04);
-          transition-delay: calc(var(--line-dur) - 0.1s);
+          transition-delay: var(--line-dur);
         }
 
         .ph-item.on h3,
         .ph-item.on p {
-          transition-delay: calc(var(--line-dur) - 0.1s);
+          transition-delay: var(--line-dur);
         }
 
         .ph-item.on h3 {
@@ -828,13 +913,23 @@ export default function OurPhilosophy() {
           }
 
           .ph-copy h3 {
-            font-size: 1.02rem;
-            white-space: normal;
+            font-size: 32px;
+            font-weight: 500;
           }
 
           .ph-copy p {
-            font-size: 0.9rem;
+            font-size: 16px;
+            font-weight: 400;
             max-width: none;
+          }
+
+          .ph-copy p span {
+            display: inline;
+            white-space: normal;
+          }
+
+          .ph-copy p span + span::before {
+            content: ' ';
           }
         }
       `}</style>

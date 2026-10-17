@@ -131,9 +131,7 @@ export default function Careers() {
         <SectionBadge number="07" label="CAREERS" />
           <h2>Join the Cloudbrain</h2>
           <p>
-            We&apos;re looking for a people who&apos;d rather build something real than just talk
-            <br />
-            about it.
+            We&apos;re looking for a people who&apos;d rather build something real than just talk about it.
           </p>
         </header>
 
@@ -314,16 +312,16 @@ export default function Careers() {
           position: relative;
           z-index: 2;
           background: #ffffff;
-          padding: 8.5rem 0 calc(8rem + 160px);
+          padding: 8.5rem 210px calc(8rem + 160px);
           padding-bottom: 10.15rem;
-          border-bottom-left-radius: 96px;
-          border-bottom-right-radius: 96px;
+          border-bottom-left-radius: 80px;
+          border-bottom-right-radius: 80px;
         }
 
         .careers-inner {
-          max-width: 1560px;
+          max-width: none;
           margin: 0 auto;
-          padding: 0 1.5rem;
+          padding: 0;
         }
 
         .careers-head {
@@ -349,7 +347,7 @@ export default function Careers() {
         }
 
         .careers-head p {
-          max-width: 760px;
+          max-width: 1100px;
           margin: 0;
           font-family: var(--font-body);
           font-size: 24px;
@@ -614,6 +612,13 @@ export default function Careers() {
           margin-bottom: 1rem;
         }
 
+        @media (max-width: 1100px) {
+          .careers-section {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+          }
+        }
+
         @media (max-width: 900px) {
           .careers-section {
             padding-bottom: calc(6.5rem + 72px);
@@ -630,7 +635,7 @@ export default function Careers() {
 
         @media (max-width: 680px) {
           .careers-section {
-            padding: 3.5rem 0 calc(5rem + 48px);
+            padding: 3.5rem 1.25rem calc(5rem + 48px);
             border-bottom-left-radius: 48px;
             border-bottom-right-radius: 48px;
           }

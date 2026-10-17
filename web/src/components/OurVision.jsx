@@ -27,7 +27,7 @@ export default function OurVision() {
         .ov-v2-section {
           background-color: #00AF57; /* Vibrant Emerald Green matching reference */
           margin-top: -80px;
-          padding: 80px 2rem 0 2rem;
+          padding: 80px 210px 0 210px;
           min-height: calc(23.5vw + 80px);
           display: flex;
           align-items: center;
@@ -45,7 +45,7 @@ export default function OurVision() {
 
         .ov-v2-container {
           width: 100%;
-          max-width: 1400px;
+          max-width: none;
           margin: 0 auto;
           display: flex;
           align-items: center;

@@ -98,16 +98,16 @@ export default function CoreValues() {
         .core-values-section {
           width: 100%;
           background: #f8fafc;
-          padding: 7.5rem 0 12rem;
+          padding: 7.5rem 210px 12rem;
           position: relative;
           border-top: 1px solid #f1f5f9;
           overflow: visible;
         }
 
         .cv-container {
-          max-width: 1500px;
+          max-width: none;
           margin: 0 auto;
-          padding: 0 1.5rem;
+          padding: 0;
         }
 
         .cv-header {
@@ -236,6 +236,13 @@ export default function CoreValues() {
           }
         }
 
+        @media (max-width: 1100px) {
+          .core-values-section {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+          }
+        }
+
         @media (max-width: 1024px) {
           .c1-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -248,7 +255,7 @@ export default function CoreValues() {
             margin-bottom: 1.25rem;
           }
           .core-values-section {
-            padding: 4.5rem 0 6.5rem;
+            padding: 4.5rem 1.25rem 6.5rem;
           }
           .cv-header {
             margin-bottom: 3.5rem;

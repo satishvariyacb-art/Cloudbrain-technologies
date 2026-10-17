@@ -137,7 +137,7 @@ export default function AboutSection() {
           background: #ffffff;
           border-radius: 80px; /* Requested 80px radius */
           box-shadow: none; /* Shadow removed */
-          padding: 4.75rem clamp(1.25rem, 2vw, 4rem) 6.5rem;
+          padding: 4.75rem 210px 6.5rem;
           width: 100%;
           box-sizing: border-box;
           position: relative;
@@ -146,7 +146,7 @@ export default function AboutSection() {
         }
 
         .about-v2-inner-container {
-          max-width: 1364px;
+          max-width: none;
           margin: 0 auto;
           width: 100%;
           box-sizing: border-box;

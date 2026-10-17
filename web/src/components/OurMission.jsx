@@ -288,7 +288,7 @@ export default function OurMission() {
         .om-v2-section {
           background-color: #3086FF; /* Warm Vivid Yellow matching reference */
           margin-top: -80px; /* Moves Yellow section up under About Card so About bottom radius shows over Yellow */
-          padding: 80px 2rem 0 2rem; /* 80px is the hidden overlap; content centers in the visible area */
+          padding: 80px 210px 0 210px; /* 80px is the hidden overlap; content centers in the visible area */
           min-height: calc(23.5vw + 80px);
           display: flex;
           align-items: center;
@@ -306,7 +306,7 @@ export default function OurMission() {
 
         .om-v2-container {
           width: 100%;
-          max-width: 1400px;
+          max-width: none;
           margin: 0 auto;
           display: flex;
           align-items: center;

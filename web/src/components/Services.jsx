@@ -80,16 +80,16 @@ export default function Services() {
         .services-showcase-section {
           width: 100%;
           background: #F8FAFC;
-          padding: 9rem 0 5.5rem;
+          padding: 9rem 210px 5.5rem;
           position: relative;
           overflow: visible;
           z-index: 1;
         }
 
         .sv-container {
-          max-width: 1560px;
+          max-width: none;
           margin: 0 auto;
-          padding: 0 1.5rem;
+          padding: 0;
         }
 
         .sv-main-header {
@@ -214,7 +214,14 @@ export default function Services() {
           }
         }
 
-        @media (max-width: 1500px) {
+        @media (max-width: 1100px) {
+          .services-showcase-section {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+          }
+        }
+
+        @media (max-width: 1024px) {
           .sv-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
           }
@@ -225,7 +232,7 @@ export default function Services() {
             font-size: 78px;
           }
           .services-showcase-section {
-            padding: 3.5rem 0;
+            padding: 3.5rem 1.25rem;
           }
           .sv-grid {
             grid-template-columns: 1fr;

@@ -215,9 +215,9 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
           align-items: center;
           justify-content: space-between;
           width: 100%;
-          max-width: 1520px;
-          height: 76px;
-          padding: 0 1.35rem 0 1.5rem;
+          max-width: 1500px;
+          height: 72px;
+          padding: 0 24px;
           background: transparent;
           backdrop-filter: none;
           -webkit-backdrop-filter: none;
@@ -228,7 +228,7 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
         }
 
         .floating-nav.is-scrolled {
-          padding: 0 1.35rem 0 1.5rem;
+          padding: 0 24px;
           background: rgba(255, 255, 255, 0.82);
           backdrop-filter: blur(13px) saturate(1000%);
           -webkit-backdrop-filter: blur(13px) saturate(1000%);
@@ -264,10 +264,14 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
         }
 
         .desktop-nav {
-          position: relative;
+          position: absolute;
+          left: 50%;
+          top: 19px;
+          transform: translateX(-50%);
           display: flex;
           align-items: center;
-          gap: 0.35rem;
+          height: 34px;
+          gap: 30px;
         }
 
         .nav-link {
@@ -276,10 +280,11 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          padding: 0.42rem 0.72rem;
+          height: 34px;
+          padding: 0;
           border-radius: 999px;
           font-family: var(--font-main);
-          font-size: 0.95rem;
+          font-size: 16px;
           font-weight: 500;
           letter-spacing: -0.011em;
           line-height: 1.2;
@@ -287,26 +292,19 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
           color: #5c6b7a;
           text-decoration: none;
           background: transparent;
-          transition:
-            color 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-            background-color 0.28s ease,
-            transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: color 0.2s ease;
         }
 
-        .nav-link:hover {
-          color: #252333;
-          background: rgba(48, 133, 255, 0.07);
-          transform: translateY(-1px);
-        }
-
+        .nav-link:hover,
         .nav-link:active {
-          transform: scale(0.98);
+          color: #3085FF;
+          background: transparent;
         }
 
-        .nav-link.is-active {
-          color: #111;
-          font-weight: 600;
-          background: rgba(48, 133, 255, 0.07);
+        .nav-link.is-active,
+        .nav-link.is-active:hover {
+          color: #3085FF;
+          background: transparent;
         }
 
         .nav-link:focus-visible {
@@ -314,90 +312,10 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
           outline-offset: 2px;
         }
 
-        .header-wrapper .nav-link::before,
-        .header-wrapper .mobile-nav-link::before,
-        .header-wrapper .nav-link::after,
-        .header-wrapper .mobile-nav-link::after {
-          content: '';
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          border: 0;
-          border-radius: 50%;
-          pointer-events: none;
-          background-repeat: no-repeat;
-          animation: header-nav-neon 6.5s ease-in-out infinite alternate;
-        }
-
-        .header-wrapper .nav-link::before,
-        .header-wrapper .mobile-nav-link::before {
-          z-index: -1;
-          width: 145%;
-          height: 2.6em;
-          transform: translate(-50%, -50%);
-          background-image:
-            radial-gradient(circle at 12% 50%, rgba(255, 64, 156, 0.62) 0%, rgba(255, 64, 156, 0) 58%),
-            radial-gradient(circle at 88% 48%, rgba(46, 196, 255, 0.58) 0%, rgba(46, 196, 255, 0) 56%),
-            radial-gradient(circle at 50% 8%, rgba(255, 214, 74, 0.42) 0%, rgba(255, 214, 74, 0) 52%),
-            radial-gradient(circle at 50% 96%, rgba(154, 92, 255, 0.55) 0%, rgba(154, 92, 255, 0) 58%);
-          background-size: 150% 150%;
-          filter: blur(14px);
-          opacity: 0;
-          transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), filter 0.45s ease;
-        }
-
-        .header-wrapper .nav-link::after,
-        .header-wrapper .mobile-nav-link::after {
-          z-index: -2;
-          width: 185%;
-          height: 3.4em;
-          transform: translate(-50%, -50%);
-          background-image:
-            radial-gradient(circle at 24% 50%, rgba(255, 90, 180, 0.46) 0%, rgba(255, 90, 180, 0) 64%),
-            radial-gradient(circle at 76% 50%, rgba(72, 120, 255, 0.44) 0%, rgba(72, 120, 255, 0) 64%),
-            radial-gradient(circle at 50% 50%, rgba(90, 255, 196, 0.24) 0%, rgba(90, 255, 196, 0) 68%);
-          background-size: 160% 160%;
-          filter: blur(22px);
-          opacity: 0;
-          transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-          animation-duration: 8s;
-          animation-direction: alternate-reverse;
-        }
-
-        .header-wrapper .nav-link.is-active::before,
-        .header-wrapper .mobile-nav-link.is-active::before {
-          opacity: 0.34;
-        }
-
-        .header-wrapper .nav-link.is-active::after,
-        .header-wrapper .mobile-nav-link.is-active::after {
-          opacity: 0.22;
-        }
-
-        .header-wrapper .nav-link:hover::before,
-        .header-wrapper .nav-link:focus-visible::before,
-        .header-wrapper .mobile-nav-link:hover::before,
-        .header-wrapper .mobile-nav-link:focus-visible::before {
-          opacity: 0.62;
-          filter: blur(12px);
-        }
-
-        .header-wrapper .nav-link:hover::after,
-        .header-wrapper .nav-link:focus-visible::after,
-        .header-wrapper .mobile-nav-link:hover::after,
-        .header-wrapper .mobile-nav-link:focus-visible::after {
-          opacity: 0.38;
-        }
-
-        @keyframes header-nav-neon {
-          0% { background-position: 8% 42%, 92% 58%, 40% 10%, 60% 95%; }
-          100% { background-position: 28% 68%, 70% 24%, 78% 36%, 22% 62%; }
-        }
-
         .header-actions {
           display: flex;
           align-items: center;
-          gap: 0.75rem;
+          gap: 16px;
         }
 
         .hiring-badge-btn {
@@ -551,22 +469,19 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
           padding: 0.72rem 0.85rem;
           border-radius: 12px;
           text-decoration: none;
-          transition:
-            color 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-            background-color 0.25s ease,
-            transform 0.25s ease;
+          background: transparent;
+          transition: color 0.2s ease;
         }
 
         .mobile-nav-link:hover {
-          color: #252333;
-          background: rgba(48, 133, 255, 0.07);
-          transform: translateY(-1px);
+          color: #3085FF;
+          background: transparent;
         }
 
-        .mobile-nav-link.is-active {
-          color: #111;
-          font-weight: 600;
-          background: rgba(48, 133, 255, 0.1);
+        .mobile-nav-link.is-active,
+        .mobile-nav-link.is-active:hover {
+          color: #3085FF;
+          background: transparent;
         }
 
         .mobile-nav-link:focus-visible {
@@ -601,16 +516,6 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
 
         .w-full {
           width: 100%;
-        }
-
-        @media (max-width: 1280px) {
-          .desktop-nav {
-            gap: 0.1rem;
-          }
-          .nav-link {
-            padding: 0.4rem 0.5rem;
-            font-size: 0.88rem;
-          }
         }
 
         @media (max-width: 1100px) {
@@ -682,10 +587,6 @@ export default function Header({ onOpenContact, onNavClick, activeSectionId = nu
             transition: none;
           }
 
-          .header-wrapper .nav-link::before,
-          .header-wrapper .mobile-nav-link::before,
-          .header-wrapper .nav-link::after,
-          .header-wrapper .mobile-nav-link::after,
           .header-wrapper .nav-contact-btn {
             animation: none;
             transition: none;

@@ -171,7 +171,7 @@ export default function Culture({ onSeeGallery }) {
                   <p>
                     30+ Peoples who<br />
                     genuinely enjoy solving<br />
-                    problems - togather
+                    problems - together
                   </p>
                   <button type="button" className="lc-gallery-btn" onClick={openGallery}>
                     See the gallery
@@ -200,7 +200,7 @@ export default function Culture({ onSeeGallery }) {
         .life-culture-section {
           width: 100%;
           background: #F8FAFC;
-          padding: 5.5rem 0 11rem;
+          padding: 5.5rem 210px 11rem;
           position: relative;
           z-index: 2;
           border-bottom-left-radius: 80px;
@@ -208,9 +208,9 @@ export default function Culture({ onSeeGallery }) {
         }
 
         .lc-wrap {
-          max-width: 1560px;
+          max-width: none;
           margin: 0 auto;
-          padding: 0 1.5rem;
+          padding: 0;
           container-type: inline-size;
         }
 
@@ -395,6 +395,13 @@ export default function Culture({ onSeeGallery }) {
           color: #64748b;
         }
 
+        @media (max-width: 1100px) {
+          .life-culture-section {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+          }
+        }
+
         @media (max-width: 900px) {
           .life-culture-section {
             border-bottom-left-radius: 60px;
@@ -421,7 +428,7 @@ export default function Culture({ onSeeGallery }) {
 
         @media (max-width: 640px) {
           .life-culture-section {
-            padding: 4rem 0 4.5rem;
+            padding: 4rem 1.25rem 4.5rem;
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
           }

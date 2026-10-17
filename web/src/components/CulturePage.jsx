@@ -503,9 +503,9 @@ export default function CulturePage({ onOpenCareers }) {
         }
 
         .static-showcase-container {
-          max-width: 1240px;
+          max-width: none;
           margin: 0 auto;
-          padding: 0 1.5rem;
+          padding: 0 210px;
           display: flex;
           justify-content: center;
           width: 100%;
@@ -681,8 +681,8 @@ export default function CulturePage({ onOpenCareers }) {
         .culture-gallery-section {
           padding-top: 1rem;
           padding-bottom: 6rem;
-          padding-left: 2rem;
-          padding-right: 2rem;
+          padding-left: 210px;
+          padding-right: 210px;
           width: 100%;
           max-width: 100%;
         }
@@ -966,6 +966,14 @@ export default function CulturePage({ onOpenCareers }) {
           background: rgba(239, 68, 68, 0.9);
           border-color: rgba(239, 68, 68, 0.9);
           transform: scale(1.06);
+        }
+
+        @media (max-width: 1100px) {
+          .static-showcase-container,
+          .culture-gallery-section {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+          }
         }
 
         @media (max-width: 1024px) {
