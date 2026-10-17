@@ -11,8 +11,9 @@ const TYPEWRITER_WORDS = [
   { text: "Craft", color: "#10B981" },          // Emerald
 ];
 
-const WORD_HOLD_MS = 2200;
-const WORD_SLIDE_MS = 900;
+const WORD_CYCLE_MS = 2000;
+const WORD_SLIDE_MS = 500;
+const WORD_HOLD_MS = WORD_CYCLE_MS - WORD_SLIDE_MS;
 
 function TypewriterText() {
   const [index, setIndex] = useState(0);
@@ -43,7 +44,7 @@ function TypewriterText() {
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % TYPEWRITER_WORDS.length);
       setPhase('rest');
-    }, WORD_HOLD_MS);
+    }, WORD_CYCLE_MS);
 
     return () => clearInterval(timer);
   }, []);
@@ -356,11 +357,11 @@ export default function Hero() {
         }
 
         .hero-word.is-out {
-          animation: heroWordOut 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: heroWordOut 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         .hero-word.is-in {
-          animation: heroWordIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: heroWordIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         @keyframes heroWordOut {
