@@ -287,36 +287,57 @@ export default function CoreValues() {
         }
 
         @media (max-width: 1024px) {
+          .core-values-section {
+            padding-left: 56px;
+            padding-right: 56px;
+          }
+
           .c1-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
           }
 
           .c1-card-scene {
-            height: 100%;
+            height: auto;
           }
 
           .c1-card {
             aspect-ratio: auto;
-            min-height: 0;
-            height: 100%;
-            padding: 1.5rem 1.25rem 1.35rem;
-            gap: 1rem;
-          }
-
-          .c1-icon-wrap,
-          .c1-icon-svg {
-            width: 64px;
-            height: 64px;
+            min-height: 400px;
+            height: auto;
+            border-radius: 48px;
+            padding: 32px;
+            gap: 64px;
           }
 
           .c1-content h3 {
-            font-size: 22px;
-            margin-bottom: 0.4rem;
+            font-size: 32px;
+            line-height: 1.15;
+            margin-bottom: 8px;
+            overflow-wrap: anywhere;
           }
 
           .c1-content p {
-            font-size: 15px;
+            font-size: 18px;
             line-height: 1.45;
+            overflow-wrap: anywhere;
+          }
+
+          .c1-grid .c1-card-scene:first-child .c1-card {
+            background-color: #3085FF;
+          }
+
+          .c1-grid .c1-card-scene:first-child .c1-icon-wrap {
+            background-color: #ffffff;
+          }
+
+          .c1-grid .c1-card-scene:first-child .c1-icon-svg {
+            color: #3085FF;
+          }
+
+          .c1-grid .c1-card-scene:first-child .c1-content h3,
+          .c1-grid .c1-card-scene:first-child .c1-content p {
+            color: #ffffff;
           }
         }
 
@@ -385,6 +406,18 @@ export default function CoreValues() {
           .c1-grid .c1-card-scene:first-child .c1-content h3,
           .c1-grid .c1-card-scene:first-child .c1-content p {
             color: #ffffff;
+          }
+        }
+
+        @media (min-width: 641px) and (max-width: 1194px) {
+          .core-values-section .cv-headline {
+            font-size: 48px;
+            line-height: 1.15;
+          }
+
+          .cv-subtext {
+            font-size: 16px;
+            line-height: 1.5;
           }
         }
 

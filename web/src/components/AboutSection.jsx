@@ -433,6 +433,20 @@ export default function AboutSection() {
             gap: 0.45rem;
           }
         }
+
+        @media (min-width: 641px) and (max-width: 1194px) {
+          .about-v2-headline {
+            font-size: 48px;
+            line-height: 1.15;
+            width: auto;
+            height: auto;
+            white-space: normal;
+          }
+
+          .about-v2-subtext {
+            font-size: 16px;
+          }
+        }
       `}</style>
     </section>
   );

@@ -92,8 +92,8 @@
   --font-body: 'cbsans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-typewriter: 'cbsans-Typewriter', 'Edu NSW ACT Foundation', 'Caveat', cursive;
   --font-fancy: var(--font-typewriter);
-  /* 210px at 1920px and above. Narrower laptops scale the gutter down. */
-  --page-gutter: clamp(24px, 10.9375vw, 210px);
+  /* 210px at 1920. Wider screens keep the 1500px column centered. */
+  --page-gutter: max(clamp(24px, 10.9375vw, 210px), calc((100vw - 1500px) / 2));
 
   /* ════════════════════════════════════════════════════════════════
      SINGLE SOURCE OF TRUTH TYPOGRAPHY SYSTEM

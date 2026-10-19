@@ -28,7 +28,7 @@ export default function OurVision() {
           background-color: #00AF57; /* Vibrant Emerald Green matching reference */
           margin-top: -80px;
           padding: 80px var(--page-gutter) 0 var(--page-gutter);
-          min-height: calc(23.5vw + 80px);
+          min-height: min(calc(23.5vw + 80px), 531px);
           display: flex;
           align-items: center;
           width: 100%;
@@ -246,6 +246,16 @@ export default function OurVision() {
             width: 100%;
             max-width: 150px;
             max-height: 132px;
+          }
+        }
+
+        @media (min-width: 641px) and (max-width: 1194px) {
+          .ov-v2-title {
+            font-size: 48px;
+          }
+
+          .ov-v2-description {
+            font-size: 16px;
           }
         }
       `}</style>

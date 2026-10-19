@@ -565,6 +565,16 @@ export default function Culture({ onSeeGallery }) {
           }
         }
 
+        @media (min-width: 641px) and (max-width: 1194px) {
+          .lc-head h2 {
+            font-size: 48px;
+          }
+
+          .lc-head p {
+            font-size: 16px;
+          }
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .lc-cell img {
             transition: filter 0.4s ease;

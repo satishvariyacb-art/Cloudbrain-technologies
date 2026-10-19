@@ -1304,6 +1304,34 @@ export default function CulturePage() {
             line-height: 1.5;
           }
         }
+
+        @media (min-width: 641px) and (max-width: 1194px) {
+          .cp-hero h1,
+          .cp-reasons h2,
+          .cp-gallery h2 {
+            font-size: 48px;
+          }
+
+          .cp-hero-copy p,
+          .cp-reasons-head p,
+          .cp-gallery-head p {
+            font-size: 16px;
+          }
+
+          .cp-reason h3 {
+            font-size: 32px;
+            line-height: 42px;
+            font-weight: 700;
+            letter-spacing: 0;
+          }
+
+          .cp-reason p {
+            font-size: 18px;
+            line-height: 28px;
+            font-weight: 500;
+            letter-spacing: 0;
+          }
+        }
       `}</style>
     </div>
   );

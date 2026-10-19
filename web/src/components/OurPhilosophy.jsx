@@ -300,9 +300,19 @@ export default function OurPhilosophy() {
       const targetTop = focusHeight >= availableHeight
         ? availableTop
         : availableTop + (availableHeight - focusHeight) / 2;
+      const spare = vh - canvasH;
+      const roomyWide = window.innerWidth > 1920 && spare > 220;
 
-      stage.style.top = `${targetTop - focusTop}px`;
-      section.style.height = `${Math.max(vh * 4, canvasH + vh * 3)}px`;
+      if (roomyWide) {
+        const centeredTop = targetTop - focusTop;
+        const roomBelow = vh - (centeredTop + canvasH);
+        const pinExtra = Math.round(Math.min(900, Math.max(240, roomBelow * 0.55)));
+        stage.style.top = `${centeredTop}px`;
+        section.style.height = `${canvasH + pinExtra}px`;
+      } else {
+        stage.style.top = `${targetTop - focusTop}px`;
+        section.style.height = `${Math.max(vh * 4, canvasH + vh * 3)}px`;
+      }
     };
 
     const applyDesktop = () => {
@@ -541,6 +551,29 @@ export default function OurPhilosophy() {
           overflow: clip;
         }
 
+        @media (min-width: 1921px) {
+          .ph-stage::before {
+            content: "";
+            position: absolute;
+            z-index: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: #ffffff;
+            border-radius: 80px;
+            pointer-events: none;
+          }
+
+          .ph-canvas {
+            position: relative;
+            z-index: 1;
+            width: min(1500px, 100%);
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+
         .ph-frame {
           position: absolute;
           box-sizing: border-box;
@@ -555,6 +588,14 @@ export default function OurPhilosophy() {
           top: 30.5%;
           width: 64%;
           height: 60%;
+          border-radius: 3cqw;
+        }
+
+        .ph-frame-mid {
+          left: -7%;
+          top: 23%;
+          width: 65%;
+          height: 77%;
           border-radius: 3cqw;
         }
 
@@ -1021,6 +1062,17 @@ export default function OurPhilosophy() {
           .ph-icon {
             width: 44px;
             border-radius: 12px;
+          }
+        }
+
+        @media (min-width: 721px) and (max-width: 1194px) {
+          .ph-title {
+            font-size: 48px;
+          }
+
+          .ph-lead {
+            font-size: 16px;
+            max-width: 36rem;
           }
         }
       `}</style>

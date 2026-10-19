@@ -288,6 +288,16 @@ export default function Services() {
           }
         }
 
+        @media (min-width: 641px) and (max-width: 1194px) {
+          .sv-main-title {
+            font-size: 48px;
+          }
+
+          .sv-main-sub {
+            font-size: 16px;
+          }
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .sv-card,
           .sv-icon-wrap,

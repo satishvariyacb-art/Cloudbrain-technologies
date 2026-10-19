@@ -289,7 +289,7 @@ export default function OurMission() {
           background-color: #3086FF; /* Warm Vivid Yellow matching reference */
           margin-top: -80px; /* Moves Yellow section up under About Card so About bottom radius shows over Yellow */
           padding: 80px var(--page-gutter) 0 var(--page-gutter); /* 80px is the hidden overlap; content centers in the visible area */
-          min-height: calc(23.5vw + 80px);
+          min-height: min(calc(23.5vw + 80px), 531px);
           display: flex;
           align-items: center;
           width: 100%;
@@ -355,7 +355,7 @@ export default function OurMission() {
           width: auto;
           max-width: 100%;
           height: auto;
-          max-height: 15vw;
+          max-height: min(15vw, 288px);
           filter: drop-shadow(0 12px 24px rgba(217, 119, 6, 0.2));
         }
 
@@ -504,6 +504,16 @@ export default function OurMission() {
             width: 100%;
             max-width: 156px;
             max-height: 136px;
+          }
+        }
+
+        @media (min-width: 641px) and (max-width: 1194px) {
+          .om-v2-title {
+            font-size: 48px;
+          }
+
+          .om-v2-description {
+            font-size: 16px;
           }
         }
       `}</style>

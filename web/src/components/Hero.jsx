@@ -487,6 +487,13 @@ export default function Hero() {
 
         }
 
+        /* Short laptops: keep only the About Us card lip on the first screen. */
+        @media (max-height: 960px) and (min-width: 1025px) {
+          .hero-section {
+            padding-bottom: max(8rem, calc(280px + 5rem - (960px - 100vh)));
+          }
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .hero-blob {
             animation: none;

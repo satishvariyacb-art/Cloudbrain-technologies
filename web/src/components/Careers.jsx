@@ -1255,6 +1255,16 @@ export default function Careers() {
           }
         }
 
+        @media (min-width: 681px) and (max-width: 1194px) {
+          .careers-head h2 {
+            font-size: 48px;
+          }
+
+          .careers-head p {
+            font-size: 16px;
+          }
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .role-apply-btn:hover {
             transform: none;
