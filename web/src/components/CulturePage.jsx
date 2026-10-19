@@ -637,7 +637,11 @@ export default function CulturePage() {
         }
 
         .cp-gallery h2 {
-          font-size: 52px;
+          font-size: 78px;
+          font-weight: 500;
+          line-height: 1.2;
+          letter-spacing: -0.01em;
+          color: #020618;
         }
 
         .cp-reasons-head p,
@@ -655,6 +659,18 @@ export default function CulturePage() {
           margin: 0;
           font-size: 24px;
           color: #020618;
+        }
+
+        .cp-gallery-head p {
+          width: 838px;
+          max-width: 100%;
+          margin: 0;
+          font-family: var(--font-main);
+          font-size: 24px;
+          font-weight: 300;
+          line-height: 1.32;
+          letter-spacing: -0.01em;
+          color: #4A5565;
         }
 
         .cp-reasons-grid {
@@ -676,11 +692,13 @@ export default function CulturePage() {
           background: #ffffff;
           border-radius: 48px;
           padding: 32px;
-          height: 461px;
+          min-height: 461px;
+          height: auto;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
           gap: 64px;
+          min-width: 0;
           box-shadow: none;
         }
 
@@ -701,6 +719,7 @@ export default function CulturePage() {
 
         .cp-reason-copy {
           width: 100%;
+          min-width: 0;
           margin-top: auto;
           display: flex;
           flex-direction: column;
@@ -715,16 +734,18 @@ export default function CulturePage() {
           letter-spacing: 0;
           line-height: 42px;
           color: #020618;
+          overflow-wrap: anywhere;
         }
 
         .cp-reason p {
           margin: 0;
           font-family: var(--font-main);
-          font-size: 16px;
+          font-size: 18px;
           font-weight: 500;
           letter-spacing: 0;
           line-height: 28px;
           color: #4A5565;
+          overflow-wrap: anywhere;
         }
 
         .cp-albums {
@@ -1157,10 +1178,6 @@ export default function CulturePage() {
           .cp-hero h1,
           .cp-reasons h2 {
             font-size: 48px;
-          }
-
-          .cp-gallery h2 {
-            font-size: 40px;
           }
         }
 
