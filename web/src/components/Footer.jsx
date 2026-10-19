@@ -26,6 +26,28 @@ function ArrowIcon() {
   );
 }
 
+function FooterLinkLabel({ item }) {
+  if (!item.accent) return item.label;
+  const match = item.label.match(/^(.*\s)(\S+)$/);
+  if (!match) {
+    return (
+      <>
+        {item.label}
+        <ArrowIcon />
+      </>
+    );
+  }
+  return (
+    <>
+      {match[1]}
+      <span className="site-footer-link-tail">
+        {match[2]}
+        <ArrowIcon />
+      </span>
+    </>
+  );
+}
+
 function FooterWordmark() {
   return (
     <svg className="site-footer-wordmark-svg" viewBox="-18 0 1936 226" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="none">
@@ -76,8 +98,7 @@ export default function Footer({ onNavClick, curved = false }) {
                     className={item.accent ? 'is-accent' : undefined}
                     onClick={(event) => handleClick(event, item.href)}
                   >
-                    {item.label}
-                    {item.accent ? <ArrowIcon /> : null}
+                    <FooterLinkLabel item={item} />
                   </a>
                 </li>
               ))}
@@ -94,8 +115,7 @@ export default function Footer({ onNavClick, curved = false }) {
                     className={item.accent ? 'is-accent' : undefined}
                     onClick={(event) => handleClick(event, item.href)}
                   >
-                    {item.label}
-                    {item.accent ? <ArrowIcon /> : null}
+                    <FooterLinkLabel item={item} />
                   </a>
                 </li>
               ))}
@@ -307,43 +327,20 @@ export default function Footer({ onNavClick, curved = false }) {
           overflow: hidden;
         }
 
-        @media (max-width: 860px) {
-          .site-footer-inner {
-            padding-top: 5.5rem;
-            align-items: flex-start;
-          }
-
-          .site-footer-tagline,
-          .site-footer-copy {
-            text-align: left;
-          }
-
-          .site-footer-grid {
-            grid-template-columns: 1fr;
-            gap: 2.25rem;
-            margin-bottom: 3rem;
-          }
+        .site-footer-link-tail {
+          white-space: nowrap;
         }
 
-        @media (max-width: 900px) {
-          .site-footer-glow {
-            height: 160px;
-            background: radial-gradient(ellipse 46% 22% at 50% 86px, #3EC8D4 0%, #13818E 32%, #177496 52%, rgba(27, 88, 151, 0.3) 72%, rgba(19, 52, 106, 0) 100%);
-            filter: blur(14px);
-          }
-
-          .site-footer.is-curved {
-            margin-top: -72px;
-          }
-
-          .site-footer.is-curved .site-footer-inner {
-            padding-top: calc(5.5rem + 72px);
-          }
+        .site-footer-link-tail svg {
+          display: inline-block;
+          vertical-align: -0.15em;
+          margin-left: 0.28rem;
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 1024px) {
           .site-footer-inner {
             align-items: center;
+            padding-top: 5.5rem;
             padding-left: 1.25rem;
             padding-right: 1.25rem;
           }
@@ -364,7 +361,7 @@ export default function Footer({ onNavClick, curved = false }) {
           }
 
           .site-footer-grid {
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.15fr);
             column-gap: 1.15rem;
             row-gap: 1.6rem;
             margin-bottom: 1.75rem;
@@ -436,12 +433,6 @@ export default function Footer({ onNavClick, curved = false }) {
             display: inline;
           }
 
-          .site-footer-col a svg {
-            display: inline-block;
-            vertical-align: -0.15em;
-            margin-left: 0.2rem;
-          }
-
           .site-footer-contact li > span:last-child {
             min-width: 0;
             flex: 1;
@@ -451,7 +442,25 @@ export default function Footer({ onNavClick, curved = false }) {
             display: inline;
             overflow-wrap: anywhere;
           }
+        }
 
+        @media (max-width: 900px) {
+          .site-footer-glow {
+            height: 160px;
+            background: radial-gradient(ellipse 46% 22% at 50% 86px, #3EC8D4 0%, #13818E 32%, #177496 52%, rgba(27, 88, 151, 0.3) 72%, rgba(19, 52, 106, 0) 100%);
+            filter: blur(14px);
+          }
+
+          .site-footer.is-curved {
+            margin-top: -72px;
+          }
+
+          .site-footer.is-curved .site-footer-inner {
+            padding-top: calc(5.5rem + 72px);
+          }
+        }
+
+        @media (max-width: 640px) {
           .site-footer-glow {
             height: 120px;
             background: radial-gradient(ellipse 50% 24% at 50% 58px, #3EC8D4 0%, #13818E 34%, #177496 54%, rgba(27, 88, 151, 0.28) 74%, rgba(19, 52, 106, 0) 100%);

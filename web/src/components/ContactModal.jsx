@@ -36,6 +36,9 @@ export default function ContactModal({ isOpen, onClose }) {
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal-content contact-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="contact-modal-accent" aria-hidden="true">
+          <span /><span /><span /><span />
+        </div>
         <button className="modal-close" onClick={onClose}>
           <X size={20} />
         </button>
@@ -151,6 +154,28 @@ export default function ContactModal({ isOpen, onClose }) {
         .contact-modal {
           max-width: 640px;
         }
+
+        .contact-modal-accent {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 3;
+          height: 6px;
+          display: flex;
+          pointer-events: none;
+          border-radius: 32px 32px 0 0;
+          overflow: hidden;
+        }
+
+        .contact-modal-accent span {
+          flex: 1;
+        }
+
+        .contact-modal-accent span:nth-child(1) { background: #3086FF; }
+        .contact-modal-accent span:nth-child(2) { background: #FFBE00; }
+        .contact-modal-accent span:nth-child(3) { background: #00AF57; }
+        .contact-modal-accent span:nth-child(4) { background: #F52837; }
 
         .contact-form {
           display: flex;

@@ -234,6 +234,9 @@ export default function Careers() {
       {selectedRole && createPortal(
         <div className="modal-backdrop" onClick={closeApply}>
           <div className="modal-content apply-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="apply-modal-accent" aria-hidden="true">
+              <span /><span /><span /><span />
+            </div>
             <button type="button" className="modal-close apply-modal-close" onClick={closeApply} aria-label="Close">
               <X size={18} />
             </button>
@@ -1010,6 +1013,28 @@ export default function Careers() {
           -ms-overflow-style: none;
         }
 
+        .apply-modal-accent {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 3;
+          height: 6px;
+          display: flex;
+          pointer-events: none;
+          border-radius: 28px 28px 0 0;
+          overflow: hidden;
+        }
+
+        .apply-modal-accent span {
+          flex: 1;
+        }
+
+        .apply-modal-accent span:nth-child(1) { background: #3086FF; }
+        .apply-modal-accent span:nth-child(2) { background: #FFBE00; }
+        .apply-modal-accent span:nth-child(3) { background: #00AF57; }
+        .apply-modal-accent span:nth-child(4) { background: #F52837; }
+
         .apply-modal-close {
           z-index: 2;
           top: 1rem;
@@ -1217,6 +1242,10 @@ export default function Careers() {
             max-height: calc(100vh - 1.25rem);
             padding: 1.15rem 1rem 0.9rem;
             border-radius: 20px;
+          }
+
+          .apply-modal-accent {
+            border-radius: 20px 20px 0 0;
           }
 
           .apply-title {

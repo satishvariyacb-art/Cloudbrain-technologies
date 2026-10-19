@@ -322,23 +322,6 @@ export default function CoreValues() {
             line-height: 1.45;
             overflow-wrap: anywhere;
           }
-
-          .c1-grid .c1-card-scene:first-child .c1-card {
-            background-color: #3085FF;
-          }
-
-          .c1-grid .c1-card-scene:first-child .c1-icon-wrap {
-            background-color: #ffffff;
-          }
-
-          .c1-grid .c1-card-scene:first-child .c1-icon-svg {
-            color: #3085FF;
-          }
-
-          .c1-grid .c1-card-scene:first-child .c1-content h3,
-          .c1-grid .c1-card-scene:first-child .c1-content p {
-            color: #ffffff;
-          }
         }
 
         @media (max-width: 640px) {

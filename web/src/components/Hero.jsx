@@ -148,7 +148,7 @@ export default function Hero() {
           top: -12vw;
           left: -10vw;
           background: radial-gradient(circle, #3B82F6 0%, rgba(59, 130, 246, 0) 68%);
-          opacity: 0.35;
+          opacity: 0.22;
           animation-name: hero-drift-blue;
           animation-duration: 22s;
         }
@@ -159,7 +159,7 @@ export default function Hero() {
           top: -14vw;
           right: -10vw;
           background: radial-gradient(circle, #34D399 0%, rgba(52, 211, 153, 0) 68%);
-          opacity: 0.3;
+          opacity: 0.18;
           animation-name: hero-drift-green;
           animation-duration: 26s;
           animation-delay: -6s;
@@ -171,7 +171,7 @@ export default function Hero() {
           bottom: -14vw;
           left: 4vw;
           background: radial-gradient(circle, #FCD34D 0%, rgba(252, 211, 77, 0) 68%);
-          opacity: 0.45;
+          opacity: 0.28;
           animation-name: hero-drift-yellow;
           animation-duration: 24s;
           animation-delay: -10s;
@@ -183,7 +183,7 @@ export default function Hero() {
           bottom: -12vw;
           right: -6vw;
           background: radial-gradient(circle, #F87171 0%, rgba(248, 113, 113, 0) 68%);
-          opacity: 0.28;
+          opacity: 0.16;
           animation-name: hero-drift-pink;
           animation-duration: 28s;
           animation-delay: -3s;
