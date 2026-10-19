@@ -85,6 +85,15 @@ const MOBILE_MQ = '(max-width: 720px)';
 const VB_W = 1024;
 const VB_H = 940;
 
+function mixWhite(hex, amount) {
+  const n = hex.replace('#', '');
+  const r = parseInt(n.slice(0, 2), 16);
+  const g = parseInt(n.slice(2, 4), 16);
+  const b = parseInt(n.slice(4, 6), 16);
+  const mix = (channel) => Math.round(255 + (channel - 255) * amount);
+  return `rgb(${mix(r)} ${mix(g)} ${mix(b)})`;
+}
+
 function buildConnectors(ox, oy, specs, busX) {
   const head = 5.1;
   const wing = 4.64;
@@ -113,7 +122,12 @@ function buildConnectors(ox, oy, specs, busX) {
     };
   });
 
-  const lines = meta.map((item) => ({ d: `${fromLogo} H${item.tip}`, arrow: item.arrow }));
+  const lines = meta.map((item) => ({
+    d: `${fromLogo} H${item.tip}`,
+    arrow: item.arrow,
+    x1: ox,
+    x2: item.tip,
+  }));
   const paint = (group) => {
     let shared = fromLogo;
     group.forEach((item, order) => {
@@ -123,14 +137,14 @@ function buildConnectors(ox, oy, specs, busX) {
         const hasSpine = current.dir < 0 ? current.yLeave < current.yEnter - 0.5 : current.yLeave > current.yEnter + 0.5;
         const spine = hasSpine ? `V${current.yLeave}` : '';
         const turn = `Q${bus} ${oy} ${bus} ${current.yEnter} ${spine}`;
-        lines[item.index] = { d: `${fromLogo} ${turn} ${elbow}`, arrow: current.arrow };
+        lines[item.index] = { d: `${fromLogo} ${turn} ${elbow}`, arrow: current.arrow, x1: ox, x2: current.tip };
         shared = `${fromLogo} ${turn}`;
         return;
       }
       const startY = meta[group[order - 1].index].yLeave;
       const hasSpine = current.dir < 0 ? current.yLeave < startY - 0.5 : current.yLeave > startY + 0.5;
       const spine = hasSpine ? `V${current.yLeave}` : '';
-      lines[item.index] = { d: `${shared} ${spine} ${elbow}`, arrow: current.arrow };
+      lines[item.index] = { d: `${shared} ${spine} ${elbow}`, arrow: current.arrow, x1: ox, x2: current.tip };
       shared = `${shared} ${spine}`;
     });
   };
@@ -458,6 +472,23 @@ export default function OurPhilosophy() {
           </div>
 
           <svg className="ph-lines" viewBox={`0 0 ${VB_W} ${VB_H}`} aria-hidden="true">
+            <defs>
+              {ITEMS.map((item, index) => (
+                <linearGradient
+                  key={item.id}
+                  id={`${uid}-line-${item.id}`}
+                  gradientUnits="userSpaceOnUse"
+                  x1={lines[index].x1 ?? 318}
+                  y1="0"
+                  x2={lines[index].x2 ?? 548}
+                  y2="0"
+                >
+                  <stop offset="0%" stopColor={mixWhite(item.color, 0.32)} />
+                  <stop offset="32%" stopColor={mixWhite(item.color, 0.32)} />
+                  <stop offset="100%" stopColor={item.color} />
+                </linearGradient>
+              ))}
+            </defs>
             {trunk ? <path className="ph-base" d={trunk} fill="none" /> : null}
             {ITEMS.map((item, index) => (
               <path key={`base-${item.id}`} className="ph-base" d={lines[index].d} fill="none" />
@@ -470,7 +501,7 @@ export default function OurPhilosophy() {
                   className={`ph-step${active[index] ? ' on' : ''}${allColorful && hovered === index ? ' is-hover' : ''}`}
                   style={{ '--c': item.color }}
                 >
-                  <path className="ph-live" pathLength="1" d={lines[index].d} fill="none" />
+                  <path className="ph-live" pathLength="1" d={lines[index].d} fill="none" stroke={`url(#${uid}-line-${item.id})`} />
                   <path className="ph-arrow" d={lines[index].arrow} fill="none" />
                 </g>
               );
@@ -756,15 +787,14 @@ export default function OurPhilosophy() {
 
         .ph-base {
           stroke: var(--off-line);
-          stroke-width: 1.7;
+          stroke-width: 1.4;
           stroke-linecap: round;
           stroke-linejoin: round;
         }
 
         .ph-live {
           fill: none;
-          stroke: var(--c);
-          stroke-width: 1.7;
+          stroke-width: 1.4;
           stroke-linecap: round;
           stroke-linejoin: round;
           stroke-dasharray: 1;
@@ -776,7 +806,7 @@ export default function OurPhilosophy() {
         .ph-arrow {
           fill: none;
           stroke: var(--off-line);
-          stroke-width: 1.7;
+          stroke-width: 1.4;
           stroke-linecap: round;
           stroke-linejoin: round;
           transition: stroke 0.2s ease;
@@ -1066,13 +1096,25 @@ export default function OurPhilosophy() {
         }
 
         @media (min-width: 721px) and (max-width: 1194px) {
+          .ph-head {
+            top: 3.4%;
+            padding: 0 1.25rem;
+          }
+
+          .ph-head .cb-section-badge {
+            margin-bottom: 12px;
+          }
+
           .ph-title {
             font-size: 48px;
+            line-height: 1.12;
           }
 
           .ph-lead {
             font-size: 16px;
-            max-width: 36rem;
+            line-height: 1.45;
+            max-width: 34rem;
+            margin-top: 10px;
           }
         }
       `}</style>

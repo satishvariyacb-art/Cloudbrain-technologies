@@ -120,7 +120,7 @@ export default function Hero() {
           justify-content: center;
           text-align: center;
           background-color: #ffffff;
-          padding: 17.5rem 1.5rem calc(280px + 5rem) 1.5rem;
+          padding: 17.5rem 1.5rem calc(360px + 5rem) 1.5rem;
           overflow: clip;
           box-sizing: border-box;
         }
@@ -490,7 +490,7 @@ export default function Hero() {
         /* Short laptops: keep only the About Us card lip on the first screen. */
         @media (max-height: 960px) and (min-width: 1025px) {
           .hero-section {
-            padding-bottom: max(8rem, calc(280px + 5rem - (960px - 100vh)));
+            padding-bottom: max(8rem, calc(360px + 5rem - (960px - 100vh)));
           }
         }
 
